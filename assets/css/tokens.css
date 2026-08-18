@@ -1,0 +1,233 @@
+/* ==========================================================================
+   tokens.css — design tokens (colors, type, spacing, motion)
+   Change values here; never hard-code a hex anywhere else.
+
+   Colors follow a validated data-viz palette. The categorical slots, the
+   sequential blue ramp and the diverging pair have all been checked for
+   colour-vision-deficiency separation and contrast in BOTH light and dark
+   modes. If you swap a series colour, re-validate it before shipping.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Surfaces & ink ------------------------------------------------- */
+  --page:            #f9f9f7;   /* page plane                              */
+  --surface-1:       #fcfcfb;   /* cards, chart surface                    */
+  --surface-2:       #f2f1ec;   /* wells, code blocks, table stripes       */
+  --surface-raised:  #ffffff;   /* header, popovers                        */
+
+  --text-primary:    #0b0b0b;
+  --text-secondary:  #52514e;
+  --text-muted:      #898781;   /* axis labels, captions, meta             */
+  --text-inverse:    #ffffff;
+
+  --border:          rgba(11, 11, 11, 0.10);
+  --border-strong:   rgba(11, 11, 11, 0.20);
+  --gridline:        #e1e0d9;
+  --axis:            #c3c2b7;
+
+  /* ---- Accent (UI only — links, buttons, focus) ------------------------ */
+  --accent:          #256abf;
+  --accent-hover:    #184f95;
+  --accent-wash:     #eaf1fc;
+  --focus-ring:      #2a78d6;
+
+  /* ---- Categorical series (fixed order — never cycle, never reorder) --- */
+  --series-1:        #2a78d6;   /* blue    */
+  --series-2:        #eb6834;   /* orange  */
+  --series-3:        #1baf7a;   /* aqua    */
+  --series-4:        #eda100;   /* yellow  */
+  --series-5:        #e87ba4;   /* magenta */
+  --series-6:        #008300;   /* green   */
+  --series-7:        #4a3aa7;   /* violet  */
+  --series-8:        #e34948;   /* red     */
+
+  /* ---- Diverging pair (volcano plot: down ↔ neutral ↔ up) -------------- */
+  --diverge-low:     #2a78d6;   /* down-regulated  */
+  --diverge-mid:     #b9b8b1;   /* not significant */
+  --diverge-high:    #e34948;   /* up-regulated    */
+
+  /* ---- Sequential ramp (heatmaps, magnitude) — one hue, light → dark --- */
+  --seq-100:         #cde2fb;
+  --seq-200:         #9ec5f4;
+  --seq-300:         #6da7ec;
+  --seq-400:         #3987e5;
+  --seq-500:         #256abf;
+  --seq-600:         #184f95;
+  --seq-700:         #0d366b;
+
+  /* ---- Status (reserved — never used as a series colour) --------------- */
+  --status-good:     #0ca30c;
+  --status-warning:  #fab219;
+  --status-serious:  #ec835a;
+  --status-critical: #d03b3b;
+  --status-good-text:#006300;
+
+  /* ---- Typography ------------------------------------------------------ */
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino,
+                  "Book Antiqua", Georgia, serif;
+  --font-body:    system-ui, -apple-system, "Segoe UI", Roboto,
+                  "Helvetica Neue", Arial, sans-serif;
+  --font-mono:    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+                  "Liberation Mono", monospace;
+  /* Charts always use the UI sans — never the display serif. */
+  --font-chart:   var(--font-body);
+
+  --step--1: clamp(0.80rem, 0.78rem + 0.10vw, 0.86rem);
+  --step-0:  clamp(1.00rem, 0.97rem + 0.15vw, 1.08rem);
+  --step-1:  clamp(1.20rem, 1.14rem + 0.30vw, 1.38rem);
+  --step-2:  clamp(1.45rem, 1.33rem + 0.58vw, 1.80rem);
+  --step-3:  clamp(1.80rem, 1.58rem + 1.05vw, 2.45rem);
+  --step-4:  clamp(2.20rem, 1.80rem + 1.95vw, 3.40rem);
+  --step-5:  clamp(2.70rem, 2.00rem + 3.40vw, 4.60rem);
+
+  --leading-tight: 1.15;
+  --leading-snug:  1.35;
+  --leading-body:  1.65;
+
+  /* ---- Space (4px base) ------------------------------------------------ */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+
+  /* ---- Shape, shadow, motion ------------------------------------------- */
+  --radius-sm: 4px;
+  --radius:    8px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(11, 11, 11, 0.05);
+  --shadow:    0 2px 8px rgba(11, 11, 11, 0.06),
+               0 1px 2px rgba(11, 11, 11, 0.04);
+  --shadow-lg: 0 12px 32px rgba(11, 11, 11, 0.10);
+
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur:      220ms;
+  --dur-slow: 480ms;
+
+  /* ---- Layout ---------------------------------------------------------- */
+  --measure: 68ch;          /* comfortable reading width */
+  --container: 1180px;
+  --container-narrow: 780px;
+  --header-h: 60px;
+}
+
+/* ---- Dark mode ---------------------------------------------------------
+   Selected, not flipped: each series is its own step chosen for the dark
+   surface. Declared under both the OS media query and the [data-theme]
+   stamp so the toggle wins in either direction.
+   ------------------------------------------------------------------------ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --page:            #0d0d0d;
+    --surface-1:       #1a1a19;
+    --surface-2:       #232321;
+    --surface-raised:  #1f1f1e;
+
+    --text-primary:    #ffffff;
+    --text-secondary:  #c3c2b7;
+    --text-muted:      #898781;
+    --text-inverse:    #0b0b0b;
+
+    --border:          rgba(255, 255, 255, 0.12);
+    --border-strong:   rgba(255, 255, 255, 0.24);
+    --gridline:        #2c2c2a;
+    --axis:            #383835;
+
+    --accent:          #6da7ec;
+    --accent-hover:    #9ec5f4;
+    --accent-wash:     #16233a;
+    --focus-ring:      #6da7ec;
+
+    --series-1:        #3987e5;
+    --series-2:        #d95926;
+    --series-3:        #199e70;
+    --series-4:        #c98500;
+    --series-5:        #d55181;
+    --series-6:        #008300;
+    --series-7:        #9085e9;
+    --series-8:        #e66767;
+
+    --diverge-low:     #3987e5;
+    --diverge-mid:     #6b6a66;
+    --diverge-high:    #e66767;
+
+    --seq-100:         #0d366b;
+    --seq-200:         #184f95;
+    --seq-300:         #256abf;
+    --seq-400:         #3987e5;
+    --seq-500:         #5598e7;
+    --seq-600:         #86b6ef;
+    --seq-700:         #cde2fb;
+
+    --status-good-text:#0ca30c;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow:    0 2px 8px rgba(0, 0, 0, 0.45),
+                 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --page:            #0d0d0d;
+  --surface-1:       #1a1a19;
+  --surface-2:       #232321;
+  --surface-raised:  #1f1f1e;
+
+  --text-primary:    #ffffff;
+  --text-secondary:  #c3c2b7;
+  --text-muted:      #898781;
+  --text-inverse:    #0b0b0b;
+
+  --border:          rgba(255, 255, 255, 0.12);
+  --border-strong:   rgba(255, 255, 255, 0.24);
+  --gridline:        #2c2c2a;
+  --axis:            #383835;
+
+  --accent:          #6da7ec;
+  --accent-hover:    #9ec5f4;
+  --accent-wash:     #16233a;
+  --focus-ring:      #6da7ec;
+
+  --series-1:        #3987e5;
+  --series-2:        #d95926;
+  --series-3:        #199e70;
+  --series-4:        #c98500;
+  --series-5:        #d55181;
+  --series-6:        #008300;
+  --series-7:        #9085e9;
+  --series-8:        #e66767;
+
+  --diverge-low:     #3987e5;
+  --diverge-mid:     #6b6a66;
+  --diverge-high:    #e66767;
+
+  --seq-100:         #0d366b;
+  --seq-200:         #184f95;
+  --seq-300:         #256abf;
+  --seq-400:         #3987e5;
+  --seq-500:         #5598e7;
+  --seq-600:         #86b6ef;
+  --seq-700:         #cde2fb;
+
+  --status-good-text:#0ca30c;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow:    0 2px 8px rgba(0, 0, 0, 0.45),
+               0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+}

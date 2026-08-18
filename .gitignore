@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Node (only if you ever add tooling)
+node_modules/
+npm-debug.log*
+
+# --- Large data files -------------------------------------------------------
+# Raw TCGA / METABRIC downloads do NOT belong in this repo: they are big, they
+# are re-downloadable, and GitHub rejects files over 100 MB. Keep them outside
+# the folder (or uncomment these lines) and commit only the small exported
+# results JSON that the website actually reads.
+# *.csv
+# *.tsv
+# *.txt
+# *.rds
+# *.h5

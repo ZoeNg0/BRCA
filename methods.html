@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Methods — Breast Cancer Transcriptomics</title>
+  <meta name="description" content="The analysis pipeline end to end: preprocessing, normalisation, differential expression, enrichment and survival modelling.">
+  <meta name="author" content="Your Name">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Methods — Breast Cancer Transcriptomics">
+  <meta property="og:description" content="The analysis pipeline end to end: preprocessing, normalisation, differential expression, enrichment and survival modelling.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a78d6'/></svg>">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <script>
+    /* Stamp the saved theme before first paint so there is no flash. */
+    (function () {
+      try {
+        var t = localStorage.getItem('brca-theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span>BRCA Transcriptomics</span>
+      </a>
+
+      <button class="icon-btn nav-toggle" data-nav-toggle type="button"
+              aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </button>
+
+      <nav class="nav" id="site-nav" data-nav aria-label="Main">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="index.html">Overview</a></li>
+          <li><a class="nav__link" href="background.html">Background</a></li>
+          <li><a class="nav__link" href="data.html">Data</a></li>
+          <li><a class="nav__link" href="methods.html">Methods</a></li>
+          <li><a class="nav__link" href="results.html">Results</a></li>
+          <li><a class="nav__link" href="discussion.html">Discussion</a></li>
+          <li><a class="nav__link" href="about.html">About</a></li>
+        </ul>
+      </nav>
+
+      <button class="icon-btn theme-toggle" data-theme-toggle type="button" aria-label="Switch colour theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow">Section 03</p>
+        <h1>Methods</h1>
+        <p class="lede">
+          The pipeline from downloaded counts to finished figure, written so that a reader
+          with the same data could run it and get the same answer.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="layout-aside">
+          <div class="stack-lg">
+
+            <div id="pipeline">
+              <h2 class="mt-0">Pipeline overview</h2>
+              <div class="pipeline">
+                <div class="pipeline__node"><strong>1. Acquire</strong><span>GDC download, manifest pinned</span></div>
+                <div class="pipeline__node"><strong>2. Clean</strong><span>Filter samples and genes</span></div>
+                <div class="pipeline__node"><strong>3. Normalise</strong><span>VST / TPM, batch check</span></div>
+                <div class="pipeline__node"><strong>4. Explore</strong><span>PCA, clustering</span></div>
+                <div class="pipeline__node"><strong>5. Test</strong><span>Differential expression</span></div>
+                <div class="pipeline__node"><strong>6. Interpret</strong><span>Pathway enrichment</span></div>
+                <div class="pipeline__node"><strong>7. Model</strong><span>Kaplan-Meier, Cox</span></div>
+                <div class="pipeline__node"><strong>8. Validate</strong><span>METABRIC replication</span></div>
+              </div>
+            </div>
+
+            <div id="steps">
+              <h2>Step by step</h2>
+              <ol class="steps">
+                <li>
+                  <h4>Acquisition</h4>
+                  <p class="text-secondary">Expression counts and clinical annotations are pulled from the GDC with a saved manifest, so the exact file versions are recoverable later. Clinical fields are reduced to the ones actually used: subtype, stage, age at diagnosis, vital status and follow-up time.</p>
+                </li>
+                <li>
+                  <h4>Quality control and filtering</h4>
+                  <p class="text-secondary">Library sizes and gene-detection rates are plotted per sample; outliers are inspected individually rather than dropped by a blanket rule. Gene filtering keeps features expressed above a minimum count in at least as many samples as the smallest subtype group.</p>
+                </li>
+                <li>
+                  <h4>Normalisation</h4>
+                  <p class="text-secondary">Counts are normalised for library size and variance-stabilised for anything distance-based (PCA, clustering, heatmaps). Raw counts are kept for the differential expression model, which expects them.</p>
+                </li>
+                <li>
+                  <h4>Exploratory analysis</h4>
+                  <p class="text-secondary">PCA on the most variable genes, then hierarchical clustering with correlation distance. The clusters are compared against published PAM50 calls to check that the recovered structure matches the known one before any hypothesis is tested.</p>
+                </li>
+                <li>
+                  <h4>Differential expression</h4>
+                  <p class="text-secondary">Subtype-versus-subtype contrasts with a negative-binomial model, Benjamini-Hochberg correction, and thresholds fixed in advance at adjusted p below 0.05 and absolute log2 fold change above 1.</p>
+                </li>
+                <li>
+                  <h4>Pathway enrichment</h4>
+                  <p class="text-secondary">Over-representation and rank-based enrichment against Hallmark and GO gene sets, so the gene lists become biology rather than a list of symbols.</p>
+                </li>
+                <li>
+                  <h4>Survival analysis</h4>
+                  <p class="text-secondary">Patients are split at the median expression of each candidate gene for Kaplan-Meier curves and the log-rank test, then a Cox proportional-hazards model adds stage and age so that a gene is not credited for what stage already explains. The proportional-hazards assumption is checked rather than assumed.</p>
+                </li>
+                <li>
+                  <h4>Validation</h4>
+                  <p class="text-secondary">The strongest candidates are re-tested in METABRIC. A finding that does not replicate is reported as not replicating, not quietly dropped.</p>
+                </li>
+              </ol>
+            </div>
+
+            <div id="software">
+              <h2>Software</h2>
+              <div class="table-wrap">
+                <table>
+                  <caption>Placeholder stack &mdash; pin exact versions before submission.</caption>
+                  <thead>
+                    <tr><th scope="col">Purpose</th><th scope="col">Tool</th><th scope="col">Version</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">Language</th><td>Python / R</td><td>TBD</td></tr>
+                    <tr><th scope="row">Data access</th><td>GDC client, cBioPortal export</td><td>TBD</td></tr>
+                    <tr><th scope="row">Differential expression</th><td>DESeq2 or edgeR</td><td>TBD</td></tr>
+                    <tr><th scope="row">Enrichment</th><td>clusterProfiler / GSEApy</td><td>TBD</td></tr>
+                    <tr><th scope="row">Survival</th><td>lifelines or survival</td><td>TBD</td></tr>
+                    <tr><th scope="row">Figures</th><td>Exported to JSON, drawn in this site</td><td>&mdash;</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="repro">
+              <h2>Reproducibility</h2>
+              <p>
+                Analysis code lives in a separate repository; this site holds only the
+                exported results. Each figure reads from a single data file, so regenerating
+                a figure means replacing one JSON object and reloading the page.
+              </p>
+<pre><code># Reproduce the analysis
+git clone https://github.com/your-handle/brca-analysis
+cd brca-analysis
+make data      # download and verify against the manifest
+make analysis  # QC, normalisation, DE, enrichment, survival
+make export    # write assets/data/results.json for the website</code></pre>
+              <div class="callout callout--todo">
+                <span class="callout__icon" aria-hidden="true">&#9998;</span>
+                <div class="callout__body">
+                  <p class="mb-0"><strong>To add:</strong> the real repository link, an environment file with pinned versions, and the random seeds used anywhere sampling occurs.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <aside class="layout-aside__side">
+            <p class="eyebrow">On this page</p>
+            <ul class="toc">
+              <li><a href="#pipeline">Pipeline overview</a></li>
+              <li><a href="#steps">Step by step</a></li>
+              <li><a href="#software">Software</a></li>
+              <li><a href="#repro">Reproducibility</a></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+<footer class="site-footer">
+    <div class="container">
+      <div class="grid grid--4">
+        <div>
+          <h4>Project</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="background.html">Background</a></li>
+            <li><a href="data.html">Data sources</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Analysis</h4>
+          <ul>
+            <li><a href="methods.html">Methods</a></li>
+            <li><a href="results.html">Results</a></li>
+            <li><a href="discussion.html">Discussion</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Data sources</h4>
+          <ul>
+            <li><a href="https://portal.gdc.cancer.gov/" rel="noopener">GDC Data Portal</a></li>
+            <li><a href="https://www.cbioportal.org/" rel="noopener">cBioPortal</a></li>
+            <li><a href="https://www.ncbi.nlm.nih.gov/geo/" rel="noopener">NCBI GEO</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>About</h4>
+          <ul>
+            <li><a href="about.html">About this project</a></li>
+            <li><a href="about.html#references">References</a></li>
+            <li><a href="mailto:you@example.com">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <span>&copy; <span data-year>2026</span> Your Name. Independent secondary-school research project.</span>
+        <span>All figures on this site currently show placeholder data.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/charts.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Background — Breast Cancer Transcriptomics</title>
+  <meta name="description" content="Why breast cancer, what the intrinsic molecular subtypes are, and what tumour gene expression data can tell us.">
+  <meta name="author" content="Your Name">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Background — Breast Cancer Transcriptomics">
+  <meta property="og:description" content="Why breast cancer, what the intrinsic molecular subtypes are, and what tumour gene expression data can tell us.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a78d6'/></svg>">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <script>
+    /* Stamp the saved theme before first paint so there is no flash. */
+    (function () {
+      try {
+        var t = localStorage.getItem('brca-theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span>BRCA Transcriptomics</span>
+      </a>
+
+      <button class="icon-btn nav-toggle" data-nav-toggle type="button"
+              aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </button>
+
+      <nav class="nav" id="site-nav" data-nav aria-label="Main">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="index.html">Overview</a></li>
+          <li><a class="nav__link" href="background.html">Background</a></li>
+          <li><a class="nav__link" href="data.html">Data</a></li>
+          <li><a class="nav__link" href="methods.html">Methods</a></li>
+          <li><a class="nav__link" href="results.html">Results</a></li>
+          <li><a class="nav__link" href="discussion.html">Discussion</a></li>
+          <li><a class="nav__link" href="about.html">About</a></li>
+        </ul>
+      </nav>
+
+      <button class="icon-btn theme-toggle" data-theme-toggle type="button" aria-label="Switch colour theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow">Section 01</p>
+        <h1>Background</h1>
+        <p class="lede">
+          Enough biology to make the rest of the site readable by someone who has taken
+          one year of high-school genetics.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="layout-aside">
+          <div class="stack-lg">
+
+            <div id="why">
+              <h2 class="mt-0">Why breast cancer</h2>
+              <p>
+                Breast cancer is the most commonly diagnosed cancer worldwide. It is also
+                one of the best-characterised at the molecular level, which makes it an
+                unusually good subject for a student project: the public data is large,
+                well annotated, and there are decades of published findings to check your
+                own results against. If an analysis recovers something already known, that
+                is evidence the pipeline works, not a wasted effort.
+              </p>
+              <div class="callout callout--todo">
+                <span class="callout__icon" aria-hidden="true">&#9998;</span>
+                <div class="callout__body">
+                  <p class="mb-0"><strong>To write:</strong> incidence and mortality figures with a citation, and one paragraph on why survival differs so much between subtypes.</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="subtypes">
+              <h2>The intrinsic molecular subtypes</h2>
+              <p>
+                Sorting tumours by which genes they switch on, rather than by how they look
+                under a microscope, produces a small number of recurring groups. The
+                standard scheme recognises five, usually assigned with a 50-gene classifier
+                called PAM50.
+              </p>
+
+              <div class="table-wrap">
+                <table>
+                  <caption>The five intrinsic subtypes and their usual markers. Placeholder figures — replace with cited values.</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Subtype</th>
+                      <th scope="col">Hormone receptors</th>
+                      <th scope="col">Proliferation</th>
+                      <th scope="col">Typical prognosis</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">Luminal A</th><td>ER+ / PR+, HER2&minus;</td><td>Low</td><td>Most favourable</td></tr>
+                    <tr><th scope="row">Luminal B</th><td>ER+, variable PR</td><td>Higher</td><td>Intermediate</td></tr>
+                    <tr><th scope="row">HER2-enriched</th><td>ER&minus;, HER2+</td><td>High</td><td>Improved by targeted therapy</td></tr>
+                    <tr><th scope="row">Basal-like</th><td>Usually triple-negative</td><td>High</td><td>Least favourable</td></tr>
+                    <tr><th scope="row">Normal-like</th><td>Variable</td><td>Low</td><td>Debated; may be a sampling artefact</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p>
+                These labels matter clinically. They decide whether a patient is offered
+                hormone therapy, HER2-targeted antibodies, or chemotherapy alone, which is
+                why a gene that shifts a tumour between groups is worth finding.
+              </p>
+            </div>
+
+            <div id="expression">
+              <h2>What gene expression data is</h2>
+              <p>
+                Every cell carries the same DNA but transcribes different parts of it into
+                RNA. RNA sequencing counts those transcripts, so a tumour becomes a vector
+                of roughly twenty thousand numbers: one per gene, each an estimate of how
+                actively that gene was being read at the moment the sample was frozen.
+              </p>
+              <p>
+                Three consequences shape everything downstream. Counts depend on how deeply
+                a sample was sequenced, so they must be normalised before samples can be
+                compared. Counts are noisy for lowly-expressed genes, so weak genes are
+                filtered out. And testing twenty thousand genes at once produces false
+                positives by the hundred, so p-values must be corrected for multiple testing.
+              </p>
+            </div>
+
+            <div id="tcga">
+              <h2>What TCGA is</h2>
+              <p>
+                The Cancer Genome Atlas is a public archive of molecular and clinical data
+                from more than eleven thousand tumours across thirty-three cancer types. The
+                breast cancer cohort, TCGA-BRCA, pairs expression data with de-identified
+                clinical records including stage, receptor status and follow-up time. That
+                pairing is what makes survival analysis possible from a laptop.
+              </p>
+              <div class="callout callout--note">
+                <span class="callout__icon" aria-hidden="true">&#9432;</span>
+                <div class="callout__body">
+                  <p class="mb-0">All data used here is open-access and de-identified. No controlled-access or individually identifiable data is involved. See <a href="data.html#ethics">Data &rsaquo; access and ethics</a>.</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="gap">
+              <h2>Where this project fits</h2>
+              <p>
+                Nothing in this project is novel to the field: the subtypes are established
+                and the best-known prognostic genes have been reported many times over. The
+                aim is to reproduce that structure independently, from raw public data,
+                using a documented pipeline, and to see how far a careful re-analysis gets.
+              </p>
+              <div class="callout callout--todo">
+                <span class="callout__icon" aria-hidden="true">&#9998;</span>
+                <div class="callout__body">
+                  <p class="mb-0"><strong>To write:</strong> two or three sentences on the specific gap or twist that makes this analysis worth reading. Choose it once the exploratory results are in.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <aside class="layout-aside__side">
+            <p class="eyebrow">On this page</p>
+            <ul class="toc">
+              <li><a href="#why">Why breast cancer</a></li>
+              <li><a href="#subtypes">Molecular subtypes</a></li>
+              <li><a href="#expression">Gene expression data</a></li>
+              <li><a href="#tcga">What TCGA is</a></li>
+              <li><a href="#gap">Where this fits</a></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+<footer class="site-footer">
+    <div class="container">
+      <div class="grid grid--4">
+        <div>
+          <h4>Project</h4>
+          <ul>
+            <li><a href="index.html">Overview</a></li>
+            <li><a href="background.html">Background</a></li>
+            <li><a href="data.html">Data sources</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Analysis</h4>
+          <ul>
+            <li><a href="methods.html">Methods</a></li>
+            <li><a href="results.html">Results</a></li>
+            <li><a href="discussion.html">Discussion</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Data sources</h4>
+          <ul>
+            <li><a href="https://portal.gdc.cancer.gov/" rel="noopener">GDC Data Portal</a></li>
+            <li><a href="https://www.cbioportal.org/" rel="noopener">cBioPortal</a></li>
+            <li><a href="https://www.ncbi.nlm.nih.gov/geo/" rel="noopener">NCBI GEO</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>About</h4>
+          <ul>
+            <li><a href="about.html">About this project</a></li>
+            <li><a href="about.html#references">References</a></li>
+            <li><a href="mailto:you@example.com">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__bottom">
+        <span>&copy; <span data-year>2026</span> Your Name. Independent secondary-school research project.</span>
+        <span>All figures on this site currently show placeholder data.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/charts.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
