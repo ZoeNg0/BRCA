@@ -119,8 +119,17 @@ These are why the figures look consistent; breaking them will show.
 - [ ] Check spelling of gene names and statistical terms
 - [ ] Have someone who is not a biologist read the overview page
 
-## Deploying
+## Deploying to GitHub Pages
 
-The site is static, so anything that serves files will host it. GitHub Pages is the
-usual free choice: push the folder to a repository, then enable Pages on the
-default branch in the repository settings.
+The repo is already Pages-ready: `.nojekyll` stops GitHub running the files through
+Jekyll, `404.html` is served for unknown paths, and every link is relative so the
+site works from the `/BRCA/` subpath Pages uses (verified locally).
+
+1. Push: `git push -u origin main`
+2. On github.com/ZoeNg0/BRCA go to **Settings -> Pages**
+3. Under **Build and deployment**, set Source to **Deploy from a branch**,
+   branch **main**, folder **/ (root)**, and Save
+4. Wait a minute or two, then open <https://zoeng0.github.io/BRCA/>
+
+Every later `git push` republishes automatically. If you rename the repository or
+add a custom domain, update the `href="/BRCA/"` link in `404.html`.
