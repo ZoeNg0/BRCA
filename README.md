@@ -126,6 +126,10 @@ Jekyll, `404.html` is served for unknown paths, and every link is relative so th
 site works from the `/BRCA/` subpath Pages uses (verified locally).
 
 1. Push: `git push -u origin main`
+   Git asks for a password: paste your personal access token, not your GitHub
+   password (GitHub stopped accepting passwords over https). The username is
+   already in the remote URL, and the macOS keychain stores the token after the
+   first push, so this is a one-time step.
 2. On github.com/ZoeNg0/BRCA go to **Settings -> Pages**
 3. Under **Build and deployment**, set Source to **Deploy from a branch**,
    branch **main**, folder **/ (root)**, and Save
@@ -133,3 +137,17 @@ site works from the `/BRCA/` subpath Pages uses (verified locally).
 
 Every later `git push` republishes automatically. If you rename the repository or
 add a custom domain, update the `href="/BRCA/"` link in `404.html`.
+
+### If the token expires or stops working
+
+Fine-grained tokens expire on the date you set. When yours does, generate a new
+one (Settings -> Developer settings -> Personal access tokens -> Fine-grained,
+scoped to `ZoeNg0/BRCA` with **Contents: Read and write**), then clear the old
+one from the keychain so git asks again:
+
+```sh
+printf "protocol=https\nhost=github.com\n\n" | git credential-osxkeychain erase
+```
+
+Never commit a token to the repository. If one is ever exposed, revoke it on that
+same settings page immediately and issue a new one.
