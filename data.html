@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Data — Breast Cancer Transcriptomics</title>
-  <meta name="description" content="The datasets behind the analysis: TCGA-BRCA, METABRIC and GEO, with sample counts, filtering and access notes.">
-  <meta name="author" content="Your Name">
+  <title>Data — PPP4C in Breast Cancer</title>
+  <meta name="description" content="The five cohorts behind the analysis: TCGA-BRCA and four GEO series, with sample counts, denominators and filtering rules.">
+  <meta name="author" content="Zoe Ng">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Data — Breast Cancer Transcriptomics">
-  <meta property="og:description" content="The datasets behind the analysis: TCGA-BRCA, METABRIC and GEO, with sample counts, filtering and access notes.">
+  <meta property="og:description" content="The five cohorts behind the analysis: TCGA-BRCA and four GEO series, with sample counts, denominators and filtering rules.">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a78d6'/></svg>">
   <link rel="stylesheet" href="assets/css/tokens.css">
@@ -18,6 +18,10 @@
   <script>
     /* Stamp the saved theme before first paint so there is no flash. */
     (function () {
+      /* Reveal-on-scroll hides content until JavaScript unhides it, so the
+         page must say up front that JavaScript is running. Without this class
+         the .reveal rules never apply and the content is simply visible. */
+      document.documentElement.classList.add('js');
       try {
         var t = localStorage.getItem('brca-theme');
         if (t) document.documentElement.setAttribute('data-theme', t);
@@ -51,6 +55,7 @@
           <li><a class="nav__link" href="methods.html">Methods</a></li>
           <li><a class="nav__link" href="results.html">Results</a></li>
           <li><a class="nav__link" href="discussion.html">Discussion</a></li>
+          <li><a class="nav__link" href="code.html">Code</a></li>
           <li><a class="nav__link" href="about.html">About</a></li>
         </ul>
       </nav>
@@ -86,134 +91,169 @@
         <div class="layout-aside">
           <div class="stack-lg">
 
-            <div id="sources">
-              <h2 class="mt-0">Datasets used</h2>
+            <div id="datasets">
+              <h2 class="mt-0">Five cohorts, four platforms</h2>
               <p>
-                One primary cohort for discovery, one independent cohort for validation,
-                and targeted GEO series for anything the two large cohorts do not cover.
+                TCGA-BRCA is the primary cohort: it supplies the expression matrix, the
+                clinical and follow-up data, the somatic mutation calls and the PAM50
+                subtype calls. The four GEO series do one job only &mdash; testing whether
+                a TCGA finding survives a change of platform and population.
               </p>
 
               <div class="table-wrap">
                 <table>
-                  <caption>Placeholder counts. Update each row once the download is complete and verified.</caption>
+                  <caption>Sample counts verified against sample-level metadata, not taken from publication abstracts.</caption>
                   <thead>
                     <tr>
-                      <th scope="col">Dataset</th>
-                      <th scope="col">Platform</th>
-                      <th scope="col" class="num">Samples</th>
+                      <th scope="col">Cohort</th><th scope="col">Platform</th>
+                      <th scope="col" class="num">Tumour</th><th scope="col" class="num">Normal</th>
                       <th scope="col">Role</th>
-                      <th scope="col">Access</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">TCGA-BRCA</th>
-                      <td>Illumina RNA-seq (STAR counts)</td>
-                      <td class="num">1,082</td>
-                      <td>Discovery cohort</td>
-                      <td>Open</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">METABRIC</th>
-                      <td>Illumina HT-12 microarray</td>
-                      <td class="num">1,904</td>
-                      <td>Independent validation</td>
-                      <td>Open via cBioPortal</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">GEO series (TBD)</th>
-                      <td>Varies</td>
-                      <td class="num">&mdash;</td>
-                      <td>Targeted follow-up</td>
-                      <td>Open</td>
-                    </tr>
+                    <tr><th scope="row">TCGA-BRCA</th><td>RNA-seq, STAR counts</td><td class="num">1,111</td><td class="num">113</td><td>Discovery &mdash; and the only source of clinical, subtype and mutation data</td></tr>
+                    <tr><th scope="row">GSE70947</th><td>Agilent GPL13607</td><td class="num">148</td><td class="num">148</td><td>Replication &mdash; the only fully paired cohort, one tumour and one adjacent normal per patient</td></tr>
+                    <tr><th scope="row">GSE58135</th><td>RNA-seq, HiSeq 2000</td><td class="num">84</td><td class="num">56</td><td>Replication &mdash; independent RNA-seq, shares no platform artefacts with TCGA</td></tr>
+                    <tr><th scope="row">GSE42568</th><td>Affymetrix U133 Plus 2.0</td><td class="num">104</td><td class="num">17</td><td>Replication &mdash; the most-cited breast validation set in the literature</td></tr>
+                    <tr><th scope="row">GSE86374</th><td>Affymetrix Gene ST 1.0</td><td class="num">124</td><td class="num">35</td><td>Replication &mdash; a Mexican Hispanic cohort, for ancestry diversity</td></tr>
                   </tbody>
                 </table>
               </div>
 
-              <div class="callout callout--todo">
-                <span class="callout__icon" aria-hidden="true">&#9998;</span>
+              <div class="callout callout--note">
                 <div class="callout__body">
-                  <p class="mb-0"><strong>To decide:</strong> which GEO series to include, and whether to add a single-cell dataset for a cell-type-composition angle. Note the accession numbers here once chosen.</p>
+                  <p><strong>Why these four, and not the four largest.</strong> Platform diversity beats raw sample count. A gene confirmed on Affymetrix <em>and</em> Agilent <em>and</em> an independent RNA-seq cohort is unlikely to be a probe artefact; the same gene confirmed across three studies on one array platform could still be one. These four give three platforms, three continents of ancestry, and both paired and unpaired designs. Around thirty other GEO series were surveyed and rejected &mdash; for tumour-only designs, unusable annotation, or normal arms too small to carry any power.</p>
+                  <p class="mb-0"><strong>Two handling decisions worth stating.</strong> GSE58135's 28 breast cancer cell lines are excluded at download, because this is a comparison of tumour against normal <em>tissue</em>. GSE86374's groups are taken from its tissue description rather than its molecular-subtype field, in which 14 of the tumours are labelled &ldquo;Normal-like&rdquo; &mdash; reading groups off that field would have put tumours in the normal arm. GSE70947 is also the second cohort of a larger study, so its companion cohort cannot later be counted as further replication.</p>
                 </div>
               </div>
             </div>
 
-            <div id="composition">
-              <h2>Cohort composition</h2>
+            <div id="tcga">
+              <h2>TCGA-BRCA in detail</h2>
               <p>
-                The subtype distribution is heavily unbalanced, with Luminal A alone
-                accounting for roughly half the cohort. Any comparison between subtypes has
-                to account for that: the smallest group has fewer than forty samples, which
-                limits how much can be claimed about it.
+                The expression matrix holds 60,660 Ensembl genes across 1,224 aliquots
+                &mdash; 1,111 primary tumours and 113 solid-tissue normals. Those tumours
+                come from 1,095 unique patients, because 16 patients contributed more than
+                one aliquot, and all 113 normals come from patients who also contributed a
+                tumour, which is what makes the matched-pair figure possible.
               </p>
 
-              <figure class="figure" data-chart="subtypes"
-                      data-alt="Horizontal bar chart of PAM50 subtype counts in the cohort, from Luminal A at 562 samples down to Normal-like at 39."
-                      data-table-caption="Subtype composition of the analysis cohort">
-                <div class="figure__head">
-                  <div class="figure__titles">
-                    <h3 class="figure__title">Figure 1 &mdash; PAM50 subtype composition of the cohort</h3>
-                    <p class="figure__subtitle">Number of primary tumour samples per intrinsic subtype after quality filtering.</p>
-                  </div>
-                  <div class="figure__tools">
-                    <button class="btn btn--ghost btn--sm" type="button" data-table-toggle aria-expanded="false">Table</button>
-                  </div>
+              <div class="grid grid--2">
+                <div class="card">
+                  <h4>Clinical, 1,098 patients</h4>
+                  <p class="text-secondary mb-0">
+                    Stage I 183 &middot; II 621 &middot; III 249 &middot; IV 20 &middot;
+                    unstageable 13 &middot; missing 12. Age at diagnosis median 59.0 years
+                    (range 26.6&ndash;90.0, 16 missing). Vital status 945 alive, 152 dead,
+                    1 missing. Histology is 778 infiltrating duct carcinoma and 201 lobular,
+                    with the remainder mixed and rarer types.
+                  </p>
                 </div>
-                <ul class="legend"></ul>
-                <div class="figure__plot"></div>
-                <div class="figure__table" hidden></div>
-                <p class="figure__note">
-                  <span class="badge badge--placeholder">Placeholder data</span>
-                  Counts are synthetic. Regenerate from the clinical table once subtype calls are finalised.
-                </p>
-              </figure>
+                <div class="card">
+                  <h4>Reported race</h4>
+                  <p class="text-secondary mb-0">
+                    757 white &middot; 183 Black or African American &middot; 61 Asian
+                    &middot; 1 American Indian or Alaska Native &middot; 95 not reported.
+                    The cohort skews heavily white, which is a limit on how far any result
+                    here generalises. The <code>gender</code> column exists but holds no
+                    values, so no sex breakdown is quoted anywhere on this site.
+                  </p>
+                </div>
+                <div class="card">
+                  <h4>PAM50 subtypes, 1,083 of 1,095</h4>
+                  <p class="text-secondary mb-0">
+                    Luminal A 562 (51.9%) &middot; Luminal B 209 (19.3%) &middot;
+                    Basal-like 190 (17.5%) &middot; HER2-enriched 82 (7.6%) &middot;
+                    Normal-like 40 (3.7%). Twelve patients have no call and are dropped
+                    rather than shown as a sixth group.
+                  </p>
+                </div>
+                <div class="card">
+                  <h4>Somatic mutations</h4>
+                  <p class="text-secondary mb-0">
+                    89,568 masked somatic mutation calls across 991 samples. Fewer samples
+                    carry mutation calls than expression, so the mutation cohort is a
+                    subset and must never be described with the expression <em>n</em>.
+                  </p>
+                </div>
+              </div>
+
+              <div class="callout callout--note">
+                <div class="callout__body">
+                  <p class="mb-0"><strong>Normal-like is not a fifth disease.</strong> It is widely read as a low-tumour-purity artefact &mdash; a sample with too little tumour in it to classify. It stays visible and labelled in every figure on this site, but it is never presented as a biological subtype alongside the other four.</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="counts">
+              <h2>Which <em>n</em> to quote</h2>
+              <p>
+                There is no single number that honestly covers this site. Four are all
+                correct, each in its own context, and the figures deliberately do not
+                agree with one another.
+              </p>
+
+              <div class="table-wrap">
+                <table>
+                  <caption>Four correct denominators, and where each belongs</caption>
+                  <thead>
+                    <tr><th scope="col" class="num">n</th><th scope="col">What it is</th><th scope="col">Used for</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row" class="num">1,224</th><td>All aliquots in the matrix</td><td>Library and quality-control statements only</td></tr>
+                    <tr><th scope="row" class="num">1,111</th><td>Primary tumour aliquots, no de-duplication</td><td>Tumour-versus-normal expression panels</td></tr>
+                    <tr><th scope="row" class="num">1,095</th><td>Unique tumour patients after de-duplication</td><td>Anything per-patient: subtypes, co-expression, the hub network</td></tr>
+                    <tr><th scope="row" class="num">1,071</th><td>Patients with expression <em>and</em> usable follow-up</td><td>Survival panels only</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-wrap">
+                <table>
+                  <caption>The full accounting, 1,224 down to 1,071</caption>
+                  <thead>
+                    <tr><th scope="col">Step</th><th scope="col" class="num">n</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">Aliquots downloaded from the GDC</th><td class="num">1,224</td></tr>
+                    <tr><th scope="row">Primary tumour aliquots</th><td class="num">1,111</td></tr>
+                    <tr><th scope="row">&mdash; 16 duplicate aliquots collapsed to one per patient</th><td class="num">1,095</td></tr>
+                    <tr><th scope="row">Clinical records on file</th><td class="num">1,098</td></tr>
+                    <tr><th scope="row">&mdash; 1 dropped, vital status neither alive nor dead</th><td class="num">1,097</td></tr>
+                    <tr><th scope="row">&mdash; 23 dropped, missing or non-positive follow-up</th><td class="num">1,074</td></tr>
+                    <tr><th scope="row">&mdash; 3 dropped, no expression match</th><td class="num">1,071</td></tr>
+                    <tr><th scope="row">Complete cases once stage, age and subtype are required</th><td class="num">1,022</td></tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <div id="filtering">
               <h2>Inclusion and exclusion</h2>
-              <p>Samples are dropped for the following reasons, in this order:</p>
+              <p>Samples are dropped for the following reasons:</p>
               <ol>
-                <li>Not a primary solid tumour (metastatic and normal-adjacent samples removed).</li>
-                <li>Duplicate sample from the same patient, keeping the one with the higher library size.</li>
-                <li>Library size below the cohort threshold, or an outlying gene-detection rate.</li>
+                <li>Not a primary solid tumour &mdash; normal-adjacent samples leave the analysis cohort, but are kept aside as the comparison group.</li>
+                <li>Duplicate aliquot from the same patient, collapsed to one.</li>
                 <li>Missing survival time or vital status, for the survival analysis only.</li>
               </ol>
               <p>
-                Genes are filtered separately: a gene is kept only if it reaches a minimum
-                count in at least as many samples as the smallest subtype group, which
-                removes most of the annotation without discarding a group-specific signal.
+                Genes are filtered separately, and by a different rule at each stage: the
+                differential-expression model keeps a gene with at least ten counts summed
+                across all samples, while the co-expression network behind
+                <a href="results.html#pathways">Results Figure&nbsp;6</a> requires
+                CPM&nbsp;&ge;&nbsp;0.5 in at least 10% of tumours. Ten per cent of 1,095 is
+                about 110 patients &mdash; roughly the size of the smallest intrinsic
+                subtype. That is deliberate: a filter on the mean would discard a gene
+                expressed in only one subtype, which in breast cancer is exactly the wrong
+                thing to throw away.
               </p>
 
-              <div class="table-wrap">
-                <table>
-                  <caption>Sample attrition. Placeholder numbers.</caption>
-                  <thead>
-                    <tr><th scope="col">Step</th><th scope="col" class="num">Removed</th><th scope="col" class="num">Remaining</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><th scope="row">Downloaded from GDC</th><td class="num">&mdash;</td><td class="num">1,231</td></tr>
-                    <tr><th scope="row">Non-primary-tumour samples</th><td class="num">113</td><td class="num">1,118</td></tr>
-                    <tr><th scope="row">Duplicate patients</th><td class="num">24</td><td class="num">1,094</td></tr>
-                    <tr><th scope="row">Quality-control failures</th><td class="num">12</td><td class="num">1,082</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div id="ethics">
-              <h2>Access, licensing and ethics</h2>
-              <p>
-                Everything used here is open-access and de-identified. No controlled-access
-                tier of TCGA is used, no attempt is made to re-identify any individual, and
-                no raw sequence reads are downloaded. TCGA data is subject to the NIH
-                Genomic Data Sharing Policy and should be cited as the publication guidelines
-                describe; METABRIC access through cBioPortal follows that portal's terms.
-              </p>
-              <div class="callout callout--todo">
-                <span class="callout__icon" aria-hidden="true">&#9998;</span>
+              <div class="callout callout--note">
                 <div class="callout__body">
-                  <p class="mb-0"><strong>To add:</strong> the exact citation text required by each data source, plus the download date and file manifest hash so the analysis is pinned to a specific data release.</p>
+                  <p><strong>Three places the numbers do not line up, on purpose.</strong></p>
+                  <p><strong>Two de-duplication rules exist.</strong> The survival scripts keep the <em>first</em> aliquot per patient; the expression figures keep the aliquot with the <em>largest library size</em>. Eleven patients are affected and the two rules usually pick the same sample. Each script states its choice rather than one rule being imposed across the site.</p>
+                  <p><strong>Normalisation is not computed on the same matrix everywhere.</strong> The survival scripts run TMM on the de-duplicated tumour matrix of 1,095 columns; the expression figures run it on all 1,224 aliquots. A patient's log&#8322;&nbsp;CPM can therefore differ in the second decimal between two figures. Each figure is internally consistent; values are not interchangeable between them.</p>
+                  <p class="mb-0"><strong>GSE70947 is 148/148 here and 147/146 in the figure.</strong> The series is fully paired at 296 samples, but the PPP4C panel drops the samples with a missing value for that one probe. The same two samples are why the Results page totals 1,570 tumour and 367 normal where this table sums to 1,571 and 369. Both numbers are right for their own context.</p>
                 </div>
               </div>
             </div>
@@ -223,10 +263,10 @@
           <aside class="layout-aside__side">
             <p class="eyebrow">On this page</p>
             <ul class="toc">
-              <li><a href="#sources">Datasets used</a></li>
-              <li><a href="#composition">Cohort composition</a></li>
+              <li><a href="#datasets">The five cohorts</a></li>
+              <li><a href="#tcga">TCGA in detail</a></li>
+              <li><a href="#counts">Which n to quote</a></li>
               <li><a href="#filtering">Inclusion and exclusion</a></li>
-              <li><a href="#ethics">Access and ethics</a></li>
             </ul>
           </aside>
         </div>
@@ -250,6 +290,7 @@
             <li><a href="methods.html">Methods</a></li>
             <li><a href="results.html">Results</a></li>
             <li><a href="discussion.html">Discussion</a></li>
+            <li><a href="code.html">Code</a></li>
           </ul>
         </div>
         <div>
@@ -264,15 +305,14 @@
           <h4>About</h4>
           <ul>
             <li><a href="about.html">About this project</a></li>
-            <li><a href="about.html#references">References</a></li>
+            <li><a href="discussion.html#references">References</a></li>
             <li><a href="mailto:you@example.com">Contact</a></li>
           </ul>
         </div>
       </div>
 
       <div class="site-footer__bottom">
-        <span>&copy; <span data-year>2026</span> Your Name. Independent secondary-school research project.</span>
-        <span>All figures on this site currently show placeholder data.</span>
+        <span>&copy; <span data-year>2026</span> Zoe Ng.</span>
       </div>
     </div>
   </footer>

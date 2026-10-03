@@ -85,7 +85,7 @@ h2:first-child, h3:first-child, h4:first-child { margin-top: 0; }
 p { margin: 0 0 var(--sp-4); max-width: var(--measure); text-wrap: pretty; }
 
 a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
-a:hover { color: var(--accent-hover); }
+a:hover { color: var(--accent-hover); }   /* green at rest, rose on hover */
 
 strong { font-weight: 650; }
 
@@ -227,12 +227,24 @@ hr {
   white-space: nowrap;
 }
 .brand:hover { color: var(--text-primary); }
+/* A serif B on a green tile. The letter is set in CSS rather than the markup
+   because the mark is decorative — the pages carry an empty aria-hidden span,
+   and the accessible name is the wordmark beside it. */
 .brand__mark {
   width: 24px; height: 24px;
   flex: none;
+  display: grid;
+  place-items: center;
   border-radius: 6px;
-  background: linear-gradient(135deg, var(--series-1), var(--series-5));
+  background: var(--brand-square);
+  color: var(--brand-letter);
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 1;
 }
+/* Nudged up by the serif's own bottom bearing, which otherwise sits the
+   letter low in the tile. */
+.brand__mark::before { content: "B"; transform: translateY(-0.5px); }
 
 .nav { margin-left: auto; }
 .nav__list {
@@ -255,7 +267,7 @@ hr {
   white-space: nowrap;
   transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
 }
-.nav__link:hover { background: var(--surface-2); color: var(--text-primary); }
+.nav__link:hover { background: var(--hover-wash); color: var(--text-primary); }
 .nav__link[aria-current="page"] { color: var(--text-primary); background: var(--accent-wash); }
 
 .icon-btn {
@@ -270,7 +282,7 @@ hr {
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
 }
-.icon-btn:hover { background: var(--surface-2); color: var(--text-primary); }
+.icon-btn:hover { background: var(--hover-wash); color: var(--text-primary); }
 .icon-btn svg { width: 17px; height: 17px; }
 
 .nav-toggle { display: none; }
@@ -311,9 +323,9 @@ hr {
   border-bottom: 1px solid var(--border);
   background:
     radial-gradient(60ch 40ch at 12% -10%,
-      color-mix(in srgb, var(--series-1) 12%, transparent), transparent 70%),
+      color-mix(in srgb, var(--series-1) 16%, transparent), transparent 70%),
     radial-gradient(50ch 34ch at 92% 0%,
-      color-mix(in srgb, var(--series-5) 12%, transparent), transparent 70%),
+      color-mix(in srgb, var(--series-5) 14%, transparent), transparent 70%),
     var(--surface-1);
 }
 
@@ -348,14 +360,17 @@ hr {
               transform var(--dur-fast) var(--ease);
 }
 .btn:active { transform: translateY(1px); }
-.btn--primary { background: var(--accent); color: #ffffff; }
-.btn--primary:hover { background: var(--accent-hover); color: #ffffff; }
+/* The fill and its ink travel together: a light-green fill wants dark ink and
+   a dark-green one wants cream, and the two themes disagree about which is
+   which — so neither is assumed here. */
+.btn--primary { background: var(--accent-solid); color: var(--accent-ink); }
+.btn--primary:hover { background: var(--accent-hover); color: var(--accent-hover-ink); }
 .btn--ghost {
   background: var(--surface-raised);
   border-color: var(--border-strong);
   color: var(--text-primary);
 }
-.btn--ghost:hover { background: var(--surface-2); color: var(--text-primary); }
+.btn--ghost:hover { background: var(--hover-wash); color: var(--text-primary); }
 .btn--sm { padding: var(--sp-2) var(--sp-3); font-size: var(--step--1); }
 
 /* ---- 06  Cards, tiles, callouts ----------------------------------------- */
@@ -379,7 +394,7 @@ a.card {
               transform var(--dur) var(--ease);
 }
 a.card:hover {
-  border-color: var(--border-strong);
+  border-color: var(--accent-hover);
   box-shadow: var(--shadow);
   transform: translateY(-2px);
   color: inherit;
@@ -410,6 +425,8 @@ a.card:hover {
   line-height: 1.05;
   letter-spacing: -0.02em;
   margin: 0;
+  /* Equal-width digits, so a number counting up does not jitter sideways. */
+  font-variant-numeric: tabular-nums;
 }
 .tile__delta {
   display: inline-flex;
@@ -421,6 +438,51 @@ a.card:hover {
 }
 .tile__delta[data-dir="up"]   { color: var(--status-good-text); }
 .tile__delta[data-dir="down"] { color: var(--status-critical); }
+
+/* ---- Hover on the static boxes -----------------------------------------
+   Tiles, cards and pipeline nodes are text, not links. The hover is there to
+   separate one box from its neighbours under the cursor, so it is the same
+   lift a link card makes but nothing more: no pointer cursor and no colour
+   that would promise a destination. Guarded by (hover: hover) because a
+   touch device would otherwise leave a box stuck in the hovered state after
+   a tap. */
+@media (hover: hover) {
+  .tile,
+  .card,
+  .pipeline__node,
+  .callout {
+    transition: background-color var(--dur) var(--ease),
+                border-color var(--dur) var(--ease),
+                box-shadow var(--dur) var(--ease),
+                transform var(--dur) var(--ease);
+  }
+  .tile:hover,
+  .card:hover,
+  .pipeline__node:hover,
+  .callout:hover {
+    background: var(--hover-wash);
+    border-color: var(--accent-hover);
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+  }
+  /* A callout's left edge is its type marker — note, todo — so it keeps its
+     own colour while the rest of the border turns rose. */
+  .callout:hover { border-left-color: var(--accent); }
+  .callout--todo:hover { border-left-color: var(--status-warning); }
+  .callout--note:hover { border-left-color: var(--series-3); }
+
+  /* The skills chips: too small to lift, so they take the rose wash instead. */
+  .chip-row .badge {
+    transition: background-color var(--dur) var(--ease),
+                border-color var(--dur) var(--ease),
+                color var(--dur) var(--ease);
+  }
+  .chip-row .badge:hover {
+    background: var(--hover-wash);
+    border-color: var(--accent-hover);
+    color: var(--text-primary);
+  }
+}
 
 .hero-figure {
   font-size: var(--step-5);
@@ -448,6 +510,13 @@ a.card:hover {
   background: color-mix(in srgb, var(--status-warning) 18%, var(--surface-2));
   border-color: color-mix(in srgb, var(--status-warning) 45%, var(--border));
   color: var(--text-primary);
+}
+
+/* Counterpart to --placeholder: a figure now drawing a real export. */
+.badge--done {
+  background: color-mix(in srgb, var(--status-good) 14%, var(--surface-2));
+  border-color: color-mix(in srgb, var(--status-good) 42%, var(--border));
+  color: var(--status-good-text);
 }
 
 .callout {
@@ -507,6 +576,19 @@ a.card:hover {
 .figure__plot { position: relative; width: 100%; }
 .figure__plot svg { width: 100%; height: auto; overflow: visible; }
 
+/* Reproduced panels from published papers: raster images, not generated SVG.
+   They are drawn on white whatever the theme, because that is the background
+   the originals were published on and inverting them would misreport the blots. */
+.figure__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-3);
+}
+
 .figure__note {
   margin: var(--sp-4) 0 0;
   padding-top: var(--sp-3);
@@ -553,6 +635,10 @@ a.card:hover {
 .axis-label  { fill: var(--text-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
 .axis-title  { fill: var(--text-secondary); font-size: 11.5px; font-weight: 550; }
 .data-label  { fill: var(--text-secondary); font-size: 11px; font-weight: 550; }
+/* Headers inside a small-multiple panel — each panel names its own unit,
+   because the panels deliberately do not share a scale. */
+.panel-title { fill: var(--text-primary); font-size: 12px; font-weight: 650; }
+.panel-sub   { fill: var(--text-muted);   font-size: 10px; }
 .mark-ring   { stroke: var(--surface-1); stroke-width: 2; }
 
 /* Tooltip — one per chart, positioned by JS. */
@@ -613,7 +699,8 @@ th {
   background: var(--surface-1);
 }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-tbody tr:hover { background: var(--surface-2); }
+/* Rose, not the stripe colour — a hover has to read on a striped row too. */
+tbody tr:hover { background: var(--hover-wash); }
 
 /* ---- 09  Pipeline / timeline / steps ------------------------------------ */
 
@@ -673,7 +760,7 @@ tbody tr:hover { background: var(--surface-2); }
   color: var(--text-secondary);
   text-decoration: none;
 }
-.toc a:hover { color: var(--text-primary); }
+.toc a:hover { color: var(--accent-hover); }
 .toc a[aria-current="true"] {
   color: var(--text-primary);
   border-left-color: var(--accent);
@@ -720,7 +807,7 @@ tbody tr:hover { background: var(--surface-2); }
 .site-footer ul { list-style: none; padding: 0; margin: 0; }
 .site-footer li { margin-bottom: var(--sp-2); }
 .site-footer a { color: var(--text-secondary); text-decoration: none; }
-.site-footer a:hover { color: var(--accent); text-decoration: underline; }
+.site-footer a:hover { color: var(--accent-hover); text-decoration: underline; }
 .site-footer__bottom {
   margin-top: var(--sp-6);
   padding-top: var(--sp-4);
@@ -753,12 +840,12 @@ tbody tr:hover { background: var(--surface-2); }
 .mt-0 { margin-top: 0; }
 .full-width { max-width: none; }
 
-.reveal {
+.js .reveal {
   opacity: 0;
   transform: translateY(12px);
   transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
 }
-.reveal[data-visible="true"] { opacity: 1; transform: none; }
+.js .reveal[data-visible="true"] { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -767,11 +854,171 @@ tbody tr:hover { background: var(--surface-2); }
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .reveal { opacity: 1; transform: none; }
+  .js .reveal { opacity: 1; transform: none; }
 }
 
 @media print {
   .site-header, .site-footer, .figure__tools, .skip-link, .btn-row { display: none !important; }
   body { background: #ffffff; }
   .figure, .card, .tile { break-inside: avoid; box-shadow: none; }
+}
+
+/* ---- 12  Code viewer ----------------------------------------------------
+   A read-only source pane. It is not an editor: nothing here is focusable
+   for editing, and the JS never writes back into the DOM it highlights.
+   Colours come from the --code-* tokens, which are defined per theme, so the
+   pane follows the site's light/dark toggle like everything else. */
+
+.codepane {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin: 0 0 var(--sp-6);
+}
+
+.codepane__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--code-gutter-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+/* The filename reads as an editor tab, so a reader knows this is one file. */
+.codepane__file {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--text-primary);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 2px var(--sp-2);
+}
+.codepane__lang {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--accent-ink);
+  background: var(--accent-solid);
+  border-radius: var(--radius-sm);
+  padding: 1px 6px;
+}
+.codepane__meta {
+  margin-left: auto;
+  font-size: var(--step--1);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.codepane__body {
+  max-height: 34rem;
+  overflow: auto;
+  /* The pane scrolls, so it takes keyboard focus as a scrollable region. */
+  scrollbar-width: thin;
+}
+.codepane__body:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+.codepane__code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.62;
+  color: var(--code-fg);
+  /* min-content so a long line widens the scroller instead of being clipped */
+  min-width: min-content;
+  padding: var(--sp-3) 0;
+  margin: 0;
+  tab-size: 2;
+}
+
+.code-line { display: flex; align-items: flex-start; }
+.code-line:hover { background: var(--code-active); }
+
+/* The line a jump landed on. It stays lit until the next jump, because the
+   reader's next move is to read around it, not to hunt for it again. */
+.code-line.is-target {
+  /* Mixed against the code surface rather than taking --accent-wash flat, so
+     the lit line reads at the same strength in both themes. */
+  background: color-mix(in srgb, var(--accent-hover) 15%, var(--code-bg));
+  box-shadow: inset 3px 0 0 var(--accent-hover);
+}
+
+/* A line of source quoted in prose that jumps to itself in the pane above.
+   It is a real <button>, so it answers the keyboard and announces itself;
+   it is dressed as the inline <code> chip it replaces, plus a rose underline
+   that says this particular chip goes somewhere. */
+.code-jump {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: inherit;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-bottom-color: var(--accent-hover);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.35em;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease);
+}
+.code-jump:hover {
+  background: var(--hover-wash);
+  border-color: var(--accent-hover);
+}
+.code-jump:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Sticky so the numbers stay put when a long line scrolls sideways. */
+.code-ln {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  flex: none;
+  width: 3.5rem;
+  padding-right: var(--sp-3);
+  text-align: right;
+  color: var(--code-line-no);
+  background: var(--code-bg);
+  border-right: 1px solid var(--border);
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+}
+.code-line:hover .code-ln { background: var(--code-active); }
+
+.code-text {
+  flex: 1 1 auto;
+  padding: 0 var(--sp-4) 0 var(--sp-3);
+  white-space: pre;
+}
+/* Before the highlighter runs — and if JS never runs at all — the raw source
+   is still readable here rather than the page showing an empty box. */
+.codepane__code pre { margin: 0; padding: 0 var(--sp-4); white-space: pre; }
+
+.tok-comment { color: var(--code-comment); font-style: italic; }
+.tok-string  { color: var(--code-string); }
+.tok-number  { color: var(--code-number); }
+.tok-keyword { color: var(--code-keyword); font-weight: 600; }
+.tok-const   { color: var(--code-const); font-weight: 600; }
+.tok-func    { color: var(--code-func); }
+.tok-ns      { color: var(--code-ns); }
+.tok-param   { color: var(--code-param); }
+.tok-op      { color: var(--code-op); }
+.tok-punct   { color: var(--code-punct); }
+
+@media (max-width: 40rem) {
+  .code-ln { width: 2.6rem; padding-right: var(--sp-2); }
+  .codepane__code { font-size: 0.76rem; }
+  .codepane__body { max-height: 26rem; }
 }

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Discussion — Breast Cancer Transcriptomics</title>
-  <meta name="description" content="What the findings mean, the limitations of the analysis, and what would come next with more time.">
-  <meta name="author" content="Your Name">
+  <title>Discussion — PPP4C in Breast Cancer</title>
+  <meta name="description" content="What the PPP4C findings mean, how they compare with two published studies of the same gene, the limitations of the analysis, and what would come next.">
+  <meta name="author" content="Zoe Ng">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Discussion — Breast Cancer Transcriptomics">
-  <meta property="og:description" content="What the findings mean, the limitations of the analysis, and what would come next with more time.">
+  <meta property="og:description" content="What the PPP4C findings mean, how they compare with two published studies of the same gene, and where the analysis is weakest.">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a78d6'/></svg>">
   <link rel="stylesheet" href="assets/css/tokens.css">
@@ -18,6 +18,10 @@
   <script>
     /* Stamp the saved theme before first paint so there is no flash. */
     (function () {
+      /* Reveal-on-scroll hides content until JavaScript unhides it, so the
+         page must say up front that JavaScript is running. Without this class
+         the .reveal rules never apply and the content is simply visible. */
+      document.documentElement.classList.add('js');
       try {
         var t = localStorage.getItem('brca-theme');
         if (t) document.documentElement.setAttribute('data-theme', t);
@@ -51,6 +55,7 @@
           <li><a class="nav__link" href="methods.html">Methods</a></li>
           <li><a class="nav__link" href="results.html">Results</a></li>
           <li><a class="nav__link" href="discussion.html">Discussion</a></li>
+          <li><a class="nav__link" href="code.html">Code</a></li>
           <li><a class="nav__link" href="about.html">About</a></li>
         </ul>
       </nav>
@@ -75,8 +80,8 @@
         <p class="eyebrow">Section 05</p>
         <h1>Discussion</h1>
         <p class="lede">
-          What the results support, what they do not, and the honest account of where the
-          analysis is weakest.
+          What the results support, what two published studies of the same gene add to
+          them, and the honest account of where the analysis is weakest.
         </p>
       </div>
     </section>
@@ -88,10 +93,205 @@
 
             <div id="interpretation">
               <h2 class="mt-0">Interpretation</h2>
-              <div class="callout callout--todo">
-                <span class="callout__icon" aria-hidden="true">&#9998;</span>
+              <p>
+                The analysis set out to test one gene, chosen in advance. Four things came
+                back, and they are worth separating by how firmly they stand.
+              </p>
+              <p class="text-secondary">
+                <strong>A note on figure numbers.</strong> The figures on this page are
+                reproduced from the two papers discussed below and are numbered
+                1&ndash;4 in their own sequence. My own figures live on the
+                <a href="results.html">Results</a> page and are cited here as
+                Results&nbsp;Figure&nbsp;1 to Results&nbsp;Figure&nbsp;5.
+              </p>
+              <p>
+                <strong>PPP4C is raised in breast tumour tissue, and that is the solid
+                part.</strong> Every one of the five cohorts in Results&nbsp;Figure&nbsp;1 puts the
+                tumour box above the normal box, on four different measurement platforms,
+                with fold-changes from +0.56 to +1.34 log&#8322; units and a rank-aggregated
+                adjusted p of 3.8&times;10&#8315;&#179;. Results&nbsp;Figure&nbsp;2 then closes the
+                loophole that different people, rather than different tissue, produce that
+                gap: in 109 of 113 TCGA patients who contributed both a tumour and their
+                own normal sample, PPP4C rises inside the individual. The four exceptions
+                move by &minus;0.09 to &minus;0.21 log&#8322; units, which is noise rather
+                than a subgroup going the other way.
+              </p>
+              <p>
+                <strong>It is a pan-breast change that subtype tilts, not a subtype-specific
+                one.</strong> Across the five PAM50 groups in Results&nbsp;Figure&nbsp;4 the medians span
+                6.48 to 7.27 &mdash; 0.79 log&#8322; units &mdash; against a tumour-versus-normal
+                shift of +1.34 in the same cohort. PPP4C is elevated in every subtype, highest
+                in HER2-enriched and lowest in Normal-like, and Luminal&nbsp;A against
+                Basal-like is the clearest null in the whole set. That matters for how the
+                result is described: this is not a finding about one kind of breast cancer.
+              </p>
+              <p>
+                <strong>It is not the loudest signal in the transcriptome, and it was never
+                claimed to be.</strong> Results&nbsp;Figure&nbsp;3 places PPP4C well inside the significant
+                region but nowhere near the extremes of 39,393 tested genes. A gene does not
+                have to be an outlier to be worth following; it does have to be reproducible,
+                which is what Results&nbsp;Figures&nbsp;1 and&nbsp;2 establish.
+              </p>
+              <p>
+                <strong>The link to outcome is real but modest, and the adjusted version is
+                borderline.</strong> The Kaplan&ndash;Meier curves in Results&nbsp;Figure&nbsp;5 separate
+                early and finish 5.1 percentage points apart at five years (84.5% against
+                79.4%), log-rank p = 0.021, hazard ratio 1.60 (95% CI 1.07&ndash;2.39).
+                Adjusted for age, AJCC stage and PAM50 subtype the hazard ratio is 1.53
+                (95% CI 1.00&ndash;2.35, p = 0.0501). The confidence interval touches 1. The
+                fair reading is that PPP4C carries prognostic information which is largely,
+                though not entirely, shared with stage and subtype &mdash; a hypothesis
+                worth testing in a second cohort, not a validated independent marker.
+              </p>
+              <p>
+                What none of that can do is say <em>why</em>. Every figure on the results
+                page is an association measured in bulk tissue from patients whose tumours
+                were already there. The question of whether PPP4C does anything &mdash;
+                whether removing it changes how a breast cancer cell behaves &mdash; cannot
+                be answered by this design at all. Two published studies can, and they are
+                the subject of the next section.
+              </p>
+            </div>
+
+            <div id="literature">
+              <h2>What the published work adds</h2>
+              <p>
+                Two papers bear directly on this analysis. Xie <em>et al.</em> (2022)
+                screened the whole phosphoprotein phosphatase catalytic (PPPCs) family in
+                breast cancer and concluded that PPP1CA and PPP4C were the two members with
+                real clinical significance <a href="#ref-1">[1]</a>. That is an independent
+                route to the same gene: their starting point was a family-wide screen, this
+                project's was a single pre-registered target, and the two arrive at PPP4C
+                from opposite directions. Li <em>et al.</em> (2026) then studied PPP4C on its
+                own in thyroid carcinoma and triple-negative breast cancer, combining
+                bioinformatics with tissue staining and cell-line experiments
+                <a href="#ref-2">[2]</a>. Between them they supply the two things this
+                analysis is missing: measurement at the protein level, and evidence that runs
+                in the causal direction.
+              </p>
+
+              <figure class="figure">
+                <div class="figure__head">
+                  <div class="figure__titles">
+                    <h3 class="figure__title">Figure 1 &mdash; Knocking PPP4C down slows and immobilises breast cancer cells</h3>
+                    <p class="figure__subtitle">Reproduced from Xie <em>et al.</em> (2022) <a href="#ref-1">[1]</a>. Three independent siRNAs against PPP4C in MCF-7 and MDA-MB-468. <strong>a&ndash;b</strong>, knockdown confirmed by qPCR; <strong>c&ndash;d</strong>, the same by western blot against GAPDH. <strong>e</strong>,&nbsp;<strong>g</strong>, CCK-8 growth over four days. <strong>f</strong>,&nbsp;<strong>h</strong>, wound-healing closure at 48&nbsp;h. Asterisks are the authors' own significance marks.</p>
+                  </div>
+                </div>
+                <div class="figure__plot">
+                  <img class="figure__img" src="assets/img/lit-xie2022-knockdown.jpg" width="1600" height="1219" loading="lazy"
+                       alt="Eight panels. Bar charts a and b show relative PPP4C expression falling from 1.0 in control cells to roughly 0.1-0.2 with each of three siRNAs, in MCF-7 and MDA-MB-468. Western blots c and d show the PPP4C band at 35 kDa fainter in all three knockdown lanes, with GAPDH unchanged. Growth curves e and g show control cells reaching an OD of about 2.0 by day 4 while all three knockdowns stay between about 0.85 and 1.3. Wound-healing panels f and h show narrower closure in knockdown cells, with closure dropping from about 48 percent to 14-33 percent in MCF-7 and to about 30-52 percent of control in MDA-MB-468.">
+                </div>
+                <p class="figure__note">
+                  <strong>Not my data.</strong> This figure is reproduced from reference
+                  <a href="#ref-1">[1]</a>, published open access under CC&nbsp;BY&nbsp;4.0.
+                  It is shown here for comparison with Results&nbsp;Figures&nbsp;1&ndash;5 and forms no
+                  part of this project's own analysis.
+                </p>
+              </figure>
+
+              <div class="callout callout--note">
                 <div class="callout__body">
-                  <p class="mb-0"><strong>To write once results are real.</strong> Structure it as: what was found, whether it agrees with the published literature, and what it would mean if it held up. Keep each claim tied to a specific figure.</p>
+                  <p><strong>Why this matters for Results&nbsp;Figure&nbsp;1.</strong> My cohorts show PPP4C sitting higher in tumour tissue than in normal tissue. That is compatible with PPP4C driving something and equally compatible with it being swept along by whatever else a tumour cell is doing. Here the gene is removed and the cells slow down: growth curves separate by day&nbsp;3 and end roughly half as high, and wound closure falls with every one of three independent siRNAs. Three siRNAs matter &mdash; a single construct can miss its target and hit something else, three agreeing is much harder to dismiss as off-target.</p>
+                  <p class="mb-0"><strong>And for Results&nbsp;Figure&nbsp;4.</strong> The two lines used are MCF-7, which is ER-positive and luminal, and MDA-MB-468, which is triple-negative and basal. Both respond. That sits comfortably beside my PAM50 result, where PPP4C was raised in every subtype rather than confined to one.</p>
+                </div>
+              </div>
+
+              <figure class="figure">
+                <div class="figure__head">
+                  <div class="figure__titles">
+                    <h3 class="figure__title">Figure 2 &mdash; The same shift, measured as protein in tissue</h3>
+                    <p class="figure__subtitle">Reproduced from Li <em>et al.</em> (2026) <a href="#ref-2">[2]</a>. <strong>a</strong>, PPP4C immunohistochemistry in adjacent non-tumour breast tissue (left) and triple-negative breast cancer (right), scale bar 100&nbsp;&micro;m. <strong>b</strong>, histoscore for every specimen, horizontal bars are medians; *** is the authors' own mark for p&nbsp;&lt;&nbsp;0.001.</p>
+                  </div>
+                </div>
+                <div class="figure__plot">
+                  <img class="figure__img" src="assets/img/lit-li2026-ihc.jpg" width="1600" height="594" loading="lazy"
+                       alt="Panel a shows two stained tissue sections: adjacent normal breast tissue with almost no brown staining, and triple-negative breast cancer tissue with dense brown PPP4C staining throughout. Panel b is a dot plot of PPP4C histoscore with adjacent tissue clustered around a median of 3 and TNBC spread between 1 and 12 with a median of 8, marked significant at p less than 0.001.">
+                </div>
+                <p class="figure__note">
+                  <strong>Not my data.</strong> Reproduced from reference
+                  <a href="#ref-2">[2]</a>, published open access under
+                  CC&nbsp;BY-NC-ND&nbsp;4.0. Shown for comparison only.
+                </p>
+              </figure>
+
+              <div class="callout callout--note">
+                <div class="callout__body">
+                  <p><strong>This answers the two easiest objections to Results&nbsp;Figures&nbsp;1 and&nbsp;2.</strong> The first is that everything I measured is messenger RNA, and mRNA is not protein &mdash; a transcript can rise without the protein following. Here the readout is the protein itself, stained in tissue, and the histoscore median moves from about 3 in adjacent tissue to about 8 in tumour. The second is study design, and the design here is the tissue-level twin of Results&nbsp;Figure&nbsp;2: tumour compared against adjacent non-tumour tissue from the same specimens, so the comparison is within patients rather than between groups of them.</p>
+                  <p class="mb-0"><strong>One difference to keep in view.</strong> Their cohort is triple-negative only. Results&nbsp;Figure&nbsp;1 is all breast cancer. The agreement is about direction, and the direction is the part that replicates.</p>
+                </div>
+              </div>
+
+              <figure class="figure">
+                <div class="figure__head">
+                  <div class="figure__titles">
+                    <h3 class="figure__title">Figure 3 &mdash; PPP4C across breast cell lines of four different subtypes</h3>
+                    <p class="figure__subtitle">Reproduced from Li <em>et al.</em> (2026) <a href="#ref-2">[2]</a>. <strong>a</strong>, PPP4C mRNA relative to the non-tumorigenic line MCF-10A. <strong>b</strong>, PPP4C protein by western blot against tubulin, quantified to the right. <strong>c</strong>, knockdown validation for the two siRNAs used in Figure&nbsp;4. Asterisks are the authors' own significance marks.</p>
+                  </div>
+                </div>
+                <div class="figure__plot">
+                  <img class="figure__img" src="assets/img/lit-li2026-celllines.jpg" width="1600" height="819" loading="lazy"
+                       alt="Panel a is a bar chart of relative PPP4C mRNA across five cell lines: MCF-10A set at 1.0, MCF7 about 1.3, SK-BR-3 about 1.9, MDA-MB-468 about 2.6 and MDA-MB-231 about 2.4, all marked significant against MCF-10A. Panel b shows a western blot with a faint PPP4C band in MCF-10A and stronger bands in the four cancer lines, quantified as roughly 0.42 for MCF-10A rising to about 0.95. Panel c shows PPP4C bands in MDA-MB-468 and MDA-MB-231 reduced by two siRNAs relative to a scrambled control, quantified to about 0.2-0.6 of control.">
+                </div>
+                <p class="figure__note">
+                  <strong>Not my data.</strong> Reproduced from reference
+                  <a href="#ref-2">[2]</a>. Shown for comparison only.
+                </p>
+              </figure>
+
+              <div class="callout callout--note">
+                <div class="callout__body">
+                  <p><strong>The breadth agrees with Results&nbsp;Figure&nbsp;4; the ordering does not, and should not be forced to.</strong> Every cancer line sits above the non-tumorigenic MCF-10A &mdash; the luminal line MCF7, the HER2-amplified SK-BR-3 and both triple-negative lines &mdash; which is the cell-culture version of my finding that PPP4C is raised in all five PAM50 subtypes. But their two highest lines are the triple-negative ones, whereas in my 1,083 tumours the highest median was HER2-enriched at 7.27 with Basal-like mid-pack near 6.9.</p>
+                  <p class="mb-0">I would not read that as a contradiction, because the two things are not comparable: five immortalised lines that have been grown in plastic for decades are not a sample of anything, least of all of subtype proportions in patients. The claim their panel supports is "raised across subtypes", which matches. The claim about <em>which</em> subtype is highest rests on my cohort, not on theirs.</p>
+                </div>
+              </div>
+
+              <figure class="figure">
+                <div class="figure__head">
+                  <div class="figure__titles">
+                    <h3 class="figure__title">Figure 4 &mdash; What breast cancer cells stop doing when PPP4C is removed</h3>
+                    <p class="figure__subtitle">Reproduced from Li <em>et al.</em> (2026) <a href="#ref-2">[2]</a>. Two siRNAs against PPP4C in MDA-MB-468 and MDA-MB-231. <strong>a&ndash;b</strong>, CCK-8 growth to 96&nbsp;h. <strong>c&ndash;d</strong>, colony formation. <strong>e&ndash;f</strong>, transwell migration and invasion, counted per field. Asterisks are the authors' own significance marks.</p>
+                  </div>
+                </div>
+                <div class="figure__plot">
+                  <img class="figure__img" src="assets/img/lit-li2026-function.jpg" width="1513" height="1600" loading="lazy"
+                       alt="Growth curves a and b show control cells reaching an OD450 of about 2.4 and 3.3 at 96 hours while both knockdowns stay well below, separating from 72 hours onward. Colony formation panels c and d show crowded control plates and sparse knockdown plates, with relative clonogenicity falling from 100 percent to about 20 percent in MDA-MB-468 and to about 58 and 12 percent in MDA-MB-231. Transwell panels e and f show dense purple-stained control membranes and sparse knockdown membranes, with migrated and invaded cells per field falling roughly by half in both cell lines.">
+                </div>
+                <p class="figure__note">
+                  <strong>Not my data.</strong> Reproduced from reference
+                  <a href="#ref-2">[2]</a>. Shown for comparison only.
+                </p>
+              </figure>
+
+              <div class="callout callout--note">
+                <div class="callout__body">
+                  <p><strong>This is the causal arm my design cannot supply.</strong> The first limitation listed below &mdash; association is not causation &mdash; is a real weakness of an analysis built on patient tissue that was collected once. Here the direction of the experiment is fixed by the experimenter: PPP4C is removed first, and proliferation, colony formation, migration and invasion all fall afterwards. In these two cell lines the arrow runs from PPP4C to behaviour, not the reverse.</p>
+                  <p class="mb-0"><strong>A candidate account of Results&nbsp;Figure&nbsp;5.</strong> If PPP4C supports growth and invasion, then tumours in my PPP4C-high half would be expected to behave more aggressively, which is what a hazard ratio of 1.60 describes. That is a plausible mechanism, not a demonstrated one: nothing in this figure was measured in my patients, and a cell line crossing a transwell membrane is a long way from a tumour metastasising.</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="tension">
+              <h2>Where the agreement stops</h2>
+              <p>
+                It would be easy to present the four figures above as confirmation and stop
+                there. Three things argue against reading them that way.
+              </p>
+              <div class="grid grid--2">
+                <div class="card">
+                  <h4>The agreement is not fully independent</h4>
+                  <p class="text-secondary mb-0">Xie <em>et al.</em> built their analysis on the same public databases this project used, TCGA among them. Where their expression conclusions and mine agree, part of that agreement is two analyses of overlapping data. Their cell-line experiments and Li <em>et al.</em>'s stained tissue are genuinely new evidence; the database sections are less so.</p>
+                </div>
+                <div class="card">
+                  <h4>Nobody here tested prognosis in my cohort</h4>
+                  <p class="text-secondary mb-0">Both papers report worse outcome with higher PPP4C, and my adjusted hazard ratio of 1.53 lands at p = 0.0501. Neither of their survival analyses is an independent test of my model, on my patients, with my covariates. The borderline result stays borderline.</p>
+                </div>
+                <div class="card">
+                  <h4>Cell lines are not tumours</h4>
+                  <p class="text-secondary mb-0">Figures&nbsp;1, 3 and&nbsp;4 above are five cell lines in culture. They have no immune system, no stroma and no treatment history, and they answer a question about what PPP4C can do &mdash; not about what it is doing in the 1,570 tumours I measured.</p>
+                </div>
+                <div class="card">
+                  <h4>The cell-of-origin question is still open</h4>
+                  <p class="text-secondary mb-0">Li <em>et al.</em>'s staining shows PPP4C protein in tumour tissue, which is more than bulk RNA can show, but my own data still cannot say which cells in the mixture carry the signal. That limitation survives both papers intact.</p>
                 </div>
               </div>
             </div>
@@ -105,11 +305,11 @@
               <div class="grid grid--2">
                 <div class="card">
                   <h4>Association, not causation</h4>
-                  <p class="text-secondary mb-0">A gene whose expression tracks with survival is not thereby a driver of it. Expression differences can be a consequence of tumour biology, of treatment, or of what cell types happen to be in the sample.</p>
+                  <p class="text-secondary mb-0">If PPP4C expression tracks with survival, that does not make it a driver of it. Expression differences can be a consequence of tumour biology, of treatment, or of what cell types happen to be in the sample. The knockdown work in Figures&nbsp;1 and&nbsp;4 above addresses this in cells; it does not import causation into my cohort.</p>
                 </div>
                 <div class="card">
                   <h4>One cohort, mostly</h4>
-                  <p class="text-secondary mb-0">TCGA-BRCA is a convenience sample with its own recruitment and demographic biases. Validation in METABRIC helps but does not remove the problem, since both skew toward certain populations.</p>
+                  <p class="text-secondary mb-0">TCGA-BRCA is a convenience sample with its own recruitment and demographic biases. The four GEO cohorts help, but the survival analysis rests on TCGA alone, and both published studies lean on the same public resources.</p>
                 </div>
                 <div class="card">
                   <h4>Bulk tissue, mixed cells</h4>
@@ -117,15 +317,23 @@
                 </div>
                 <div class="card">
                   <h4>Multiple testing and researcher choice</h4>
-                  <p class="text-secondary mb-0">Testing thousands of genes and then focusing on the strongest inflates apparent effect sizes. Thresholds were fixed in advance to limit this, but the risk does not disappear.</p>
+                  <p class="text-secondary mb-0">PPP4C was chosen before the analysis, which avoids the worst of this. The genes reported as correlated with it were not: they are the strongest of twenty thousand tested, so their coefficients are inflated.</p>
                 </div>
                 <div class="card">
                   <h4>Median splits lose information</h4>
-                  <p class="text-secondary mb-0">Dichotomising a continuous variable makes a readable Kaplan-Meier plot and a weaker test. The continuous Cox model is the primary analysis for that reason.</p>
+                  <p class="text-secondary mb-0">Splitting patients at the median PPP4C value makes a readable Kaplan-Meier plot and a weaker test. The continuous Cox model is the primary analysis for that reason.</p>
                 </div>
                 <div class="card">
                   <h4>Incomplete clinical annotation</h4>
                   <p class="text-secondary mb-0">Treatment details are patchy in the public clinical tables, so survival differences cannot be fully separated from differences in what patients received.</p>
+                </div>
+                <div class="card">
+                  <h4>Ninety-nine events</h4>
+                  <p class="text-secondary mb-0">The whole survival section rests on 99 deaths inside the five-year window. That is what makes the confidence intervals as wide as they are, and no amount of supporting literature narrows them.</p>
+                </div>
+                <div class="card">
+                  <h4>Transcript, not protein</h4>
+                  <p class="text-secondary mb-0">Everything I measured is mRNA. Figure&nbsp;2 above shows the protein moving the same way in someone else's cohort, which is reassuring, but it is not a protein-level check on my own samples.</p>
                 </div>
               </div>
             </div>
@@ -133,22 +341,36 @@
             <div id="future">
               <h2>What I would do next</h2>
               <ol>
-                <li>Re-run the survival models with treatment covariates wherever the annotation allows it.</li>
-                <li>Deconvolve the bulk expression into cell-type proportions to test whether candidate signals are immune-driven.</li>
-                <li>Add a single-cell dataset to check which cell population actually expresses the candidate genes.</li>
-                <li>Test whether a small multi-gene score outperforms any single gene at predicting outcome.</li>
-                <li>Pre-register the thresholds and the analysis plan before touching the validation cohort.</li>
+                <li>Re-run the survival models with treatment covariates wherever the annotation allows it, since 99 events and a p of 0.0501 is exactly the situation where an unmodelled confounder decides the answer.</li>
+                <li>Check PPP4C protein in a public proteomic cohort such as CPTAC-BRCA, which would be the protein-level test on patient tumours that Figure&nbsp;2 supplies only for triple-negative disease.</li>
+                <li>Deconvolve the bulk expression into cell-type proportions to test whether the PPP4C signal is immune-driven, which neither published paper settles.</li>
+                <li>Add a single-cell dataset to check which cell population actually expresses PPP4C.</li>
+                <li>Repeat the tumour-versus-normal and survival analysis in the triple-negative subset alone, so that my cohort and Li <em>et al.</em>'s are asking the same question of the same disease.</li>
+                <li>Test whether the genes co-expressed with PPP4C in my data overlap the WNT signalling, antigen presentation and DNA repair programmes that Xie <em>et al.</em> report for this family <a href="#ref-1">[1]</a>.</li>
+                <li>Check whether PPP4C copy number at 16p11.2 explains the expression differences, rather than transcriptional regulation.</li>
+                <li>Pre-register the thresholds and the analysis plan before touching any further validation cohort.</li>
               </ol>
             </div>
 
-            <div id="learned">
-              <h2>What I learned</h2>
-              <div class="callout callout--todo">
-                <span class="callout__icon" aria-hidden="true">&#9998;</span>
-                <div class="callout__body">
-                  <p class="mb-0"><strong>To write:</strong> a short, specific, non-generic paragraph. Admissions readers have seen "I learned perseverance" many times; "I learned why normalising before clustering changes the answer" is the version worth writing.</p>
-                </div>
-              </div>
+            <div id="references">
+              <h2>References</h2>
+              <ol class="refs">
+                <li id="ref-1">
+                  Xie W, Sun Y, Zeng Y, Hu L, Zhi J, Ling H, Zheng X, Ruan X, Gao M.
+                  Comprehensive analysis of PPPCs family reveals the clinical significance
+                  of PPP1CA and PPP4C in breast cancer. <em>Bioengineered</em>.
+                  2022;13(1):190&ndash;205.
+                  <a href="https://doi.org/10.1080/21655979.2021.2012316" rel="noopener">doi:10.1080/21655979.2021.2012316</a>.
+                  Source of Figure&nbsp;1 on this page.
+                </li>
+                <li id="ref-2">
+                  Li H, Chen Y, Guo G, Luo Q, Lin Q, Xie W, Yan M. PPP4C: a potential
+                  molecular marker and therapeutic target in thyroid cancer and
+                  triple-negative breast cancer. <em>BMC Cancer</em>. 2026;26:768.
+                  <a href="https://doi.org/10.1186/s12885-026-16083-2" rel="noopener">doi:10.1186/s12885-026-16083-2</a>.
+                  Source of Figures&nbsp;2&ndash;4 on this page.
+                </li>
+              </ol>
             </div>
 
           </div>
@@ -157,9 +379,11 @@
             <p class="eyebrow">On this page</p>
             <ul class="toc">
               <li><a href="#interpretation">Interpretation</a></li>
+              <li><a href="#literature">Published work</a></li>
+              <li><a href="#tension">Where agreement stops</a></li>
               <li><a href="#limitations">Limitations</a></li>
               <li><a href="#future">What comes next</a></li>
-              <li><a href="#learned">What I learned</a></li>
+              <li><a href="#references">References</a></li>
             </ul>
           </aside>
         </div>
@@ -183,6 +407,7 @@
             <li><a href="methods.html">Methods</a></li>
             <li><a href="results.html">Results</a></li>
             <li><a href="discussion.html">Discussion</a></li>
+            <li><a href="code.html">Code</a></li>
           </ul>
         </div>
         <div>
@@ -197,15 +422,14 @@
           <h4>About</h4>
           <ul>
             <li><a href="about.html">About this project</a></li>
-            <li><a href="about.html#references">References</a></li>
+            <li><a href="discussion.html#references">References</a></li>
             <li><a href="mailto:you@example.com">Contact</a></li>
           </ul>
         </div>
       </div>
 
       <div class="site-footer__bottom">
-        <span>&copy; <span data-year>2026</span> Your Name. Independent secondary-school research project.</span>
-        <span>All figures on this site currently show placeholder data.</span>
+        <span>&copy; <span data-year>2026</span> Zoe Ng.</span>
       </div>
     </div>
   </footer>

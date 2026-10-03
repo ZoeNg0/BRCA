@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Page not found — Breast Cancer Transcriptomics</title>
+  <title>Page not found — PPP4C in Breast Cancer</title>
 
   <!-- Styles are inlined on purpose. GitHub Pages serves this file for ANY
        unknown path, including deep ones like /BRCA/a/b/c, where a relative
@@ -11,14 +11,18 @@
   <style>
     :root {
       color-scheme: light;
-      --page: #f9f9f7; --ink: #0b0b0b; --muted: #52514e;
-      --accent: #256abf; --border: rgba(11,11,11,0.10);
+      --page: #f5f2e7; --ink: #26371f; --muted: #43593a;
+      --accent: #456337; --accent-hover: #a8446a;
+      --on-accent: #fcfaf4; --on-hover: #fcfaf4;
+      --border: rgba(38,55,31,0.13);
     }
     @media (prefers-color-scheme: dark) {
       :root {
         color-scheme: dark;
-        --page: #0d0d0d; --ink: #ffffff; --muted: #c3c2b7;
-        --accent: #6da7ec; --border: rgba(255,255,255,0.12);
+        --page: #1a1e15; --ink: #f2f0e4; --muted: #c6ccb4;
+        --accent: #a5b68d; --accent-hover: #e9a7b8;
+        --on-accent: #1a1e15; --on-hover: #1a1e15;
+        --border: rgba(240,226,224,0.14);
       }
     }
     * { box-sizing: border-box; }
@@ -47,10 +51,10 @@
     p { color: var(--muted); margin: 0 0 1.5rem; }
     a.btn {
       display: inline-block; padding: 0.7rem 1.4rem;
-      background: var(--accent); color: #fff;
+      background: var(--accent); color: var(--on-accent);
       border-radius: 8px; text-decoration: none; font-weight: 550;
     }
-    a.btn:hover { filter: brightness(0.92); }
+    a.btn:hover { background: var(--accent-hover); color: var(--on-hover); }
   </style>
 </head>
 <body>

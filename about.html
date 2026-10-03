@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About — Breast Cancer Transcriptomics</title>
-  <meta name="description" content="About the student behind this project, the timeline, the tools learned, and the full reference list.">
-  <meta name="author" content="Your Name">
+  <title>About — PPP4C in Breast Cancer</title>
+  <meta name="description" content="About the student behind this project: what was done first-hand, the timeline, the tools learned, and how to get in touch.">
+  <meta name="author" content="Zoe Ng">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="About — Breast Cancer Transcriptomics">
-  <meta property="og:description" content="About the student behind this project, the timeline, the tools learned, and the full reference list.">
+  <meta property="og:description" content="About the student behind this project: how it started, the timeline, and the tools learned.">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a78d6'/></svg>">
   <link rel="stylesheet" href="assets/css/tokens.css">
@@ -18,6 +18,10 @@
   <script>
     /* Stamp the saved theme before first paint so there is no flash. */
     (function () {
+      /* Reveal-on-scroll hides content until JavaScript unhides it, so the
+         page must say up front that JavaScript is running. Without this class
+         the .reveal rules never apply and the content is simply visible. */
+      document.documentElement.classList.add('js');
       try {
         var t = localStorage.getItem('brca-theme');
         if (t) document.documentElement.setAttribute('data-theme', t);
@@ -51,6 +55,7 @@
           <li><a class="nav__link" href="methods.html">Methods</a></li>
           <li><a class="nav__link" href="results.html">Results</a></li>
           <li><a class="nav__link" href="discussion.html">Discussion</a></li>
+          <li><a class="nav__link" href="code.html">Code</a></li>
           <li><a class="nav__link" href="about.html">About</a></li>
         </ul>
       </nav>
@@ -72,11 +77,11 @@
   <main id="main">
     <section class="section">
       <div class="container">
-        <p class="eyebrow">Section 06</p>
+        <p class="eyebrow">Section 07</p>
         <h1>About this project</h1>
         <p class="lede">
-          An independent research project carried out outside of coursework, between
-          grade 11 and grade 12.
+          An independent computational biology project by <strong>Zoe Ng</strong>, carried
+          out outside of coursework between grade 11 and grade 12.
         </p>
       </div>
     </section>
@@ -91,77 +96,88 @@
               <div class="callout callout--todo">
                 <span class="callout__icon" aria-hidden="true">&#9998;</span>
                 <div class="callout__body">
-                  <p class="mb-0"><strong>To write:</strong> two short paragraphs. First, how you got interested in computational biology specifically. Second, what you did on this project with your own hands. Avoid listing adjectives about yourself; the site is already the evidence.</p>
+                  <p class="mb-0"><strong>Your opening paragraph goes here.</strong> One short paragraph on how you came to computational biology &mdash; the specific thing that caught your attention, not a general statement about loving science. The paragraph below already covers what you did, so this one only has to cover why.</p>
                 </div>
               </div>
+              <p>
+                Everything on this site was done from scratch: downloading the TCGA breast
+                cancer cohort and its clinical records, assembling four further cohorts
+                from public repositories, choosing a differential expression method
+                appropriate to each measurement platform, combining five cohorts by rank
+                aggregation, fitting the survival models, building a co-expression network
+                from the tumour signal, and testing gene sets against it. The figures are
+                drawn from those results; the site itself &mdash; the layout, the charts
+                and the code viewer &mdash; was written by hand in plain HTML, CSS and
+                JavaScript, with no framework and no charting library.
+              </p>
+              <p>
+                No part of the analysis was run for me, and nothing on the site is
+                simulated. Where a result is weaker than I would like &mdash; the adjusted
+                hazard ratio that lands at p&nbsp;=&nbsp;0.05, the motility programme that
+                turns out to be absent &mdash; it is reported as it came out.
+              </p>
             </div>
 
             <div id="timeline">
               <h2>Timeline</h2>
               <ol class="steps">
                 <li>
-                  <h4>Summer 2026 &mdash; scoping</h4>
-                  <p class="text-secondary">Background reading, choosing the question, learning enough R or Python to handle a count matrix.</p>
+                  <h4>August 2026 &mdash; scoping and acquisition</h4>
+                  <p class="text-secondary">Choosing the question and the target gene, learning enough R to handle a count matrix, and downloading TCGA-BRCA. Surveying around thirty public cohorts and settling on the four that give the most platform and ancestry diversity.</p>
                 </li>
                 <li>
-                  <h4>Autumn 2026 &mdash; analysis</h4>
-                  <p class="text-secondary">Data acquisition, quality control, exploratory analysis and differential expression.</p>
+                  <h4>September 2026 &mdash; replication and modelling</h4>
+                  <p class="text-secondary">Per-cohort differential expression, rank aggregation across all five, subtype comparison and the survival models. The co-expression network and its enrichment testing followed.</p>
                 </li>
                 <li>
-                  <h4>Winter 2026 &mdash; modelling and validation</h4>
-                  <p class="text-secondary">Survival analysis, replication in an independent cohort, and revision after feedback.</p>
-                </li>
-                <li>
-                  <h4>Early 2027 &mdash; write-up</h4>
-                  <p class="text-secondary">Final figures, discussion, and this site in its finished form.</p>
+                  <h4>October 2026 &mdash; write-up</h4>
+                  <p class="text-secondary">Exporting the figures, reading the published work on the same gene against my own results, and building this site.</p>
                 </li>
               </ol>
-              <p class="meta">Adjust these dates to your real schedule &mdash; a timeline that matches your application deadlines is more useful than one that looks impressive.</p>
             </div>
 
             <div id="skills">
               <h2>Tools and skills used</h2>
               <div class="chip-row">
-                <span class="badge">Python</span>
                 <span class="badge">R</span>
+                <span class="badge">Bioconductor</span>
                 <span class="badge">RNA-seq analysis</span>
                 <span class="badge">Differential expression</span>
+                <span class="badge">Meta-analysis by rank aggregation</span>
                 <span class="badge">Survival analysis</span>
-                <span class="badge">Statistics</span>
+                <span class="badge">Network analysis</span>
+                <span class="badge">Gene set enrichment</span>
                 <span class="badge">Data visualisation</span>
                 <span class="badge">Git</span>
-                <span class="badge">HTML / CSS / JS</span>
+                <span class="badge">HTML / CSS / JavaScript</span>
                 <span class="badge">Scientific writing</span>
               </div>
-              <p class="text-secondary">Trim this list to what you genuinely used. A short honest list reads better than a long aspirational one.</p>
+              <p class="text-secondary">
+                The two that took longest to learn were not the statistics. They were
+                deciding which method a dataset actually permits &mdash; a cohort with no
+                raw counts rules out the model everyone reaches for first &mdash; and
+                working out how to present a result honestly when it is weaker than the
+                headline would like it to be.
+              </p>
             </div>
 
             <div id="acknowledgements">
               <h2>Acknowledgements</h2>
               <p>
                 The results shown here are based upon data generated by the
-                <a href="https://www.cancer.gov/tcga" rel="noopener">TCGA Research Network</a>.
-                Thanks to everyone who read drafts or answered questions along the way.
+                <a href="https://www.cancer.gov/tcga" rel="noopener">TCGA Research Network</a>
+                and by the investigators who deposited the four replication cohorts in the
+                Gene Expression Omnibus. Every one of those datasets was made public by
+                people who did not have to, and by patients who consented to their tumour
+                being studied long after their own treatment ended. A project like this one
+                is only possible because of that.
               </p>
               <div class="callout callout--todo">
                 <span class="callout__icon" aria-hidden="true">&#9998;</span>
                 <div class="callout__body">
-                  <p class="mb-0"><strong>To add:</strong> name any teacher, mentor or researcher who helped, and check each data source for its required acknowledgement wording.</p>
+                  <p class="mb-0"><strong>To add:</strong> anyone who helped &mdash; a teacher, a mentor, anyone who read a draft or answered a question.</p>
                 </div>
               </div>
-            </div>
-
-            <div id="references">
-              <h2>References</h2>
-              <p class="text-secondary">Placeholder entries in a consistent format. Replace with the papers you actually cite, and keep the numbering consistent with any in-text markers.</p>
-              <ol class="refs">
-                <li>Perou CM, et al. Molecular portraits of human breast tumours. <em>Nature</em>. 2000.</li>
-                <li>Parker JS, et al. Supervised risk predictor of breast cancer based on intrinsic subtypes. <em>Journal of Clinical Oncology</em>. 2009.</li>
-                <li>The Cancer Genome Atlas Network. Comprehensive molecular portraits of human breast tumours. <em>Nature</em>. 2012.</li>
-                <li>Curtis C, et al. The genomic and transcriptomic architecture of 2,000 breast tumours. <em>Nature</em>. 2012.</li>
-                <li>Love MI, Huber W, Anders S. Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2. <em>Genome Biology</em>. 2014.</li>
-                <li>Add your own sources here, in whichever citation style your application requires.</li>
-              </ol>
             </div>
 
             <div id="contact">
@@ -182,7 +198,6 @@
               <li><a href="#timeline">Timeline</a></li>
               <li><a href="#skills">Tools and skills</a></li>
               <li><a href="#acknowledgements">Acknowledgements</a></li>
-              <li><a href="#references">References</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
           </aside>
@@ -207,6 +222,7 @@
             <li><a href="methods.html">Methods</a></li>
             <li><a href="results.html">Results</a></li>
             <li><a href="discussion.html">Discussion</a></li>
+            <li><a href="code.html">Code</a></li>
           </ul>
         </div>
         <div>
@@ -221,15 +237,14 @@
           <h4>About</h4>
           <ul>
             <li><a href="about.html">About this project</a></li>
-            <li><a href="about.html#references">References</a></li>
+            <li><a href="discussion.html#references">References</a></li>
             <li><a href="mailto:you@example.com">Contact</a></li>
           </ul>
         </div>
       </div>
 
       <div class="site-footer__bottom">
-        <span>&copy; <span data-year>2026</span> Your Name. Independent secondary-school research project.</span>
-        <span>All figures on this site currently show placeholder data.</span>
+        <span>&copy; <span data-year>2026</span> Zoe Ng.</span>
       </div>
     </div>
   </footer>

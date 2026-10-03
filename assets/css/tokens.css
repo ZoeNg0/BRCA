@@ -2,67 +2,90 @@
    tokens.css — design tokens (colors, type, spacing, motion)
    Change values here; never hard-code a hex anywhere else.
 
-   Colors follow a validated data-viz palette. The categorical slots, the
-   sequential blue ramp and the diverging pair have all been checked for
-   colour-vision-deficiency separation and contrast in BOTH light and dark
-   modes. If you swap a series colour, re-validate it before shipping.
+   Light mode is built on four source colours:
+     #E7CCCC dusty rose · #EDE8DC cream · #A5B68D sage · #C1CFA1 light sage
+   The page plane is that cream lifted, the accent is a deepened sage, the
+   rose does the highlighting, and the data colours lead with green and pink.
+
+   Dark mode is the same garden after dusk: deep forest planes, the cream
+   become the ink, and the source sage stepping forward as the accent.
+
+   The categorical slots, the sequential green ramp and the diverging pair
+   have all been checked for contrast in BOTH light and dark modes: every
+   series clears 3:1 against its chart surface and every text token clears
+   4.5:1 against the plane it sits on. If you swap a series colour,
+   re-validate it before shipping.
    ========================================================================== */
 
 :root {
   color-scheme: light;
 
   /* ---- Surfaces & ink ------------------------------------------------- */
-  --page:            #f9f9f7;   /* page plane                              */
-  --surface-1:       #fcfcfb;   /* cards, chart surface                    */
-  --surface-2:       #f2f1ec;   /* wells, code blocks, table stripes       */
-  --surface-raised:  #ffffff;   /* header, popovers                        */
+  --page:            #f5f2e7;   /* page plane — the cream, lifted          */
+  --surface-1:       #fcfaf4;   /* cards, chart surface                    */
+  --surface-2:       #ebe6d8;   /* wells, code blocks, table stripes       */
+  --surface-raised:  #fdfcf7;   /* header, popovers                        */
 
-  --text-primary:    #0b0b0b;
-  --text-secondary:  #52514e;
-  --text-muted:      #898781;   /* axis labels, captions, meta             */
-  --text-inverse:    #ffffff;
+  --text-primary:    #26371f;   /* the ink is green, not black             */
+  --text-secondary:  #43593a;
+  --text-muted:      #656f5b;   /* axis labels, captions, meta             */
+  --text-inverse:    #fcfaf4;   /* ink for use ON the accent               */
 
-  --border:          rgba(11, 11, 11, 0.10);
-  --border-strong:   rgba(11, 11, 11, 0.20);
-  --gridline:        #e1e0d9;
-  --axis:            #c3c2b7;
+  --border:          rgba(38, 55, 31, 0.13);
+  --border-strong:   rgba(38, 55, 31, 0.24);
+  --gridline:        #e5e0cf;
+  --axis:            #c2bea9;
 
-  /* ---- Accent (UI only — links, buttons, focus) ------------------------ */
-  --accent:          #256abf;
-  --accent-hover:    #184f95;
-  --accent-wash:     #eaf1fc;
-  --focus-ring:      #2a78d6;
+  /* ---- Accent (UI only — links, buttons, focus) ------------------------
+     Green at rest, rose on hover: the two source hues split the job rather
+     than sharing it, so a hover is a hue change and not just a darkening. */
+  --accent:          #456337;   /* green as TEXT: links, card arrows       */
+  --accent-solid:    #456337;   /* green as a FILL: buttons, the brand tile */
+  --accent-ink:      #fcfaf4;   /* what sits on that fill                   */
+  --accent-hover:    #a8446a;   /* the rose, deepened to clear 4.5:1       */
+  --accent-hover-ink:#fcfaf4;   /* what sits on a rose fill                 */
+  --accent-wash:     #f0dcde;   /* the current page / selected thing       */
+  --hover-wash:      #f6e6e7;   /* the thing under the cursor              */
+  --focus-ring:      #5f7f46;
 
-  /* ---- Categorical series (fixed order — never cycle, never reorder) --- */
-  --series-1:        #2a78d6;   /* blue    */
-  --series-2:        #eb6834;   /* orange  */
-  --series-3:        #1baf7a;   /* aqua    */
-  --series-4:        #eda100;   /* yellow  */
-  --series-5:        #e87ba4;   /* magenta */
-  --series-6:        #008300;   /* green   */
-  --series-7:        #4a3aa7;   /* violet  */
-  --series-8:        #e34948;   /* red     */
+  /* ---- Brand mark ------------------------------------------------------
+     A typographic mark: a serif B on a green tile. Its own tokens, not
+     series slots, so retuning a chart colour can never restyle it. */
+  --brand-square:    #456337;
+  --brand-letter:    #fcfaf4;
+
+  /* ---- Categorical series (fixed order — never cycle, never reorder) ---
+     Slot 3 reads as the calm/normal condition and slot 8 as the tumour one;
+     the charts lean on that pairing, so keep 3 green and 8 rose. */
+  --series-1:        #5c7a47;   /* green     */
+  --series-2:        #b85473;   /* rose      */
+  --series-3:        #3e7f6e;   /* teal      */
+  --series-4:        #a8802b;   /* gold      */
+  --series-5:        #c2718c;   /* pink      */
+  --series-6:        #31492b;   /* forest    */
+  --series-7:        #6b5ba6;   /* violet    */
+  --series-8:        #9c3f52;   /* deep rose */
 
   /* ---- Diverging pair (volcano plot: down ↔ neutral ↔ up) -------------- */
-  --diverge-low:     #2a78d6;   /* down-regulated  */
-  --diverge-mid:     #b9b8b1;   /* not significant */
-  --diverge-high:    #e34948;   /* up-regulated    */
+  --diverge-low:     #5c7a47;   /* down-regulated  */
+  --diverge-mid:     #c9bcba;   /* not significant */
+  --diverge-high:    #b85473;   /* up-regulated    */
 
   /* ---- Sequential ramp (heatmaps, magnitude) — one hue, light → dark --- */
-  --seq-100:         #cde2fb;
-  --seq-200:         #9ec5f4;
-  --seq-300:         #6da7ec;
-  --seq-400:         #3987e5;
-  --seq-500:         #256abf;
-  --seq-600:         #184f95;
-  --seq-700:         #0d366b;
+  --seq-100:         #e6ecd8;
+  --seq-200:         #cfddb6;
+  --seq-300:         #b2c793;
+  --seq-400:         #92ac6f;
+  --seq-500:         #748f53;
+  --seq-600:         #57703c;
+  --seq-700:         #2e4020;
 
   /* ---- Status (reserved — never used as a series colour) --------------- */
-  --status-good:     #0ca30c;
-  --status-warning:  #fab219;
-  --status-serious:  #ec835a;
-  --status-critical: #d03b3b;
-  --status-good-text:#006300;
+  --status-good:     #4a7c36;
+  --status-warning:  #b8892a;
+  --status-serious:  #be6b41;
+  --status-critical: #a94442;
+  --status-good-text:#3d6a2c;
 
   /* ---- Typography ------------------------------------------------------ */
   --font-display: "Iowan Old Style", "Palatino Linotype", Palatino,
@@ -104,10 +127,31 @@
   --radius-lg: 14px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(11, 11, 11, 0.05);
-  --shadow:    0 2px 8px rgba(11, 11, 11, 0.06),
-               0 1px 2px rgba(11, 11, 11, 0.04);
-  --shadow-lg: 0 12px 32px rgba(11, 11, 11, 0.10);
+  --shadow-sm: 0 1px 2px rgba(38, 55, 31, 0.06);
+  --shadow:    0 2px 8px rgba(38, 55, 31, 0.08),
+               0 1px 2px rgba(38, 55, 31, 0.05);
+  --shadow-lg: 0 12px 32px rgba(38, 55, 31, 0.13);
+
+  /* ---- Code viewer -----------------------------------------------------
+     A read-only syntax theme, defined per mode like every other token. The
+     hues are chosen for contrast on the code surface, not borrowed from the
+     categorical series — a keyword is not a data series. */
+  --code-bg:         #fcfaf4;
+  --code-gutter-bg:  #f0ecdf;
+  --code-fg:         #26371f;
+  --code-line-no:    #97957f;
+  --code-active:     #f6e6e7;   /* the rose hover wash, same as a table row */
+
+  --code-comment:    #7c866f;   /* green-grey, recedes                      */
+  --code-string:     #2f7a63;
+  --code-number:     #a0662c;
+  --code-keyword:    #a8446a;   /* the hover rose — the site's second hue   */
+  --code-const:      #a0662c;
+  --code-func:       #456337;   /* the accent green                         */
+  --code-ns:         #8a4f7d;
+  --code-param:      #7f6a33;
+  --code-op:         #5e6a55;
+  --code-punct:      #6b7562;
 
   --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
   --dur-fast: 120ms;
@@ -123,111 +167,165 @@
 
 /* ---- Dark mode ---------------------------------------------------------
    Selected, not flipped: each series is its own step chosen for the dark
-   surface. Declared under both the OS media query and the [data-theme]
-   stamp so the toggle wins in either direction.
+   surface, and the accent is the source sage (#A5B68D), which is light
+   enough here to serve as both link text and a filled button. Declared
+   under both the OS media query and the [data-theme] stamp so the toggle
+   wins in either direction.
    ------------------------------------------------------------------------ */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
 
-    --page:            #0d0d0d;
-    --surface-1:       #1a1a19;
-    --surface-2:       #232321;
-    --surface-raised:  #1f1f1e;
+    --page:            #1a1e15;
+    --surface-1:       #242a1d;
+    --surface-2:       #2e3526;
+    --surface-raised:  #272e20;
 
-    --text-primary:    #ffffff;
-    --text-secondary:  #c3c2b7;
-    --text-muted:      #898781;
-    --text-inverse:    #0b0b0b;
+    --text-primary:    #f2f0e4;
+    --text-secondary:  #c6ccb4;
+    --text-muted:      #98a189;
+    --text-inverse:    #1a1e15;
 
-    --border:          rgba(255, 255, 255, 0.12);
-    --border-strong:   rgba(255, 255, 255, 0.24);
-    --gridline:        #2c2c2a;
-    --axis:            #383835;
+    --border:          rgba(240, 226, 224, 0.14);
+    --border-strong:   rgba(240, 226, 224, 0.27);
+    --gridline:        #363d2d;
+    --axis:            #47503c;
 
-    --accent:          #6da7ec;
-    --accent-hover:    #9ec5f4;
-    --accent-wash:     #16233a;
-    --focus-ring:      #6da7ec;
+    --accent:          #a5b68d;
+    --accent-solid:    #a5b68d;   /* light fill here, so it takes dark ink */
+    --accent-ink:      #1a1e15;
+    --accent-hover:    #e9a7b8;   /* rose on hover, as in light mode */
+    --accent-hover-ink:#1a1e15;
+    --accent-wash:     #372a27;
+    --hover-wash:      #3d2b31;
+    --focus-ring:      #a5b68d;
 
-    --series-1:        #3987e5;
-    --series-2:        #d95926;
-    --series-3:        #199e70;
-    --series-4:        #c98500;
-    --series-5:        #d55181;
-    --series-6:        #008300;
-    --series-7:        #9085e9;
-    --series-8:        #e66767;
+    /* ---- Brand mark ---------------------------------------------------- */
+    --brand-square:    #a5b68d;
+    --brand-letter:    #1a1e15;
 
-    --diverge-low:     #3987e5;
-    --diverge-mid:     #6b6a66;
-    --diverge-high:    #e66767;
+    --series-1:        #8fa86e;
+    --series-2:        #dc8aa1;
+    --series-3:        #5fb49c;
+    --series-4:        #d6b15c;
+    --series-5:        #e3a7ba;
+    --series-6:        #b8cc93;
+    --series-7:        #a899e8;
+    --series-8:        #d4737f;
 
-    --seq-100:         #0d366b;
-    --seq-200:         #184f95;
-    --seq-300:         #256abf;
-    --seq-400:         #3987e5;
-    --seq-500:         #5598e7;
-    --seq-600:         #86b6ef;
-    --seq-700:         #cde2fb;
+    --diverge-low:     #8fa86e;
+    --diverge-mid:     #77796b;
+    --diverge-high:    #dc8aa1;
 
-    --status-good-text:#0ca30c;
+    --seq-100:         #2e4020;
+    --seq-200:         #445b31;
+    --seq-300:         #5e7a45;
+    --seq-400:         #7c9a5c;
+    --seq-500:         #9cb77b;
+    --seq-600:         #bdd2a0;
+    --seq-700:         #e0eacb;
+
+    --status-good-text:#9bc47c;
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow:    0 2px 8px rgba(0, 0, 0, 0.45),
                  0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+
+    /* ---- Code viewer --------------------------------------------------- */
+    --code-bg:         #171a12;
+    --code-gutter-bg:  #212619;
+    --code-fg:         #e9e7da;
+    --code-line-no:    #7a8270;
+    --code-active:     #3d2b31;   /* the rose hover wash */
+
+    --code-comment:    #8a9179;
+    --code-string:     #8ecfae;
+    --code-number:     #dfae7a;
+    --code-keyword:    #e993b2;   /* the hover rose */
+    --code-const:      #dfae7a;
+    --code-func:       #b8cc93;   /* the accent sage */
+    --code-ns:         #d3a0c9;
+    --code-param:      #cbbd7f;
+    --code-op:         #c6ccb4;
+    --code-punct:      #9aa18b;
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
 
-  --page:            #0d0d0d;
-  --surface-1:       #1a1a19;
-  --surface-2:       #232321;
-  --surface-raised:  #1f1f1e;
+  --page:            #1a1e15;
+  --surface-1:       #242a1d;
+  --surface-2:       #2e3526;
+  --surface-raised:  #272e20;
 
-  --text-primary:    #ffffff;
-  --text-secondary:  #c3c2b7;
-  --text-muted:      #898781;
-  --text-inverse:    #0b0b0b;
+  --text-primary:    #f2f0e4;
+  --text-secondary:  #c6ccb4;
+  --text-muted:      #98a189;
+  --text-inverse:    #1a1e15;
 
-  --border:          rgba(255, 255, 255, 0.12);
-  --border-strong:   rgba(255, 255, 255, 0.24);
-  --gridline:        #2c2c2a;
-  --axis:            #383835;
+  --border:          rgba(240, 226, 224, 0.14);
+  --border-strong:   rgba(240, 226, 224, 0.27);
+  --gridline:        #363d2d;
+  --axis:            #47503c;
 
-  --accent:          #6da7ec;
-  --accent-hover:    #9ec5f4;
-  --accent-wash:     #16233a;
-  --focus-ring:      #6da7ec;
+  --accent:          #a5b68d;
+  --accent-solid:    #a5b68d;   /* light fill here, so it takes dark ink */
+  --accent-ink:      #1a1e15;
+  --accent-hover:    #e9a7b8;   /* rose on hover, as in light mode */
+  --accent-hover-ink:#1a1e15;
+  --accent-wash:     #372a27;
+  --hover-wash:      #3d2b31;
+  --focus-ring:      #a5b68d;
 
-  --series-1:        #3987e5;
-  --series-2:        #d95926;
-  --series-3:        #199e70;
-  --series-4:        #c98500;
-  --series-5:        #d55181;
-  --series-6:        #008300;
-  --series-7:        #9085e9;
-  --series-8:        #e66767;
+  /* ---- Brand mark ---------------------------------------------------- */
+  --brand-square:    #a5b68d;
+  --brand-letter:    #1a1e15;
 
-  --diverge-low:     #3987e5;
-  --diverge-mid:     #6b6a66;
-  --diverge-high:    #e66767;
+  --series-1:        #8fa86e;
+  --series-2:        #dc8aa1;
+  --series-3:        #5fb49c;
+  --series-4:        #d6b15c;
+  --series-5:        #e3a7ba;
+  --series-6:        #b8cc93;
+  --series-7:        #a899e8;
+  --series-8:        #d4737f;
 
-  --seq-100:         #0d366b;
-  --seq-200:         #184f95;
-  --seq-300:         #256abf;
-  --seq-400:         #3987e5;
-  --seq-500:         #5598e7;
-  --seq-600:         #86b6ef;
-  --seq-700:         #cde2fb;
+  --diverge-low:     #8fa86e;
+  --diverge-mid:     #77796b;
+  --diverge-high:    #dc8aa1;
 
-  --status-good-text:#0ca30c;
+  --seq-100:         #2e4020;
+  --seq-200:         #445b31;
+  --seq-300:         #5e7a45;
+  --seq-400:         #7c9a5c;
+  --seq-500:         #9cb77b;
+  --seq-600:         #bdd2a0;
+  --seq-700:         #e0eacb;
+
+  --status-good-text:#9bc47c;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow:    0 2px 8px rgba(0, 0, 0, 0.45),
                0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+
+  /* ---- Code viewer --------------------------------------------------- */
+  --code-bg:         #171a12;
+  --code-gutter-bg:  #212619;
+  --code-fg:         #e9e7da;
+  --code-line-no:    #7a8270;
+  --code-active:     #3d2b31;   /* the rose hover wash */
+
+  --code-comment:    #8a9179;
+  --code-string:     #8ecfae;
+  --code-number:     #dfae7a;
+  --code-keyword:    #e993b2;   /* the hover rose */
+  --code-const:      #dfae7a;
+  --code-func:       #b8cc93;   /* the accent sage */
+  --code-ns:         #d3a0c9;
+  --code-param:      #cbbd7f;
+  --code-op:         #c6ccb4;
+  --code-punct:      #9aa18b;
 }

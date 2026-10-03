@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Overview — Breast Cancer Transcriptomics</title>
-  <meta name="description" content="An independent computational biology project analysing breast cancer gene expression using TCGA and other public datasets.">
-  <meta name="author" content="Your Name">
+  <title>PPP4C in Breast Cancer</title>
+  <meta name="description" content="An independent computational biology project asking whether PPP4C expression separates breast cancer subtypes and tracks with patient survival, using TCGA and other public datasets.">
+  <meta name="author" content="Zoe Ng">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Overview — Breast Cancer Transcriptomics">
-  <meta property="og:description" content="An independent computational biology project analysing breast cancer gene expression using TCGA and other public datasets.">
+  <meta property="og:title" content="PPP4C in Breast Cancer">
+  <meta property="og:description" content="An independent computational biology project asking whether PPP4C expression separates breast cancer subtypes and tracks with patient survival, using TCGA and other public datasets.">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a78d6'/></svg>">
   <link rel="stylesheet" href="assets/css/tokens.css">
@@ -18,6 +18,10 @@
   <script>
     /* Stamp the saved theme before first paint so there is no flash. */
     (function () {
+      /* Reveal-on-scroll hides content until JavaScript unhides it, so the
+         page must say up front that JavaScript is running. Without this class
+         the .reveal rules never apply and the content is simply visible. */
+      document.documentElement.classList.add('js');
       try {
         var t = localStorage.getItem('brca-theme');
         if (t) document.documentElement.setAttribute('data-theme', t);
@@ -51,6 +55,7 @@
           <li><a class="nav__link" href="methods.html">Methods</a></li>
           <li><a class="nav__link" href="results.html">Results</a></li>
           <li><a class="nav__link" href="discussion.html">Discussion</a></li>
+          <li><a class="nav__link" href="code.html">Code</a></li>
           <li><a class="nav__link" href="about.html">About</a></li>
         </ul>
       </nav>
@@ -73,21 +78,18 @@
 
     <section class="hero">
       <div class="container hero__inner">
-        <p class="eyebrow">Independent research project · Grade 12</p>
-        <h1>Molecular subtypes of breast cancer, read from public tumour transcriptomes</h1>
+        <h1>PPP4C in breast cancer, read from public tumour transcriptomes</h1>
         <p class="lede">
           A computational analysis of RNA sequencing data from
-          <strong>1,082 primary breast tumours</strong> in The Cancer Genome Atlas, asking
-          which genes separate the molecular subtypes and whether any of them track with
-          how long patients survive.
+          <strong>1,111 primary breast tumours</strong> in The Cancer Genome Atlas, with
+          replication in four independent cohorts, asking whether <strong>PPP4C</strong>
+          &mdash; the catalytic subunit of protein phosphatase 4 &mdash; is elevated in
+          tumours, whether it differs between the molecular subtypes, and whether it
+          tracks with how long patients survive.
         </p>
 
         <div class="hero__meta">
-          <span>By <strong>Your Name</strong></span>
-          <span>·</span>
-          <span>Last updated <time datetime="2026-08-17">17 August 2026</time></span>
-          <span>·</span>
-          <span>TCGA-BRCA · METABRIC · GEO</span>
+          <span>By <strong>Zoe Ng</strong></span>
         </div>
 
         <div class="btn-row">
@@ -99,21 +101,7 @@
 
     <section class="section">
       <div class="container">
-
-        <div class="callout callout--todo">
-          <span class="callout__icon" aria-hidden="true">&#9888;</span>
-          <div class="callout__body">
-            <p class="mb-0">
-              <strong>Prototype notice.</strong> Every number and figure on this site is
-              synthetic placeholder data used to build and test the layout. Nothing here is
-              a real result yet. Replace the contents of
-              <code>assets/js/data.js</code> as the analysis produces real output, then
-              delete these notices.
-            </p>
-          </div>
-        </div>
-
-        <div class="section-head reveal">
+        <div class="section__head reveal">
           <p class="eyebrow">At a glance</p>
           <h2 class="mt-0">The project in four numbers</h2>
         </div>
@@ -121,23 +109,23 @@
         <div class="grid grid--4 reveal">
           <div class="tile">
             <p class="tile__label">Tumour samples analysed</p>
-            <p class="tile__value">1,082</p>
-            <p class="tile__delta">TCGA-BRCA primary tumours</p>
+            <p class="tile__value">1,570</p>
+            <p class="tile__delta">five independent cohorts</p>
           </div>
           <div class="tile">
-            <p class="tile__label">Genes passing expression filter</p>
-            <p class="tile__value">18,341</p>
-            <p class="tile__delta">of 60,660 annotated features</p>
+            <p class="tile__label">PPP4C tumour vs normal</p>
+            <p class="tile__value">+0.56 to +1.34</p>
+            <p class="tile__delta">log&#8322;FC, raised in all five cohorts</p>
           </div>
           <div class="tile">
-            <p class="tile__label">Differentially expressed genes</p>
-            <p class="tile__value">2,417</p>
-            <p class="tile__delta">padj &lt; 0.05, |log2FC| &gt; 1</p>
+            <p class="tile__label">Matched pairs rising in tumour</p>
+            <p class="tile__value">109 / 113</p>
+            <p class="tile__delta">TCGA patients, own normal as control</p>
           </div>
           <div class="tile">
-            <p class="tile__label">Candidate prognostic genes</p>
-            <p class="tile__value">12</p>
-            <p class="tile__delta">survival-associated, FDR &lt; 0.10</p>
+            <p class="tile__label">Five-year hazard ratio</p>
+            <p class="tile__value">1.60</p>
+            <p class="tile__delta">PPP4C-high, 95% CI 1.07&ndash;2.39</p>
           </div>
         </div>
       </div>
@@ -148,10 +136,11 @@
         <div class="layout-aside">
           <div>
             <p class="eyebrow">The question</p>
-            <h2 class="mt-0">What I am trying to find out</h2>
+            <h2 class="mt-0">What this project asks</h2>
             <blockquote>
-              Which genes most strongly distinguish the intrinsic molecular subtypes of
-              breast cancer, and do any of those genes independently predict patient survival?
+              Is PPP4C expression raised in breast tumours, does it differ between the
+              intrinsic molecular subtypes, and does it predict patient survival
+              independently of stage and age?
             </blockquote>
             <p>
               Breast cancer is not one disease. Tumours that look similar under a microscope
@@ -161,21 +150,30 @@
               measurements for thousands of tumours, which means a student with a laptop can
               re-ask questions that once needed a laboratory.
             </p>
-            <p>The question breaks into three aims:</p>
+            <p>
+              PPP4C is the catalytic subunit of protein phosphatase 4, an enzyme complex
+              involved in DNA damage repair and cell cycle progression. It has been
+              reported as over-expressed in several solid tumours, which makes it a
+              reasonable target to re-examine independently in a large public breast
+              cancer cohort.
+            </p>
+            <p>It breaks into four aims:</p>
             <ol>
-              <li><strong>Characterise</strong> the cohort and confirm that the published subtype structure is recoverable from the raw expression matrix.</li>
-              <li><strong>Compare</strong> subtypes with differential expression analysis to find the genes that separate them.</li>
-              <li><strong>Connect</strong> those genes to clinical outcome with survival analysis, and check whether the association survives adjustment for stage and age.</li>
+              <li><strong>Characterise</strong> the cohort &mdash; resolve aliquots to patients, and establish which sample count honestly belongs to which question.</li>
+              <li><strong>Quantify</strong> PPP4C expression in tumours against adjacent normal tissue, and across the five PAM50 subtypes.</li>
+              <li><strong>Connect</strong> PPP4C to clinical outcome with survival analysis, and check whether the association survives adjustment for stage, age and subtype.</li>
+              <li><strong>Contextualise</strong> it by building a co-expression network from the tumour-versus-normal signal and asking what programme that network is organised around.</li>
             </ol>
           </div>
 
           <aside class="layout-aside__side">
-            <p class="eyebrow">Status</p>
-            <ul class="legend" style="flex-direction:column;align-items:flex-start;gap:var(--sp-3)">
-              <li><span class="badge">Aim 1 &middot; in progress</span></li>
-              <li><span class="badge">Aim 2 &middot; not started</span></li>
-              <li><span class="badge">Aim 3 &middot; not started</span></li>
-            </ul>
+            <p class="eyebrow">In one sentence</p>
+            <p class="text-secondary">
+              PPP4C is raised in breast tumours in all five cohorts and in 109 of 113
+              matched patients, is raised in every intrinsic subtype rather than confined
+              to one, and marks worse five-year survival &mdash; though adjusting for
+              stage and subtype leaves that last result at the edge of significance.
+            </p>
           </aside>
         </div>
       </div>
@@ -207,17 +205,22 @@
           </a>
           <a class="card" href="results.html">
             <h3>Results</h3>
-            <p class="text-secondary mb-0">Differential expression, subtype expression patterns, and survival analysis, as interactive figures.</p>
+            <p class="text-secondary mb-0">PPP4C expression in tumour and normal tissue, across subtypes, and against survival &mdash; six interactive figures.</p>
             <span class="card__more">See the results &rarr;</span>
           </a>
           <a class="card" href="discussion.html">
             <h3>Discussion</h3>
-            <p class="text-secondary mb-0">What the findings mean, where the analysis is weakest, and what I would do with more time.</p>
+            <p class="text-secondary mb-0">What the findings mean, how they compare with two published studies of the same gene, and where the analysis is weakest.</p>
             <span class="card__more">Read the discussion &rarr;</span>
+          </a>
+          <a class="card" href="code.html">
+            <h3>Code</h3>
+            <p class="text-secondary mb-0">The R behind the TCGA download, the mutation summary and the differential expression, shown as it was written.</p>
+            <span class="card__more">Read the code &rarr;</span>
           </a>
           <a class="card" href="about.html">
             <h3>About</h3>
-            <p class="text-secondary mb-0">Who built this, the timeline, the skills learned along the way, and the full reference list.</p>
+            <p class="text-secondary mb-0">Who built this, how the project started, the timeline, and the skills learned along the way.</p>
             <span class="card__more">About the project &rarr;</span>
           </a>
         </div>
@@ -227,38 +230,38 @@
     <section class="section section--alt">
       <div class="container container--narrow">
         <div class="section-head">
-          <p class="eyebrow">Roadmap</p>
-          <h2 class="mt-0">Where the work stands</h2>
+          <p class="eyebrow">How it ran</p>
+          <h2 class="mt-0">The work, in the order it happened</h2>
         </div>
 
-        <ol class="steps">
+        <ol class="steps reveal">
           <li>
-            <h4>Scope the question and read the literature <span class="badge">Done</span></h4>
-            <p class="text-secondary">Settle on subtype-versus-survival as the question; collect the key papers on intrinsic subtypes and the PAM50 classifier.</p>
+            <h4>Scope the question and read the literature</h4>
+            <p class="text-secondary">Settle on a single pre-chosen target gene rather than a fishing expedition, and collect the published work on the PP4 complex in cancer to know what result would agree with it and what would not.</p>
           </li>
           <li>
-            <h4>Download and quality-check TCGA-BRCA <span class="badge">In progress</span></h4>
-            <p class="text-secondary">Pull expression counts and clinical annotations from the GDC, check library sizes, drop low-quality and duplicate samples.</p>
+            <h4>Acquire and quality-check TCGA-BRCA</h4>
+            <p class="text-secondary">Pull expression counts, clinical records and somatic mutation calls from the GDC; resolve 1,224 aliquots down to 1,095 patients, and keep the 113 with a matched normal sample aside as their own control group.</p>
           </li>
           <li>
-            <h4>Exploratory analysis and clustering <span class="badge">Next</span></h4>
-            <p class="text-secondary">Normalise counts, run PCA and hierarchical clustering, and check the clusters against published subtype calls.</p>
+            <h4>Differential expression, tumour against normal</h4>
+            <p class="text-secondary">A negative-binomial model across the transcriptome, with the reference level set so a positive fold change means up in tumour, and thresholds fixed in advance.</p>
           </li>
           <li>
-            <h4>Differential expression <span class="badge">Planned</span></h4>
-            <p class="text-secondary">Subtype-versus-subtype contrasts with multiple-testing correction, plus pathway enrichment on the resulting gene sets.</p>
+            <h4>Replicate in four independent cohorts</h4>
+            <p class="text-secondary">Assemble four GEO cohorts on three further platforms, run the differential expression method each one's measurement actually calls for, and combine all five by rank aggregation rather than by intersecting gene lists.</p>
           </li>
           <li>
-            <h4>Survival analysis <span class="badge">Planned</span></h4>
-            <p class="text-secondary">Kaplan-Meier curves and Cox proportional-hazards models for the candidate genes, adjusted for stage and age.</p>
+            <h4>Subtype and survival</h4>
+            <p class="text-secondary">Read PPP4C across the five PAM50 subtypes, then Kaplan-Meier curves and a Cox model adjusted for stage, age and subtype, with the proportional-hazards assumption checked rather than assumed.</p>
           </li>
           <li>
-            <h4>Validate in an independent cohort <span class="badge">Planned</span></h4>
-            <p class="text-secondary">Re-test the strongest candidates in METABRIC so the findings do not rest on one dataset.</p>
+            <h4>Build the co-expression network</h4>
+            <p class="text-secondary">Ask what programme the tumour signal is organised around by connecting genes that move together across the cohort, then test proliferation and motility gene sets against its most connected genes &mdash; reporting the sets that fail alongside the ones that pass.</p>
           </li>
           <li>
-            <h4>Write up and publish this site <span class="badge">Planned</span></h4>
-            <p class="text-secondary">Replace the placeholder figures with real output, write the discussion, and get feedback before submission.</p>
+            <h4>Write it up</h4>
+            <p class="text-secondary">Compare every finding against the published work, state the limitations in full, and build this site so each figure carries its own sample count, test and caveats.</p>
           </li>
         </ol>
       </div>
@@ -282,6 +285,7 @@
             <li><a href="methods.html">Methods</a></li>
             <li><a href="results.html">Results</a></li>
             <li><a href="discussion.html">Discussion</a></li>
+            <li><a href="code.html">Code</a></li>
           </ul>
         </div>
         <div>
@@ -296,15 +300,14 @@
           <h4>About</h4>
           <ul>
             <li><a href="about.html">About this project</a></li>
-            <li><a href="about.html#references">References</a></li>
+            <li><a href="discussion.html#references">References</a></li>
             <li><a href="mailto:you@example.com">Contact</a></li>
           </ul>
         </div>
       </div>
 
       <div class="site-footer__bottom">
-        <span>&copy; <span data-year>2026</span> Your Name. Independent secondary-school research project.</span>
-        <span>All figures on this site currently show placeholder data.</span>
+        <span>&copy; <span data-year>2026</span> Zoe Ng.</span>
       </div>
     </div>
   </footer>

@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Background — Breast Cancer Transcriptomics</title>
-  <meta name="description" content="Why breast cancer, what the intrinsic molecular subtypes are, and what tumour gene expression data can tell us.">
-  <meta name="author" content="Your Name">
+  <title>Background — PPP4C in Breast Cancer</title>
+  <meta name="description" content="Why breast cancer, what the intrinsic molecular subtypes are, what PPP4C does, and what tumour gene expression data can tell us.">
+  <meta name="author" content="Zoe Ng">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Background — Breast Cancer Transcriptomics">
-  <meta property="og:description" content="Why breast cancer, what the intrinsic molecular subtypes are, and what tumour gene expression data can tell us.">
+  <meta property="og:description" content="Why breast cancer, what the intrinsic molecular subtypes are, what PPP4C does, and what tumour gene expression data can tell us.">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a78d6'/></svg>">
   <link rel="stylesheet" href="assets/css/tokens.css">
@@ -18,6 +18,10 @@
   <script>
     /* Stamp the saved theme before first paint so there is no flash. */
     (function () {
+      /* Reveal-on-scroll hides content until JavaScript unhides it, so the
+         page must say up front that JavaScript is running. Without this class
+         the .reveal rules never apply and the content is simply visible. */
+      document.documentElement.classList.add('js');
       try {
         var t = localStorage.getItem('brca-theme');
         if (t) document.documentElement.setAttribute('data-theme', t);
@@ -51,6 +55,7 @@
           <li><a class="nav__link" href="methods.html">Methods</a></li>
           <li><a class="nav__link" href="results.html">Results</a></li>
           <li><a class="nav__link" href="discussion.html">Discussion</a></li>
+          <li><a class="nav__link" href="code.html">Code</a></li>
           <li><a class="nav__link" href="about.html">About</a></li>
         </ul>
       </nav>
@@ -74,10 +79,6 @@
       <div class="container">
         <p class="eyebrow">Section 01</p>
         <h1>Background</h1>
-        <p class="lede">
-          Enough biology to make the rest of the site readable by someone who has taken
-          one year of high-school genetics.
-        </p>
       </div>
     </section>
 
@@ -90,18 +91,28 @@
               <h2 class="mt-0">Why breast cancer</h2>
               <p>
                 Breast cancer is the most commonly diagnosed cancer worldwide. It is also
-                one of the best-characterised at the molecular level, which makes it an
-                unusually good subject for a student project: the public data is large,
+                one of the best-characterised at the molecular level, which makes it a
+                good subject for a student project: the public data is large,
                 well annotated, and there are decades of published findings to check your
                 own results against. If an analysis recovers something already known, that
                 is evidence the pipeline works, not a wasted effort.
               </p>
-              <div class="callout callout--todo">
-                <span class="callout__icon" aria-hidden="true">&#9998;</span>
-                <div class="callout__body">
-                  <p class="mb-0"><strong>To write:</strong> incidence and mortality figures with a citation, and one paragraph on why survival differs so much between subtypes.</p>
-                </div>
-              </div>
+              <p>
+                The scale behind that first sentence: an estimated 2.3&nbsp;million new
+                cases in 2020, 11.7% of all cancer diagnoses, and the fifth leading cause
+                of cancer death worldwide. Targeted
+                therapy, radiotherapy and immunotherapy have improved outcomes
+                substantially, but roughly 20% of patients whose disease has spread
+                survive only five years, which is why the search for markers that predict
+                who will do badly has not stopped.
+              </p>
+              <p>
+                Survival also differs sharply <em>within</em> the diagnosis. Two patients with tumours of the same size and stage can have
+                very different outcomes, and much of that difference tracks with which
+                genes their tumours express rather than with anything visible under a
+                microscope. That is what makes expression data worth reading, and it is
+                the subject of the next section.
+              </p>
             </div>
 
             <div id="subtypes">
@@ -115,21 +126,22 @@
 
               <div class="table-wrap">
                 <table>
-                  <caption>The five intrinsic subtypes and their usual markers. Placeholder figures — replace with cited values.</caption>
+                  <caption>The five intrinsic subtypes, with the share each makes up of the 1,083 classified tumours in this project's TCGA cohort.</caption>
                   <thead>
                     <tr>
                       <th scope="col">Subtype</th>
                       <th scope="col">Hormone receptors</th>
                       <th scope="col">Proliferation</th>
                       <th scope="col">Typical prognosis</th>
+                      <th scope="col" class="num">Share of cohort</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><th scope="row">Luminal A</th><td>ER+ / PR+, HER2&minus;</td><td>Low</td><td>Most favourable</td></tr>
-                    <tr><th scope="row">Luminal B</th><td>ER+, variable PR</td><td>Higher</td><td>Intermediate</td></tr>
-                    <tr><th scope="row">HER2-enriched</th><td>ER&minus;, HER2+</td><td>High</td><td>Improved by targeted therapy</td></tr>
-                    <tr><th scope="row">Basal-like</th><td>Usually triple-negative</td><td>High</td><td>Least favourable</td></tr>
-                    <tr><th scope="row">Normal-like</th><td>Variable</td><td>Low</td><td>Debated; may be a sampling artefact</td></tr>
+                    <tr><th scope="row">Luminal A</th><td>ER+ / PR+, HER2&minus;</td><td>Low</td><td>Most favourable</td><td class="num">51.9%</td></tr>
+                    <tr><th scope="row">Luminal B</th><td>ER+, variable PR</td><td>Higher</td><td>Intermediate</td><td class="num">19.3%</td></tr>
+                    <tr><th scope="row">HER2-enriched</th><td>ER&minus;, HER2+</td><td>High</td><td>Improved by targeted therapy</td><td class="num">7.6%</td></tr>
+                    <tr><th scope="row">Basal-like</th><td>Usually triple-negative</td><td>High</td><td>Least favourable</td><td class="num">17.5%</td></tr>
+                    <tr><th scope="row">Normal-like</th><td>Variable</td><td>Low</td><td>Debated; may be a sampling artefact</td><td class="num">3.7%</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -158,6 +170,73 @@
               </p>
             </div>
 
+            <div id="target">
+              <h2>The target gene: PPP4C</h2>
+              <p>
+                Protein phosphatase 4 is an enzyme complex that removes phosphate groups
+                from other proteins. Phosphorylation is how a cell switches many of its
+                proteins on and off, so a phosphatase is a switch in the other direction,
+                and PP4 sits on switches that matter: DNA damage repair, the checkpoints
+                that decide whether a damaged cell divides, and progression through the
+                cell cycle.
+              </p>
+              <p>
+                <strong>PPP4C</strong> is the catalytic subunit &mdash; the part of the
+                complex that does the chemistry. On its own it does very little; which
+                proteins it acts on is decided by the regulatory subunits it binds
+                (PPP4R1, PPP4R2, PPP4R3A and others). That has a practical consequence for
+                this project: if the PPP4C measurements are real signal rather than noise,
+                the regulatory subunits should rise and fall alongside it across tumours,
+                which is a check the analysis can actually run.
+              </p>
+
+              <div class="table-wrap">
+                <table>
+                  <caption>PPP4C at a glance.</caption>
+                  <thead>
+                    <tr><th scope="col">Field</th><th scope="col">Value</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">Gene symbol</th><td>PPP4C</td></tr>
+                    <tr><th scope="row">Full name</th><td>Protein phosphatase 4 catalytic subunit</td></tr>
+                    <tr><th scope="row">Ensembl ID</th><td>ENSG00000149923</td></tr>
+                    <tr><th scope="row">Location</th><td>16p11.2</td></tr>
+                    <tr><th scope="row">Complex partners</th><td>PPP4R1, PPP4R2, PPP4R3A, PPP4R3B, PPP4R4</td></tr>
+                    <tr><th scope="row">Reported roles</th><td>DNA damage response, cell cycle progression, NF-&kappa;B signalling</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h3>What is already published</h3>
+              <p>
+                PPP4C was not picked at random. The phosphoprotein phosphatase catalytic
+                family has been examined across breast cancer before, and when the whole
+                family was screened for clinical significance, PPP4C came out as one of
+                only two members that mattered &mdash; associated with clinicopathological
+                features and prognosis, and with the differentially expressed genes around
+                it falling into WNT signalling, antigen presentation and DNA repair.
+                Silencing it with siRNA slowed proliferation and migration in breast cancer
+                cell lines.
+              </p>
+              <p>
+                A more recent study looked at PPP4C on its own in triple-negative breast
+                cancer and in thyroid carcinoma. It reported the protein raised in tumour
+                tissue against adjacent normal tissue, higher expression associated with
+                worse overall survival, and knockdown suppressing proliferation, migration
+                and invasion in culture. Both studies are examined against this project's
+                own results, with their figures reproduced, on the
+                <a href="discussion.html#literature">Discussion</a> page.
+              </p>
+              <p>
+                Two things follow for this project. The prediction is directional and
+                therefore falsifiable: if the published account holds, PPP4C should be
+                raised in tumour tissue here too, and higher expression should associate
+                with worse outcome. And the existing work is concentrated in cell lines and
+                in single cohorts &mdash; which leaves room for an independent test across
+                several cohorts and platforms, which is what the rest of this site is.
+              </p>
+            </div>
+
             <div id="tcga">
               <h2>What TCGA is</h2>
               <p>
@@ -168,25 +247,8 @@
                 pairing is what makes survival analysis possible from a laptop.
               </p>
               <div class="callout callout--note">
-                <span class="callout__icon" aria-hidden="true">&#9432;</span>
                 <div class="callout__body">
-                  <p class="mb-0">All data used here is open-access and de-identified. No controlled-access or individually identifiable data is involved. See <a href="data.html#ethics">Data &rsaquo; access and ethics</a>.</p>
-                </div>
-              </div>
-            </div>
-
-            <div id="gap">
-              <h2>Where this project fits</h2>
-              <p>
-                Nothing in this project is novel to the field: the subtypes are established
-                and the best-known prognostic genes have been reported many times over. The
-                aim is to reproduce that structure independently, from raw public data,
-                using a documented pipeline, and to see how far a careful re-analysis gets.
-              </p>
-              <div class="callout callout--todo">
-                <span class="callout__icon" aria-hidden="true">&#9998;</span>
-                <div class="callout__body">
-                  <p class="mb-0"><strong>To write:</strong> two or three sentences on the specific gap or twist that makes this analysis worth reading. Choose it once the exploratory results are in.</p>
+                  <p class="mb-0">All data used here is open-access and de-identified. No controlled-access or individually identifiable data is involved.</p>
                 </div>
               </div>
             </div>
@@ -199,8 +261,8 @@
               <li><a href="#why">Why breast cancer</a></li>
               <li><a href="#subtypes">Molecular subtypes</a></li>
               <li><a href="#expression">Gene expression data</a></li>
+              <li><a href="#target">The target gene: PPP4C</a></li>
               <li><a href="#tcga">What TCGA is</a></li>
-              <li><a href="#gap">Where this fits</a></li>
             </ul>
           </aside>
         </div>
@@ -224,6 +286,7 @@
             <li><a href="methods.html">Methods</a></li>
             <li><a href="results.html">Results</a></li>
             <li><a href="discussion.html">Discussion</a></li>
+            <li><a href="code.html">Code</a></li>
           </ul>
         </div>
         <div>
@@ -238,15 +301,14 @@
           <h4>About</h4>
           <ul>
             <li><a href="about.html">About this project</a></li>
-            <li><a href="about.html#references">References</a></li>
+            <li><a href="discussion.html#references">References</a></li>
             <li><a href="mailto:you@example.com">Contact</a></li>
           </ul>
         </div>
       </div>
 
       <div class="site-footer__bottom">
-        <span>&copy; <span data-year>2026</span> Your Name. Independent secondary-school research project.</span>
-        <span>All figures on this site currently show placeholder data.</span>
+        <span>&copy; <span data-year>2026</span> Zoe Ng.</span>
       </div>
     </div>
   </footer>

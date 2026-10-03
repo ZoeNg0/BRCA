@@ -23,3 +23,7 @@ npm-debug.log*
 # *.txt
 # *.rds
 # *.h5
+
+# Local-only: source papers (copyrighted) and site export bundle
+external_papers/
+brca-site.zip

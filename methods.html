@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Methods — Breast Cancer Transcriptomics</title>
-  <meta name="description" content="The analysis pipeline end to end: preprocessing, normalisation, differential expression, enrichment and survival modelling.">
-  <meta name="author" content="Your Name">
+  <title>Methods — PPP4C in Breast Cancer</title>
+  <meta name="description" content="The analysis pipeline end to end: acquisition, per-cohort differential expression, rank aggregation across five cohorts, survival modelling, and the hub co-expression network.">
+  <meta name="author" content="Zoe Ng">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Methods — Breast Cancer Transcriptomics">
-  <meta property="og:description" content="The analysis pipeline end to end: preprocessing, normalisation, differential expression, enrichment and survival modelling.">
+  <meta property="og:description" content="The analysis pipeline end to end: acquisition, per-cohort differential expression, rank aggregation across five cohorts, survival modelling, and the hub co-expression network.">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232a78d6'/></svg>">
   <link rel="stylesheet" href="assets/css/tokens.css">
@@ -18,6 +18,10 @@
   <script>
     /* Stamp the saved theme before first paint so there is no flash. */
     (function () {
+      /* Reveal-on-scroll hides content until JavaScript unhides it, so the
+         page must say up front that JavaScript is running. Without this class
+         the .reveal rules never apply and the content is simply visible. */
+      document.documentElement.classList.add('js');
       try {
         var t = localStorage.getItem('brca-theme');
         if (t) document.documentElement.setAttribute('data-theme', t);
@@ -51,6 +55,7 @@
           <li><a class="nav__link" href="methods.html">Methods</a></li>
           <li><a class="nav__link" href="results.html">Results</a></li>
           <li><a class="nav__link" href="discussion.html">Discussion</a></li>
+          <li><a class="nav__link" href="code.html">Code</a></li>
           <li><a class="nav__link" href="about.html">About</a></li>
         </ul>
       </nav>
@@ -89,15 +94,19 @@
             <div id="pipeline">
               <h2 class="mt-0">Pipeline overview</h2>
               <div class="pipeline">
-                <div class="pipeline__node"><strong>1. Acquire</strong><span>GDC download, manifest pinned</span></div>
-                <div class="pipeline__node"><strong>2. Clean</strong><span>Filter samples and genes</span></div>
-                <div class="pipeline__node"><strong>3. Normalise</strong><span>VST / TPM, batch check</span></div>
-                <div class="pipeline__node"><strong>4. Explore</strong><span>PCA, clustering</span></div>
-                <div class="pipeline__node"><strong>5. Test</strong><span>Differential expression</span></div>
-                <div class="pipeline__node"><strong>6. Interpret</strong><span>Pathway enrichment</span></div>
-                <div class="pipeline__node"><strong>7. Model</strong><span>Kaplan-Meier, Cox</span></div>
-                <div class="pipeline__node"><strong>8. Validate</strong><span>METABRIC replication</span></div>
+                <div class="pipeline__node"><strong>1. Acquire</strong><span>GDC and GEO, cached once</span></div>
+                <div class="pipeline__node"><strong>2. Test</strong><span>One DE method per platform</span></div>
+                <div class="pipeline__node"><strong>3. Aggregate</strong><span>Combine five cohorts by rank</span></div>
+                <div class="pipeline__node"><strong>4. Shortlist</strong><span>260 replicated genes</span></div>
+                <div class="pipeline__node"><strong>5. Characterise</strong><span>Survival, subtype, confounders</span></div>
+                <div class="pipeline__node"><strong>6. Connect</strong><span>Co-expression network, hubs</span></div>
+                <div class="pipeline__node"><strong>7. Interpret</strong><span>Directed enrichment test</span></div>
+                <div class="pipeline__node"><strong>8. Export</strong><span>Plots and tables for this site</span></div>
               </div>
+              <p class="meta">
+                Each stage is one numbered R script, run in dependency order. Nothing
+                downstream re-downloads or re-fits what an earlier stage already produced.
+              </p>
             </div>
 
             <div id="steps">
@@ -105,35 +114,39 @@
               <ol class="steps">
                 <li>
                   <h4>Acquisition</h4>
-                  <p class="text-secondary">Expression counts and clinical annotations are pulled from the GDC with a saved manifest, so the exact file versions are recoverable later. Clinical fields are reduced to the ones actually used: subtype, stage, age at diagnosis, vital status and follow-up time.</p>
+                  <p class="text-secondary">TCGA expression, clinical tables and somatic mutation calls are pulled from the GDC with TCGAbiolinks &mdash; STAR counts, unstranded assay, primary tumours and solid-tissue normals &mdash; then cached as R objects so nothing re-downloads. The GEO series are cached the same way. GSE58135 needs different handling: GEO holds no raw counts for it, only per-sample FPKM tracking files, so its matrix is assembled during download and its 28 cell lines are excluded at that point rather than filtered out later.</p>
                 </li>
                 <li>
-                  <h4>Quality control and filtering</h4>
-                  <p class="text-secondary">Library sizes and gene-detection rates are plotted per sample; outliers are inspected individually rather than dropped by a blanket rule. Gene filtering keeps features expressed above a minimum count in at least as many samples as the smallest subtype group.</p>
+                  <h4>Differential expression, one method per platform</h4>
+                  <p class="text-secondary">TCGA uses DESeq2 with <code>design = ~ sample_type</code>, the reference level set to normal tissue so a positive log&#8322; fold change always means &ldquo;up in tumour&rdquo;. GSE70947 uses limma with the design blocked on patient, which removes inter-patient variance and is the whole reason that cohort carries the most weight. GSE58135 has no counts, so limma-trend models the mean&ndash;variance relationship of log&#8322;(FPKM&nbsp;+&nbsp;1) directly. The two Affymetrix cohorts arrive RMA-processed and get a cross-array quantile normalisation before the same two-group contrast. Matching the model to the measurement matters more than using one model everywhere.</p>
                 </li>
                 <li>
-                  <h4>Normalisation</h4>
-                  <p class="text-secondary">Counts are normalised for library size and variance-stabilised for anything distance-based (PCA, clustering, heatmaps). Raw counts are kept for the differential expression model, which expects them.</p>
+                  <h4>Combining cohorts by rank, not by intersection</h4>
+                  <p class="text-secondary">The obvious rule &mdash; keep genes significant in all five cohorts &mdash; is very sensitive to an arbitrary threshold and punishes the smaller cohorts for being small. Instead each cohort is ranked independently by signed &minus;log&#8321;&#8320;&nbsp;p, and the rankings are combined with robust rank aggregation, so a gene rises by being <em>consistently</em> near the top. Up and down directions are aggregated separately, so a gene that moves one way in one cohort and the other way elsewhere is penalised in both lists. The analysis is restricted to the 7,311 genes measured in all five cohorts; a gene outside that set is untested, not disproved.</p>
                 </li>
                 <li>
-                  <h4>Exploratory analysis</h4>
-                  <p class="text-secondary">PCA on the most variable genes, then hierarchical clustering with correlation distance. The clusters are compared against published PAM50 calls to check that the recovered structure matches the known one before any hypothesis is tested.</p>
+                  <h4>From 8,186 candidates to 260</h4>
+                  <p class="text-secondary">Rank aggregation returns 294 up and 615 down at adjusted p&nbsp;&lt;&nbsp;0.05, and the shortlist keeps the 260 genes that are also individually significant, in the same direction, in every one of the five cohorts. Two sanity checks come free: the up list is dominated by mitotic machinery and the down list is an adipose and stromal loss signature &mdash; exactly what comparing tumour against normal breast, which is largely fat and stroma, should produce. That is evidence the pipeline is wired correctly, not a discovery.</p>
                 </li>
                 <li>
-                  <h4>Differential expression</h4>
-                  <p class="text-secondary">Subtype-versus-subtype contrasts with a negative-binomial model, Benjamini-Hochberg correction, and thresholds fixed in advance at adjusted p below 0.05 and absolute log2 fold change above 1.</p>
+                  <h4>Characterising a candidate, and guarding against its confounders</h4>
+                  <p class="text-secondary">Survival uses a <em>pre-specified</em> median split rather than the cut-point that minimises p, which would inflate significance badly; Kaplan&ndash;Meier with 95% bands and a log-rank test, censored at five years, then Cox adjusted for stage, age and subtype, with the proportional-hazards assumption checked rather than assumed. Two sensitivity analyses guard the split: a top-40%-versus-bottom-40% comparison with the middle fifth dropped rather than reassigned, and a sweep across 50/50, 60/40, 70/30, 80/20 and 90/10. Subtype comparisons use non-parametric tests, because the group sizes differ by more than an order of magnitude.</p>
                 </li>
                 <li>
-                  <h4>Pathway enrichment</h4>
-                  <p class="text-secondary">Over-representation and rank-based enrichment against Hallmark and GO gene sets, so the gene lists become biology rather than a list of symbols.</p>
+                  <h4>Building the co-expression network</h4>
+                  <p class="text-secondary">&ldquo;Hub&rdquo; is a property of a network, so the network is built before anything is called a hub: the 10,184 TCGA differentially expressed genes are filtered to 4,563 that are actually expressed across the cohort, joined by 20,326 edges wherever two genes correlate at |Spearman&nbsp;&rho;|&nbsp;&ge;&nbsp;0.70 across the 1,095 tumours, and split into 143 modules. The 200 most connected genes &mdash; degree 71 to 172 &mdash; are the hubs. No external interaction database contributes an edge: STRING or BioGRID would import evidence from other tissues and experiments, which is precisely what a TCGA-only analysis excludes.</p>
                 </li>
                 <li>
-                  <h4>Survival analysis</h4>
-                  <p class="text-secondary">Patients are split at the median expression of each candidate gene for Kaplan-Meier curves and the log-rank test, then a Cox proportional-hazards model adds stage and age so that a gene is not credited for what stage already explains. The proportional-hazards assumption is checked rather than assumed.</p>
+                  <h4>Asking the enrichment question in a way that can return &ldquo;no&rdquo;</h4>
+                  <p class="text-secondary">A first pass over twenty databases returns 3,034 terms at FDR&nbsp;&lt;&nbsp;0.05, tested against two backgrounds that answer different questions: against all expressed genes, what biology are the hubs part of; against the other differentially expressed genes, what makes a hub different from any ordinary tumour-altered gene. But &ldquo;what passed&rdquo; is the wrong instrument for &ldquo;is motility involved?&rdquo;, so a second, directed test names the canonical proliferation and motility sets in advance and reports every one of them whether it passes or not. That is what <a href="results.html#pathways">Results Figure&nbsp;6</a> draws, and it is why a failing set is faded on that figure rather than deleted from it.</p>
                 </li>
                 <li>
-                  <h4>Validation</h4>
-                  <p class="text-secondary">The strongest candidates are re-tested in METABRIC. A finding that does not replicate is reported as not replicating, not quietly dropped.</p>
+                  <h4>Testing whether a signal is tumour or stroma</h4>
+                  <p class="text-secondary">One module in the network does carry a strong EMT signature, which would be a real finding if it came from the cancer cells. Each module is scored per tumour and correlated against markers whose cellular origin is not in doubt. That module tracks fibroblast content at +0.86 and epithelial content at &minus;0.14 &mdash; cancer cells changing state would move <em>with</em> epithelial content, not against it. So it is measuring how much fibroblast is admixed in each bulk sample. The proliferation module behaves the opposite way, and is a programme of the carcinoma cells themselves.</p>
+                </li>
+                <li>
+                  <h4>Export to this website</h4>
+                  <p class="text-secondary">Every figure on this site is exported from the analysis together with the table of values behind it and a record of how it was produced. Nothing is recomputed at that stage and nothing is synthesised: the export aborts rather than publish a figure that disagrees with the analysis. The survival export, for instance, refuses to run unless the recomputed sample count, event count, hazard ratio and log-rank p match the values the analysis itself reported &mdash; so the site and the analysis cannot quietly drift apart.</p>
                 </li>
               </ol>
             </div>
@@ -142,41 +155,46 @@
               <h2>Software</h2>
               <div class="table-wrap">
                 <table>
-                  <caption>Placeholder stack &mdash; pin exact versions before submission.</caption>
+                  <caption>Versions as recorded on the run that produced the results shown on this site.</caption>
                   <thead>
                     <tr><th scope="col">Purpose</th><th scope="col">Tool</th><th scope="col">Version</th></tr>
                   </thead>
                   <tbody>
-                    <tr><th scope="row">Language</th><td>Python / R</td><td>TBD</td></tr>
-                    <tr><th scope="row">Data access</th><td>GDC client, cBioPortal export</td><td>TBD</td></tr>
-                    <tr><th scope="row">Differential expression</th><td>DESeq2 or edgeR</td><td>TBD</td></tr>
-                    <tr><th scope="row">Enrichment</th><td>clusterProfiler / GSEApy</td><td>TBD</td></tr>
-                    <tr><th scope="row">Survival</th><td>lifelines or survival</td><td>TBD</td></tr>
-                    <tr><th scope="row">Figures</th><td>Exported to JSON, drawn in this site</td><td>&mdash;</td></tr>
+                    <tr><th scope="row">Language</th><td>R (aarch64 macOS)</td><td>4.6.1</td></tr>
+                    <tr><th scope="row">TCGA access</th><td>TCGAbiolinks</td><td>2.40.0</td></tr>
+                    <tr><th scope="row">GEO access</th><td>GEOquery</td><td>2.80.0</td></tr>
+                    <tr><th scope="row">Differential expression, RNA-seq</th><td>DESeq2</td><td>not pinned</td></tr>
+                    <tr><th scope="row">Differential expression, arrays and FPKM</th><td>limma</td><td>3.68.5</td></tr>
+                    <tr><th scope="row">Normalisation</th><td>edgeR (TMM)</td><td>4.10.3</td></tr>
+                    <tr><th scope="row">Meta-analysis</th><td>RobustRankAggreg</td><td>1.2.1</td></tr>
+                    <tr><th scope="row">Network and modules</th><td>igraph (Louvain)</td><td>2.3.3</td></tr>
+                    <tr><th scope="row">Enrichment</th><td>clusterProfiler</td><td>4.20.0</td></tr>
+                    <tr><th scope="row">Gene set definitions</th><td>msigdbr</td><td>26.1.1</td></tr>
+                    <tr><th scope="row">Gene annotation</th><td>org.Hs.eg.db</td><td>3.23.1</td></tr>
+                    <tr><th scope="row">Survival</th><td>survival</td><td>3.8.6</td></tr>
+                    <tr><th scope="row">Figure export</th><td>jsonlite</td><td>2.0.0</td></tr>
+                    <tr><th scope="row">Figures on this site</th><td>Hand-written SVG, no charting library</td><td>&mdash;</td></tr>
                   </tbody>
                 </table>
               </div>
+              <p class="meta">
+                DESeq2 carries no version because the TCGA differential expression was run in
+                the original acquisition notebook, whose session record was not kept. Every
+                other version is recorded automatically at the time the analysis ran.
+              </p>
             </div>
 
             <div id="repro">
               <h2>Reproducibility</h2>
               <p>
                 Analysis code lives in a separate repository; this site holds only the
-                exported results. Each figure reads from a single data file, so regenerating
-                a figure means replacing one JSON object and reloading the page.
+                exported results. Each stage is a separate script run in dependency order,
+                every download is cached, and each step is independently re-runnable, so
+                repeating the analysis costs compute rather than bandwidth. Each script
+                writes a record of its own inputs, parameters and software versions
+                alongside its output.
               </p>
-<pre><code># Reproduce the analysis
-git clone https://github.com/your-handle/brca-analysis
-cd brca-analysis
-make data      # download and verify against the manifest
-make analysis  # QC, normalisation, DE, enrichment, survival
-make export    # write assets/data/results.json for the website</code></pre>
-              <div class="callout callout--todo">
-                <span class="callout__icon" aria-hidden="true">&#9998;</span>
-                <div class="callout__body">
-                  <p class="mb-0"><strong>To add:</strong> the real repository link, an environment file with pinned versions, and the random seeds used anywhere sampling occurs.</p>
-                </div>
-              </div>
+
             </div>
 
           </div>
@@ -211,6 +229,7 @@ make export    # write assets/data/results.json for the website</code></pre>
             <li><a href="methods.html">Methods</a></li>
             <li><a href="results.html">Results</a></li>
             <li><a href="discussion.html">Discussion</a></li>
+            <li><a href="code.html">Code</a></li>
           </ul>
         </div>
         <div>
@@ -225,15 +244,14 @@ make export    # write assets/data/results.json for the website</code></pre>
           <h4>About</h4>
           <ul>
             <li><a href="about.html">About this project</a></li>
-            <li><a href="about.html#references">References</a></li>
+            <li><a href="discussion.html#references">References</a></li>
             <li><a href="mailto:you@example.com">Contact</a></li>
           </ul>
         </div>
       </div>
 
       <div class="site-footer__bottom">
-        <span>&copy; <span data-year>2026</span> Your Name. Independent secondary-school research project.</span>
-        <span>All figures on this site currently show placeholder data.</span>
+        <span>&copy; <span data-year>2026</span> Zoe Ng.</span>
       </div>
     </div>
   </footer>
