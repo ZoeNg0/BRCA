@@ -96,25 +96,11 @@
               <div class="callout callout--todo">
                 <span class="callout__icon" aria-hidden="true">&#9998;</span>
                 <div class="callout__body">
-                  <p class="mb-0"><strong>Your opening paragraph goes here.</strong> One short paragraph on how you came to computational biology &mdash; the specific thing that caught your attention, not a general statement about loving science. The paragraph below already covers what you did, so this one only has to cover why.</p>
+                  <p class="mb-0">I first became interested in computational biology when I learned how researchers could use genetic data to study diseases like cancer. I was particularly interested in how differences in gene expression could affect cancer progression and patient survival. I wanted to see how this worked using real data, rather than just reading about other people's research. This led me to focus on PPP4C in breast cancer and investigate whether its expression was associated with patient outcomes.</p>
                 </div>
               </div>
               <p>
-                Everything on this site was done from scratch: downloading the TCGA breast
-                cancer cohort and its clinical records, assembling four further cohorts
-                from public repositories, choosing a differential expression method
-                appropriate to each measurement platform, combining five cohorts by rank
-                aggregation, fitting the survival models, building a co-expression network
-                from the tumour signal, and testing gene sets against it. The figures are
-                drawn from those results; the site itself &mdash; the layout, the charts
-                and the code viewer &mdash; was written by hand in plain HTML, CSS and
-                JavaScript, with no framework and no charting library.
-              </p>
-              <p>
-                No part of the analysis was run for me, and nothing on the site is
-                simulated. Where a result is weaker than I would like &mdash; the adjusted
-                hazard ratio that lands at p&nbsp;=&nbsp;0.05, the motility programme that
-                turns out to be absent &mdash; it is reported as it came out.
+                I started by downloading the TCGA breast cancer dataset and its clinical records, along with four additional datasets from public databases. Since the datasets were collected using different methods, I had to choose an appropriate way to analyze gene expression for each one. I then combined the results from all five datasets, looked at the relationship between gene expression and patient survival, built a gene co-expression network, and analyzed different groups of genes. I also built this website using HTML, CSS, and JavaScript, including the layout, graphs, and code viewer, without using any frameworks or charting libraries.
               </p>
             </div>
 
@@ -172,12 +158,11 @@
                 being studied long after their own treatment ended. A project like this one
                 is only possible because of that.
               </p>
-              <div class="callout callout--todo">
-                <span class="callout__icon" aria-hidden="true">&#9998;</span>
-                <div class="callout__body">
-                  <p class="mb-0"><strong>To add:</strong> anyone who helped &mdash; a teacher, a mentor, anyone who read a draft or answered a question.</p>
-                </div>
-              </div>
+              <p>
+                Thank you to my mentor and subject matter expert,
+                <a href="https://www.linkedin.com/in/mehrdadmoosavi/" target="_blank" rel="noopener">Mehrdad Moosavi</a>,
+                for his guidance throughout this project.
+              </p>
             </div>
 
             <div id="contact">
