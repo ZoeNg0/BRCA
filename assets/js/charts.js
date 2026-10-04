@@ -1127,7 +1127,8 @@
     var ends = svgEl('g', {}, g);
     var slotOf = {};
     (data.groups || []).forEach(function (gr) { slotOf[gr.label] = gr.slot; });
-    var nColor = series(slotOf.Normal || 3), tColor = series(slotOf.Tumour || 8);
+    /* Normal takes the volcano's green rather than slot 3's teal. */
+    var nColor = downColor, tColor = series(slotOf.Tumour || 8);
     data.pairs.forEach(function (pr) {
       svgEl('circle', { cx: xN, cy: y(pr.normal), r: 2, fill: nColor, opacity: 0.62 }, ends);
       svgEl('circle', { cx: xT, cy: y(pr.tumour), r: 2, fill: tColor, opacity: 0.62 }, ends);
