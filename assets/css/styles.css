@@ -167,6 +167,8 @@ hr {
 .stack-lg > * + * { margin-top: var(--sp-6); }
 
 .grid { display: grid; gap: var(--sp-5); }
+/* Same gap below as between cells, so a following callout doesn't butt up. */
+.grid:not(:last-child) { margin-bottom: var(--sp-5); }
 .grid--2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .grid--3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 .grid--4 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
