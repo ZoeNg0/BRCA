@@ -469,7 +469,7 @@ a.card:hover {
      own colour while the rest of the border turns rose. */
   .callout:hover { border-left-color: var(--accent); }
   .callout--todo:hover { border-left-color: var(--status-warning); }
-  .callout--note:hover { border-left-color: var(--series-3); }
+  .callout--note:hover { border-left-color: var(--diverge-low); }
 
   /* The skills chips: too small to lift, so they take the rose wash instead. */
   .chip-row .badge {
@@ -532,7 +532,7 @@ a.card:hover {
 .callout > :last-child { margin-bottom: 0; }
 .callout__body > :last-child { margin-bottom: 0; }
 .callout--todo { border-left-color: var(--status-warning); }
-.callout--note { border-left-color: var(--series-3); }
+.callout--note { border-left-color: var(--diverge-low); }
 .callout__icon { flex: none; font-size: 1.1rem; line-height: 1.5; }
 
 .chip-row { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-4); }
