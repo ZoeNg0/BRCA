@@ -80,11 +80,9 @@
         <p class="eyebrow">Section 04</p>
         <h1>Results</h1>
         <p class="lede">
-          Six figures, asked in the order the question needs them: is
-          <strong>PPP4C</strong> shifted in tumours at all, does that shift hold inside
-          individual patients, how does it sit against the rest of the transcriptome, is
-          it one subtype doing the work, does it track with how long patients live, and
-          what programme is the tumour signal as a whole built around.
+          Six figures looking at whether <strong>PPP4C</strong> is higher in tumours, whether
+          this holds within patients and across subtypes, whether it's linked to survival,
+          and what the wider tumour signal is made of.
         </p>
       </div>
     </section>
@@ -122,25 +120,21 @@
           <div class="stack-lg">
 
             <div id="expression">
-              <h2>Is PPP4C expression shifted in tumours?</h2>
+              <h2>PPP4C in tumour vs normal tissue</h2>
               <p>
-                Before anything about outcome can be asked, the gene has to be doing
-                something. Protein phosphatase 4 has been reported as elevated in several
-                solid tumours, so the first test is the plainest one available: compare
-                PPP4C in tumour tissue against normal breast tissue. One cohort answering
-                that question is an observation; five independent cohorts, on four
-                different measurement platforms, answering it the same way is a result.
-                That is the comparison the target selection actually rested on, so it is
-                where this section starts.
+                The first question was whether PPP4C is higher in tumour tissue than in normal
+                breast tissue. Protein phosphatase 4 has been reported as raised in several solid
+                tumours, and this comparison was the basis for choosing the gene, so I started
+                here. One cohort on its own would only be an observation, so I checked it in five
+                independent cohorts measured on four different platforms.
               </p>
               <p>
-                Each cohort is drawn on its own axis, in its own units. That is deliberate.
-                These five datasets were measured on four different platforms &mdash; RNA-seq
-                counts, FPKM, and two generations of microarray &mdash; and their raw PPP4C
-                values do not share a scale. Putting them on one axis would mean transforming
-                them first, and the transformation, rather than the biology, would be doing
-                the work. Five separate panels need no such justification: each one is simply
-                that cohort's tumours against that cohort's normals.
+                Each cohort is plotted on its own axis and in its own units. The five datasets
+                come from four platforms (RNA-seq counts, FPKM, and two generations of
+                microarray), and their raw PPP4C values aren't on the same scale. Putting them on
+                one axis would mean transforming the data first, and then differences could come
+                from the transformation instead of the biology. With separate panels, each one
+                just shows that cohort's tumours against its own normal samples.
               </p>
 
               <figure class="figure" data-chart="boxpanels" data-source="ppp4.cohortBoxes" data-height="290"
@@ -149,7 +143,7 @@
                 <div class="figure__head">
                   <div class="figure__titles">
                     <h3 class="figure__title">Figure 1 &mdash; PPP4C in tumour and normal tissue, in five independent cohorts</h3>
-                    <p class="figure__subtitle">One panel per cohort, each on its <em>own</em> axis in its <em>own</em> units &mdash; the panels are not to a common scale, so box heights should not be compared between them. Within each panel: boxes are median and interquartile range, whiskers extend to 1.5&times; IQR, open circles are values beyond them, and the dots behind are a thinned sample of the individual samples.</p>
+                    <p class="figure__subtitle">One panel per cohort, each with its <em>own</em> axis and units, so box heights can't be compared between panels. Boxes show the median and interquartile range, whiskers extend to 1.5&times; the IQR, open circles are values beyond that, and the dots behind are a thinned sample of individual samples.</p>
                   </div>
                   <div class="figure__tools">
                     <button class="btn btn--ghost btn--sm" type="button" data-table-toggle aria-expanded="false">Table</button>
@@ -163,29 +157,29 @@
                   <abbr title="The Cancer Genome Atlas, breast invasive carcinoma">TCGA-BRCA</abbr>
                   and GEO series GSE70947, GSE58135, GSE42568 and GSE86374. The test named under each panel
                   is the one that cohort's differential expression actually used, and each
-                  fold change is the value that analysis produced &mdash; nothing was
-                  recomputed to make the panels agree with each other.
+                  fold change is the value from that analysis. Nothing was recalculated to make
+                  the panels match.
                 </p>
               </figure>
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p><strong>Why the effect sizes differ between panels.</strong> The array cohorts GSE70947 and GSE86374 show the smallest shifts &mdash; +0.56 and +0.84 log&#8322; units, against +1.34 in the RNA-seq TCGA cohort. That ordering is a property of the measurement rather than the biology: microarray dynamic range compresses large fold-changes, which this project's validation report flags independently. The direction is consistent on every platform; the magnitude is not, and should not be read as though it were.</p>
-                  <p class="mb-0">The evidence that PPP4C is genuinely elevated is the agreement of five independent differential-expression results, combined by rank aggregation (RRA adjusted p = 3.8&times;10&#8315;&#179;, same direction in all five) &mdash; not any one panel's p-value.</p>
+                  <p><strong>Effect sizes by platform.</strong> The array cohorts GSE70947 and GSE86374 have the smallest shifts (+0.56 and +0.84 log&#8322; units), compared with +1.34 in the TCGA RNA-seq cohort. This comes from the measurement rather than the biology, since microarrays have a narrower dynamic range and compress large fold changes. This project's validation report flags the same thing. The direction is consistent across platforms, but the size of the shift shouldn't be compared between them.</p>
+                  <p class="mb-0">The main evidence that PPP4C is raised is that five independent differential expression results agree. Combined by rank aggregation, the adjusted p is 3.8&times;10&#8315;&#179;, with the same direction in all five. The conclusion doesn't depend on any single panel's p-value.</p>
                 </div>
               </div>
 
             </div>
 
             <div id="paired">
-              <h2>Does it hold inside individual patients?</h2>
+              <h2>Matched patient pairs</h2>
               <p>
-                Comparing one set of tumours against a different set of normal tissue leaves
-                a loophole open: the difference could reflect who the patients are rather
-                than what the tumour did. TCGA closes it. Every one of its 113 normal samples
-                comes from a patient who also contributed a tumour, so each patient can serve
-                as their own control, and the question sharpens &mdash; does PPP4C rise
-                <em>within</em> a person, not merely on average across groups?
+                Comparing a group of tumours with a separate group of normal samples has a
+                weakness: the difference could be due to who the patients are, and not to the
+                tumour itself. TCGA gets around this because all 113 of its normal samples come
+                from patients who also have a tumour sample. Each patient can then be their own
+                control, and the question becomes whether PPP4C goes up <em>within</em> each
+                person.
               </p>
 
               <figure class="figure" data-chart="paired" data-source="ppp4.paired" data-height="470"
@@ -194,7 +188,7 @@
                 <div class="figure__head">
                   <div class="figure__titles">
                     <h3 class="figure__title">Figure 2 &mdash; PPP4C in 113 matched tumour/normal pairs</h3>
-                    <p class="figure__subtitle">One line per patient, joining their own normal sample to their own tumour. Lines are coloured by direction, and the four patients who move downward are drawn at full strength so they stay visible. Thick bars mark each column's median. Hover a line to follow a single patient.</p>
+                    <p class="figure__subtitle">Each line is one patient, connecting their normal sample to their tumour. Lines are coloured by direction, and the four patients who go down are drawn at full strength so they're easy to see. Thick bars show the median for each column. Hover over a line to follow a patient.</p>
                   </div>
                   <div class="figure__tools">
                     <button class="btn btn--ghost btn--sm" type="button" data-table-toggle aria-expanded="false">Table</button>
@@ -204,31 +198,30 @@
                 <div class="figure__plot"></div>
                 <div class="figure__table" hidden></div>
                 <p class="figure__note">
-                  <strong>Real data.</strong> All 113 TCGA normal samples come from 113
-                  distinct patients who each also contributed a tumour, so every normal is
-                  matched and none is left out. Where a patient had more than one tumour
-                  aliquot &mdash; four patients did &mdash; the one with the largest library
-                  size was kept.
+                  <strong>Real data.</strong> All 113 TCGA normal samples are from 113 different
+                  patients who also have a tumour sample, so every normal is matched. Four
+                  patients had more than one tumour aliquot, and for them I kept the one with
+                  the largest library size.
                 </p>
               </figure>
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p><strong>109 of 113 patients go up; four go down.</strong> The four exceptions are small &mdash; between &minus;0.09 and &minus;0.21 log&#8322; units, inside the range of ordinary measurement noise &mdash; so they read less as a subgroup moving the other way than as a handful of patients showing no real change. They are worth leaving visible: a figure showing only the median would not admit they exist.</p>
-                  <p class="mb-0"><strong>One inconsistency worth stating.</strong> This figure uses a paired test, but the TCGA differential expression behind Figures 1 and 3 was run <em>unpaired</em> on the same samples. Pairing is the stronger design and would likely give a smaller p-value again; the unpaired result is reported as it was actually run rather than quietly upgraded here. The tumour median also differs between the two figures &mdash; 6.91 against 6.79 &mdash; because Figure 1 uses all 1,111 tumours and this one only the 113 that have a matched normal.</p>
+                  <p><strong>Patients where PPP4C went down.</strong> Four of the 113 patients go down. The changes are small, between &minus;0.09 and &minus;0.21 log&#8322; units, which is within normal measurement noise, so these look like patients with no real change rather than a subgroup going the opposite way. I've kept them visible because a plot showing only the median would hide them.</p>
+                  <p class="mb-0"><strong>Paired vs unpaired testing.</strong> This figure uses a paired test, but the TCGA differential expression in Figures 1 and 3 was run <em>unpaired</em> on the same samples. A paired analysis is the stronger design and would probably give an even smaller p-value, but I've reported the unpaired result as it was actually run. The tumour median also differs between the two figures (6.91 vs 6.79) because Figure 1 uses all 1,111 tumours and this one only uses the 113 with a matched normal.</p>
                 </div>
               </div>
 
             </div>
 
             <div id="transcriptome">
-              <h2>What else separates tumour from normal?</h2>
+              <h2>Genome-wide comparison</h2>
               <p>
-                PPP4C did not come from a guess. It came out of a genome-wide comparison of
-                tumour against normal tissue, and the field it was selected from is worth
-                seeing. Each point below is one gene, and PPP4C is ringed: comfortably inside
-                the significant region, but nowhere near the extremes. That is the honest
-                picture of it &mdash; a reproducible signal, not the loudest one on the plot.
+                PPP4C was picked from a genome-wide comparison of tumour and normal tissue, and
+                this plot shows all the genes it was picked from. Each point is a gene, with
+                PPP4C circled. It's well within the significant region but not near the
+                extremes, so it's a reproducible signal without being one of the strongest on
+                the plot.
               </p>
 
               <figure class="figure" data-chart="volcano" data-source="tcgaVolcano" data-height="480"
@@ -236,8 +229,8 @@
                       data-table-caption="Strongest tumour-versus-normal genes by adjusted p-value">
                 <div class="figure__head">
                   <div class="figure__titles">
-                    <h3 class="figure__title">Figure 3 &mdash; Tumour versus normal across the transcriptome, with PPP4C in place</h3>
-                    <p class="figure__subtitle">Each point is one gene. Dashed lines mark the significance and fold-change thresholds; the strongest hits are labelled directly, and PPP4C carries an extra ring so it can be found among them.</p>
+                    <h3 class="figure__title">Figure 3 &mdash; Tumour vs normal across all genes, with PPP4C marked</h3>
+                    <p class="figure__subtitle">Each point is one gene. Dashed lines show the significance and fold-change cutoffs. The strongest hits are labelled, and PPP4C has an extra ring to make it easier to find.</p>
                   </div>
                   <div class="figure__tools">
                     <button class="btn btn--ghost btn--sm" type="button" data-table-toggle aria-expanded="false">Table</button>
@@ -247,28 +240,25 @@
                 <div class="figure__plot"></div>
                 <div class="figure__table" hidden></div>
                 <p class="figure__note">
-                  <strong>Real data, thinned to keep its shape.</strong> 5,785 of 39,393
-                  tested genes are plotted. Drawing all of them would not render smoothly,
-                  so the plane is divided into bins: every gene in a sparsely populated bin
-                  is kept &mdash; those carry the outline and the extreme genes at both ends
-                  &mdash; and only the crowded interiors are thinned. Density is reduced
-                  where nothing is lost by it and nowhere else, so both wings stay
-                  continuous with the central cloud rather than being cut off at a
-                  threshold. The counts printed on the figure are the true totals, not the
-                  plotted ones.
+                  <strong>Real data, thinned.</strong> 5,785 of the 39,393 tested genes are
+                  plotted, since plotting all of them would make the figure slow. I split the
+                  plot into bins and kept every gene in the sparse bins, which includes the
+                  outline and the most extreme genes, and only thinned the crowded middle. This
+                  keeps the overall shape, and the wings stay connected to the central cloud
+                  instead of being cut off at a threshold. The counts printed on the figure are
+                  the true totals.
                 </p>
               </figure>
 
             </div>
 
             <div id="subtype">
-              <h2>Is it one subtype doing the work?</h2>
+              <h2>PPP4C by subtype</h2>
               <p>
-                A tumour-versus-normal difference can hide a large effect confined to one
-                group. Breast cancer is not one disease, and if PPP4C were elevated only in,
-                say, basal-like tumours, everything above would need rewriting as a
-                statement about that subtype rather than about breast cancer. Reading PPP4C
-                across the five PAM50 intrinsic subtypes separates those possibilities.
+                An overall tumour-vs-normal difference could be driven by a big change in just
+                one subtype. If PPP4C were only raised in basal-like tumours, for example, the
+                results above would really be about that subtype and not breast cancer in
+                general. Comparing PPP4C across the five PAM50 subtypes checks for this.
               </p>
 
               <figure class="figure" data-chart="box" data-source="ppp4.bySubtype" data-height="440"
@@ -277,7 +267,7 @@
                 <div class="figure__head">
                   <div class="figure__titles">
                     <h3 class="figure__title">Figure 4 &mdash; PPP4C across the five PAM50 subtypes</h3>
-                    <p class="figure__subtitle">TCGA tumours only, on the same log&#8322;&nbsp;CPM scale as the TCGA panel of Figure 1, so the two can be read against each other. Group sizes differ by more than an order of magnitude, so read each box against the n underneath it.</p>
+                    <p class="figure__subtitle">TCGA tumours only, on the same log&#8322;&nbsp;CPM scale as the TCGA panel in Figure 1 so they can be compared. Group sizes vary by more than tenfold, so check the n under each box.</p>
                   </div>
                   <div class="figure__tools">
                     <button class="btn btn--ghost btn--sm" type="button" data-table-toggle aria-expanded="false">Table</button>
@@ -287,29 +277,28 @@
                 <div class="figure__plot"></div>
                 <div class="figure__table" hidden></div>
                 <p class="figure__note">
-                  <strong>Real data.</strong> 1,083 patients with a PAM50 call. Post-hoc
-                  Wilcoxon tests on all ten subtype pairs, Benjamini&ndash;Hochberg
-                  adjusted: eight of the ten survive correction.
+                  <strong>Real data.</strong> 1,083 patients with a PAM50 call. Post-hoc Wilcoxon
+                  tests on all ten subtype pairs, with Benjamini&ndash;Hochberg adjustment: eight
+                  of the ten are still significant after correction.
                 </p>
               </figure>
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p><strong>Subtype modulates the effect; it does not explain it.</strong> The subtype medians span 6.48 to 7.27 &mdash; a range of 0.79 log&#8322; units &mdash; while the tumour-versus-normal shift in the same cohort is +1.34. PPP4C is raised in every subtype, highest in HER2-enriched and lowest in Normal-like, and the difference between subtypes is the smaller effect. Luminal A against Basal-like is the clearest null in the whole set (adjusted p = 0.39). So this is a pan-breast change that subtype tilts, not a subtype-restricted one.</p>
-                  <p class="mb-0"><strong>Why the n is not 1,111.</strong> PAM50 is called once per patient, so the sixteen duplicate aliquots that Figure 1 keeps have to collapse first (1,111 &rarr; 1,095), and twelve further patients carry no PAM50 call at all. They are dropped rather than shown as a sixth group, which is why this figure plots 1,083. The survival analysis below is smaller again.</p>
+                  <p><strong>Subtype differences.</strong> Subtype medians range from 6.48 to 7.27, a spread of 0.79 log&#8322; units, while the tumour-vs-normal shift in the same cohort is +1.34. PPP4C is raised in every subtype, highest in HER2-enriched and lowest in Normal-like, and the differences between subtypes are smaller than the tumour-vs-normal difference. Luminal A vs Basal-like shows no difference (adjusted p = 0.39). So the increase applies to breast cancer in general, with subtype shifting it slightly up or down.</p>
+                  <p class="mb-0"><strong>Sample size.</strong> PAM50 is assigned per patient, so the sixteen duplicate aliquots kept in Figure 1 had to be merged first (1,111 &rarr; 1,095). Another twelve patients have no PAM50 call and were left out instead of being shown as a sixth group, which leaves 1,083. The survival analysis below uses a smaller number again.</p>
                 </div>
               </div>
 
             </div>
 
             <div id="survival">
-              <h2>Does PPP4C track with survival?</h2>
+              <h2>Survival</h2>
               <p>
-                Expression differences only matter clinically if they connect to outcome.
-                Splitting the cohort at the median PPP4C value and following both halves for
-                five years asks the question directly. Five years is the window the analysis
-                was restricted to: beyond it the numbers still at risk thin out and the
-                curves stop being worth reading.
+                Differences in expression only matter clinically if they're linked to outcome. I
+                split the cohort at the median PPP4C value and followed both groups for five
+                years. I stopped at five years because after that, not enough patients are still
+                being followed for the curves to be reliable.
               </p>
 
               <figure class="figure" data-chart="survival" data-source="ppp4.survival" data-height="430"
@@ -318,7 +307,7 @@
                 <div class="figure__head">
                   <div class="figure__titles">
                     <h3 class="figure__title">Figure 5 &mdash; Five-year overall survival by PPP4C expression</h3>
-                    <p class="figure__subtitle">Median split, administratively censored at 60 months. Shaded bands are Greenwood 95% confidence intervals; vertical ticks are censored patients; the table beneath the axis is the number still at risk.</p>
+                    <p class="figure__subtitle">Median split, censored at 60 months. Shaded bands are Greenwood 95% confidence intervals, vertical ticks mark censored patients (no longer followed), and the table under the axis shows how many patients are still at risk.</p>
                   </div>
                   <div class="figure__tools">
                     <button class="btn btn--ghost btn--sm" type="button" data-table-toggle aria-expanded="false">Table</button>
@@ -328,18 +317,17 @@
                 <div class="figure__plot"></div>
                 <div class="figure__table" hidden></div>
                 <p class="figure__note">
-                  <strong>Real data.</strong> 1,071 patients &mdash; 536 PPP4C-low, 535
-                  PPP4C-high &mdash; with 99 deaths inside the five-year window (39 and 60).
-                  A further 50 deaths occurred after five years and are censored at 60
-                  months.
+                  <strong>Real data.</strong> 1,071 patients (536 PPP4C-low, 535 PPP4C-high),
+                  with 99 deaths within five years (39 and 60). Another 50 deaths happened
+                  after five years and are censored at 60 months.
                 </p>
               </figure>
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p><strong>The separation is real but modest, and the adjusted result is borderline.</strong> The curves separate early and stay apart, ending 5.1 percentage points apart at five years (84.5% against 79.4%), with a log-rank p of 0.021 and a hazard ratio of 1.60 (95% CI 1.07&ndash;2.39). Adjusted for age, AJCC stage and PAM50 subtype, the hazard ratio is 1.53 (95% CI 1.00&ndash;2.35, p = 0.0501, n = 1,022) &mdash; the confidence interval touches 1 and the p-value lands just the wrong side of the conventional threshold.</p>
-                  <p><strong>What that means.</strong> PPP4C-high tumours do worse, and adjusting for the obvious confounders does not remove the association &mdash; but nor does it establish it as independent. The honest reading is that PPP4C carries prognostic information which is largely, though not entirely, shared with stage and subtype. It is a hypothesis worth testing in a second cohort, not a validated independent marker.</p>
-                  <p class="mb-0"><strong>Two caveats on the statistics.</strong> The whole analysis rests on 99 events, which is what makes the confidence intervals as wide as they are. The proportional hazards assumption holds for the univariate model the curve depicts (Schoenfeld global p = 0.061) but is weaker for the adjusted model, so the adjusted hazard ratio should be read as a summary rather than a constant effect over time.</p>
+                  <p><strong>Survival results.</strong> The curves separate early and stay apart, ending 5.1 percentage points apart at five years (84.5% vs 79.4%), with a log-rank p of 0.021 and a hazard ratio of 1.60 (95% CI 1.07&ndash;2.39). After adjusting for age, AJCC stage and PAM50 subtype, the hazard ratio is 1.53 (95% CI 1.00&ndash;2.35, p = 0.0501, n = 1,022). The confidence interval touches 1 and the p-value is just above the usual 0.05 cutoff.</p>
+                  <p><strong>Interpretation.</strong> Patients with high PPP4C have worse survival, and adjusting for the main confounders doesn't remove the association, but it doesn't show it's independent either. Most, though not all, of the prognostic information in PPP4C overlaps with stage and subtype. It should be tested in a second cohort before being treated as an independent marker.</p>
+                  <p class="mb-0"><strong>Caveats.</strong> The analysis is based on only 99 deaths, which is why the confidence intervals are wide. The proportional hazards assumption holds for the unadjusted (univariate) model shown in the plot (Schoenfeld global p = 0.061) but is weaker for the adjusted model, so the adjusted hazard ratio is best treated as an average over time.</p>
                 </div>
               </div>
 
@@ -347,27 +335,23 @@
             </div>
 
             <div id="pathways">
-              <h2>What is this tumour network built around?</h2>
+              <h2>Hub gene enrichment</h2>
               <p>
-                Everything above is about one gene. This last figure steps back and asks
-                what the whole tumour-versus-normal signal is organised around, because a
-                gene means something different depending on the company it keeps. Every
-                gene that cleared the Figure&nbsp;3 thresholds becomes a node; any two
-                nodes whose expression correlates at |Spearman&nbsp;&rho;|&nbsp;&ge;&nbsp;0.70
-                across the 1,095 tumours are joined by an edge; and the 200 most connected
-                genes in the resulting 4,563-gene network are its hubs. The question this
-                figure asks is what those 200 genes are <em>for</em>, tested against 32
-                curated gene sets split between two themes &mdash; proliferation, and
-                EMT&nbsp;/&nbsp;motility.
+                The figures above are all about PPP4C. This one looks at the whole
+                tumour-vs-normal signal to see what it's organised around, since a gene's role
+                depends on the genes around it. Every gene that passed the Figure&nbsp;3 cutoffs
+                is a node, and two nodes are connected if their expression correlates at
+                |Spearman&nbsp;&rho;|&nbsp;&ge;&nbsp;0.70 across the 1,095 tumours. The 200
+                most connected genes in the resulting 4,563-gene network are the hubs. I tested
+                what those 200 genes are <em>for</em> using 32 curated gene sets in two groups:
+                proliferation, and EMT&nbsp;/&nbsp;motility.
               </p>
               <p>
-                One thing to be clear about before reading it: <strong>PPP4C is not one of
-                the hubs.</strong> It is in the network, comfortably past the
-                differential-expression filter, but with six connections it ranks 811th,
-                against the 71 to 172 connections that the hub genes carry. So this is not
-                a picture of PPP4C's own neighbourhood. It is the landscape PPP4C sits in,
-                and it is worth showing because that landscape turns out to be
-                heavily one-sided.
+                <strong>PPP4C isn't one of the hubs.</strong> It's in the network and passes the
+                differential expression filter easily, but it only has six connections and
+                ranks 811th, while the hubs have between 71 and 172. So this figure doesn't show
+                PPP4C's own neighbourhood. It shows the wider network PPP4C is part of, which
+                turns out to be very one-sided.
               </p>
 
               <figure class="figure" data-chart="enrichment" data-source="hubEnrichment" data-height="900"
@@ -376,7 +360,7 @@
                 <div class="figure__head">
                   <div class="figure__titles">
                     <h3 class="figure__title">Figure 6 &mdash; What the 200 hub genes are enriched for</h3>
-                    <p class="figure__subtitle">Fold enrichment over chance on a log axis, with the dashed line at 1&times; marking no enrichment. Bars run rightward for enrichment and leftward for depletion. Every tested set is drawn: the ones that fail correction are faded rather than removed, and a set containing no hub gene has no bar at all. Hover a row for its overlapping genes.</p>
+                    <p class="figure__subtitle">Fold enrichment over chance on a log scale. The dashed line at 1&times; means no enrichment, bars to the right show enrichment, and bars to the left show depletion. All tested sets are shown: ones that fail correction are faded, and sets with no hub genes have no bar. Hover over a row to see the overlapping genes.</p>
                   </div>
                   <div class="figure__tools">
                     <button class="btn btn--ghost btn--sm" type="button" data-table-toggle aria-expanded="false">Table</button>
@@ -386,21 +370,21 @@
                 <div class="figure__plot"></div>
                 <div class="figure__table" hidden></div>
                 <p class="figure__note">
-                  <strong>Real data.</strong> Hypergeometric over-representation of each
+                  <strong>Real data.</strong> Hypergeometric test for over-representation of each
                   set among the 200 hub genes, against the 18,133 genes expressed in these
-                  tumours, Benjamini&ndash;Hochberg corrected across the 32 sets shown. The
-                  network uses TCGA-BRCA alone &mdash; no STRING, BioGRID or other external
-                  interaction database contributes an edge, which is what keeps the
-                  evidence inside this cohort. Set definitions come from MSigDB.
+                  tumours, with Benjamini&ndash;Hochberg correction across the 32 sets. The
+                  network is built from TCGA-BRCA only, without STRING, BioGRID or any other
+                  interaction database, so all the evidence comes from this cohort. Gene set
+                  definitions are from MSigDB.
                 </p>
               </figure>
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p><strong>This network is a cell-cycle machine.</strong> Eight of the nine proliferation sets survive correction, and not narrowly: G2M checkpoint at 23.35&times;, E2F targets at 22.33&times;, mitotic nuclear division at 17.12&times;. Reactome's cell cycle set contains 71 of the 200 hubs on its own. Whatever else separates these tumours from normal tissue, the genes doing the connecting are the ones that run mitosis.</p>
-                  <p><strong>Motility mostly is not there, and that is the actual finding.</strong> Twenty-three EMT and motility sets were tested and four pass, all of them small: angiogenesis at 8.5&times; on three genes, the integrin-1 pathway at 5.58&times; on four, the EMT hallmark at 4.08&times; on nine, and GO cell migration at 1.65&times; &mdash; a fold that low is barely above chance even when the p-value clears. GO wound healing runs the other way entirely, at 0.45&times;, and four sets &mdash; TGF-&beta; signalling, apical junction, integrin signalling and smooth muscle contraction &mdash; contain no hub gene at all. This is why the figure draws its failures: filter to FDR&nbsp;&lt;&nbsp;0.05 and the result disappears, because the result <em>is</em> the absence.</p>
-                  <p><strong>Three things it does not show.</strong> The 32 sets overlap heavily &mdash; Reactome's cell cycle contains its own mitotic subset, and GO cell migration and cell motility share all 26 of their hub genes &mdash; so these are not 32 independent tests and the correction across them is approximate. A fold built on three or four genes, which is every EMT set that passed except cell migration, moves a long way if one gene changes. And hub membership is a property of the threshold: at |&rho;|&nbsp;&ge;&nbsp;0.70 the list is this one, and a looser cutoff would draw a different network.</p>
-                  <p class="mb-0"><strong>Read against the published work.</strong> The knockdown experiments discussed on the <a href="discussion.html#literature">Discussion</a> page report that removing PPP4C slows migration and invasion as well as growth. Nothing here contradicts that: this figure says motility programmes are not what the <em>hub structure</em> of the bulk tumour network is built on, which is a statement about co-expression in tissue, not about what a single gene can do to a cell in culture. It does temper how far the proliferation-and-motility story should be pushed from my data alone.</p>
+                  <p><strong>Proliferation sets.</strong> Eight of the nine proliferation sets pass correction, most by a wide margin: G2M checkpoint at 23.35&times;, E2F targets at 22.33&times;, and mitotic nuclear division at 17.12&times;. Reactome's cell cycle set alone contains 71 of the 200 hubs. The most connected genes in this network are mainly the ones involved in cell division.</p>
+                  <p><strong>EMT and motility sets.</strong> Of the twenty-three EMT and motility sets, four pass, and all of those are small: angiogenesis at 8.5&times; on three genes, the integrin-1 pathway at 5.58&times; on four, the EMT hallmark at 4.08&times; on nine, and GO cell migration at 1.65&times;, which is barely above chance even though the p-value passes. GO wound healing is depleted, at 0.45&times;, and four sets (TGF-&beta; signalling, apical junction, integrin signalling and smooth muscle contraction) contain no hub genes. Motility mostly isn't represented among the hubs, and that's the main result of this figure. Filtering to FDR&nbsp;&lt;&nbsp;0.05 would hide it completely, which is why the failed sets stay on the plot.</p>
+                  <p><strong>Limitations of this figure.</strong> The 32 sets overlap a lot. Reactome's cell cycle set includes its own mitotic subset, and GO cell migration and cell motility share all 26 of their hub genes, so these aren't 32 independent tests and the correction is only approximate. Folds based on three or four genes (every EMT set that passed except cell migration) can change a lot if a single gene changes. The hub list also depends on the cutoff, and a looser threshold than |&rho;|&nbsp;&ge;&nbsp;0.70 would give a different network.</p>
+                  <p class="mb-0"><strong>Compared with the published work.</strong> The knockdown experiments on the <a href="discussion.html#literature">Discussion</a> page found that removing PPP4C slows migration and invasion as well as growth, and nothing here contradicts that. This figure is about which programmes the <em>hub structure</em> of the bulk tumour network is built on, which is a question about co-expression in tissue. It doesn't test what a single gene does to a cell in culture. It does mean my data alone can't support much of a motility story.</p>
                 </div>
               </div>
 
@@ -413,10 +397,10 @@
             <ul class="toc">
               <li><a href="#expression">Tumour versus normal</a></li>
               <li><a href="#paired">Matched patient pairs</a></li>
-              <li><a href="#transcriptome">Across the transcriptome</a></li>
+              <li><a href="#transcriptome">Genome-wide comparison</a></li>
               <li><a href="#subtype">Subtype</a></li>
               <li><a href="#survival">Survival</a></li>
-              <li><a href="#pathways">Pathway enrichment</a></li>
+              <li><a href="#pathways">Hub gene enrichment</a></li>
             </ul>
           </aside>
         </div>

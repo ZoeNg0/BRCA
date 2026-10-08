@@ -80,8 +80,8 @@
         <p class="eyebrow">Section 02</p>
         <h1>Data</h1>
         <p class="lede">
-          Where every number in this project comes from, what was thrown away before
-          analysis, and how someone else could obtain exactly the same files.
+          Where every number on this site comes from, which samples were removed before
+          analysis, and how to get the same files yourself.
         </p>
       </div>
     </section>
@@ -92,17 +92,17 @@
           <div class="stack-lg">
 
             <div id="datasets">
-              <h2 class="mt-0">Five cohorts, four platforms</h2>
+              <h2 class="mt-0">Datasets</h2>
               <p>
-                TCGA-BRCA is the primary cohort: it supplies the expression matrix, the
-                clinical and follow-up data, the somatic mutation calls and the PAM50
-                subtype calls. The four GEO series do one job only &mdash; testing whether
-                a TCGA finding survives a change of platform and population.
+                TCGA-BRCA is the main cohort. It provides the expression data, clinical and
+                follow-up records, somatic mutation calls and PAM50 subtype labels. The four GEO
+                datasets are only used to check whether TCGA results hold up on other platforms
+                and in other populations.
               </p>
 
               <div class="table-wrap">
                 <table>
-                  <caption>Sample counts verified against sample-level metadata, not taken from publication abstracts.</caption>
+                  <caption>Sample counts checked against each sample's own metadata, not copied from paper abstracts.</caption>
                   <thead>
                     <tr>
                       <th scope="col">Cohort</th><th scope="col">Platform</th>
@@ -111,31 +111,31 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><th scope="row">TCGA-BRCA</th><td>RNA-seq, STAR counts</td><td class="num">1,111</td><td class="num">113</td><td>Discovery &mdash; and the only source of clinical, subtype and mutation data</td></tr>
-                    <tr><th scope="row">GSE70947</th><td>Agilent GPL13607</td><td class="num">148</td><td class="num">148</td><td>Replication &mdash; the only fully paired cohort, one tumour and one adjacent normal per patient</td></tr>
-                    <tr><th scope="row">GSE58135</th><td>RNA-seq, HiSeq 2000</td><td class="num">84</td><td class="num">56</td><td>Replication &mdash; independent RNA-seq, shares no platform artefacts with TCGA</td></tr>
-                    <tr><th scope="row">GSE42568</th><td>Affymetrix U133 Plus 2.0</td><td class="num">104</td><td class="num">17</td><td>Replication &mdash; the most-cited breast validation set in the literature</td></tr>
-                    <tr><th scope="row">GSE86374</th><td>Affymetrix Gene ST 1.0</td><td class="num">124</td><td class="num">35</td><td>Replication &mdash; a Mexican Hispanic cohort, for ancestry diversity</td></tr>
+                    <tr><th scope="row">TCGA-BRCA</th><td>RNA-seq, STAR counts</td><td class="num">1,111</td><td class="num">113</td><td>Discovery cohort; the only source of clinical, subtype and mutation data</td></tr>
+                    <tr><th scope="row">GSE70947</th><td>Agilent GPL13607</td><td class="num">148</td><td class="num">148</td><td>Replication; the only fully paired cohort (one tumour and one nearby normal sample per patient)</td></tr>
+                    <tr><th scope="row">GSE58135</th><td>RNA-seq, HiSeq 2000</td><td class="num">84</td><td class="num">56</td><td>Replication; independent RNA-seq, so it doesn't share TCGA's platform biases</td></tr>
+                    <tr><th scope="row">GSE42568</th><td>Affymetrix U133 Plus 2.0</td><td class="num">104</td><td class="num">17</td><td>Replication; the most-cited breast cancer validation set</td></tr>
+                    <tr><th scope="row">GSE86374</th><td>Affymetrix Gene ST 1.0</td><td class="num">124</td><td class="num">35</td><td>Replication; Mexican Hispanic cohort, for ancestry diversity</td></tr>
                   </tbody>
                 </table>
               </div>
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p><strong>Why these four, and not the four largest.</strong> Platform diversity beats raw sample count. A gene confirmed on Affymetrix <em>and</em> Agilent <em>and</em> an independent RNA-seq cohort is unlikely to be a probe artefact; the same gene confirmed across three studies on one array platform could still be one. These four give three platforms, three continents of ancestry, and both paired and unpaired designs. Around thirty other GEO series were surveyed and rejected &mdash; for tumour-only designs, unusable annotation, or normal arms too small to carry any power.</p>
-                  <p class="mb-0"><strong>Two handling decisions worth stating.</strong> GSE58135's 28 breast cancer cell lines are excluded at download, because this is a comparison of tumour against normal <em>tissue</em>. GSE86374's groups are taken from its tissue description rather than its molecular-subtype field, in which 14 of the tumours are labelled &ldquo;Normal-like&rdquo; &mdash; reading groups off that field would have put tumours in the normal arm. GSE70947 is also the second cohort of a larger study, so its companion cohort cannot later be counted as further replication.</p>
+                  <p><strong>Why these four cohorts.</strong> I chose for platform diversity over size. If a gene shows up on Affymetrix <em>and</em> Agilent <em>and</em> an independent RNA-seq cohort, it's unlikely to be a probe artefact, whereas three studies on the same array platform could all share the same artefact. These four cover three platforms, ancestry from three continents, and both paired and unpaired designs. I looked at about thirty other GEO datasets and rejected them because they only had tumour samples, had unusable labels, or had too few normal samples to be useful.</p>
+                  <p class="mb-0"><strong>Sample handling.</strong> GSE58135 includes 28 breast cancer cell lines, which I removed at download since this project compares tumour <em>tissue</em> with normal tissue. For GSE86374, I took the groups from the tissue description instead of the molecular-subtype field, because that field labels 14 of the tumours &ldquo;Normal-like&rdquo; and would have put them in the normal group. GSE70947 is the second cohort of a larger study, so its companion cohort can't be counted as separate replication later.</p>
                 </div>
               </div>
             </div>
 
             <div id="tcga">
-              <h2>TCGA-BRCA in detail</h2>
+              <h2>TCGA-BRCA cohort</h2>
               <p>
-                The expression matrix holds 60,660 Ensembl genes across 1,224 aliquots
-                &mdash; 1,111 primary tumours and 113 solid-tissue normals. Those tumours
-                come from 1,095 unique patients, because 16 patients contributed more than
-                one aliquot, and all 113 normals come from patients who also contributed a
-                tumour, which is what makes the matched-pair figure possible.
+                The expression data has 60,660 Ensembl genes across 1,224 aliquots (individual
+                samples): 1,111 primary tumours and 113 normal tissue samples. The tumours come
+                from 1,095 patients, since 16 patients have more than one aliquot. All 113 normal
+                samples are from patients who also have a tumour sample, which is what makes the
+                matched-pair figure on the Results page possible.
               </p>
 
               <div class="grid grid--2">
@@ -143,10 +143,10 @@
                   <h4>Clinical, 1,098 patients</h4>
                   <p class="text-secondary mb-0">
                     Stage I 183 &middot; II 621 &middot; III 249 &middot; IV 20 &middot;
-                    unstageable 13 &middot; missing 12. Age at diagnosis median 59.0 years
-                    (range 26.6&ndash;90.0, 16 missing). Vital status 945 alive, 152 dead,
-                    1 missing. Histology is 778 infiltrating duct carcinoma and 201 lobular,
-                    with the remainder mixed and rarer types.
+                    unstageable 13 &middot; missing 12. Age at diagnosis: median 59.0 years
+                    (range 26.6&ndash;90.0, 16 missing). Vital status: 945 alive, 152 dead,
+                    1 missing. Histology: 778 infiltrating duct carcinoma and 201 lobular,
+                    with the rest mixed or rarer types.
                   </p>
                 </div>
                 <div class="card">
@@ -154,9 +154,9 @@
                   <p class="text-secondary mb-0">
                     757 white &middot; 183 Black or African American &middot; 61 Asian
                     &middot; 1 American Indian or Alaska Native &middot; 95 not reported.
-                    The cohort skews heavily white, which is a limit on how far any result
-                    here generalises. The <code>gender</code> column exists but holds no
-                    values, so no sex breakdown is quoted anywhere on this site.
+                    Most of the cohort is white, so the results may not apply equally to other
+                    groups. There's a <code>gender</code> column but it's empty, so I don't give
+                    a breakdown by sex anywhere on the site.
                   </p>
                 </div>
                 <div class="card">
@@ -164,33 +164,33 @@
                   <p class="text-secondary mb-0">
                     Luminal A 562 (51.9%) &middot; Luminal B 209 (19.3%) &middot;
                     Basal-like 190 (17.5%) &middot; HER2-enriched 82 (7.6%) &middot;
-                    Normal-like 40 (3.7%). Twelve patients have no call and are dropped
-                    rather than shown as a sixth group.
+                    Normal-like 40 (3.7%). Twelve patients have no subtype call, so I left them out instead of adding a
+                    sixth group.
                   </p>
                 </div>
                 <div class="card">
                   <h4>Somatic mutations</h4>
                   <p class="text-secondary mb-0">
-                    89,568 masked somatic mutation calls across 991 samples. Fewer samples
-                    carry mutation calls than expression, so the mutation cohort is a
-                    subset and must never be described with the expression <em>n</em>.
+                    89,568 masked somatic mutation calls across 991 samples. Fewer samples have
+                    mutation data than expression data, so the mutation cohort is a smaller
+                    subset and shouldn't be described using the expression <em>n</em>.
                   </p>
                 </div>
               </div>
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p class="mb-0"><strong>Normal-like is not a fifth disease.</strong> It is widely read as a low-tumour-purity artefact &mdash; a sample with too little tumour in it to classify. It stays visible and labelled in every figure on this site, but it is never presented as a biological subtype alongside the other four.</p>
+                  <p class="mb-0"><strong>About the Normal-like group.</strong> Normal-like is usually thought to be an artefact of low tumour purity, meaning the sample had too little tumour in it to classify properly. I keep it labelled in every figure but don't treat it as a biological subtype like the other four.</p>
                 </div>
               </div>
             </div>
 
             <div id="counts">
-              <h2>Which <em>n</em> to quote</h2>
+              <h2>Sample counts</h2>
               <p>
-                There is no single number that honestly covers this site. Four are all
-                correct, each in its own context, and the figures deliberately do not
-                agree with one another.
+                The sample size changes depending on the analysis. Four different counts are
+                used on this site, each correct for its own purpose, so the figures don't all
+                show the same number.
               </p>
 
               <div class="table-wrap">
@@ -230,30 +230,30 @@
 
             <div id="filtering">
               <h2>Inclusion and exclusion</h2>
-              <p>Samples are dropped for the following reasons:</p>
+              <p>Samples were removed for these reasons:</p>
               <ol>
-                <li>Not a primary solid tumour &mdash; normal-adjacent samples leave the analysis cohort, but are kept aside as the comparison group.</li>
-                <li>Duplicate aliquot from the same patient, collapsed to one.</li>
-                <li>Missing survival time or vital status, for the survival analysis only.</li>
+                <li>Not a primary solid tumour. Normal tissue samples are taken out of the analysis cohort but kept aside as the comparison group.</li>
+                <li>Duplicate aliquot from the same patient, merged down to one.</li>
+                <li>Missing survival time or vital status (survival analysis only).</li>
               </ol>
               <p>
-                Genes are filtered separately, and by a different rule at each stage: the
-                differential-expression model keeps a gene with at least ten counts summed
-                across all samples, while the co-expression network behind
-                <a href="results.html#pathways">Results Figure&nbsp;6</a> requires
-                CPM&nbsp;&ge;&nbsp;0.5 in at least 10% of tumours. Ten per cent of 1,095 is
-                about 110 patients &mdash; roughly the size of the smallest intrinsic
-                subtype. That is deliberate: a filter on the mean would discard a gene
-                expressed in only one subtype, which in breast cancer is exactly the wrong
-                thing to throw away.
+                Genes were filtered separately, using a different rule at each stage. For
+                differential expression, a gene was kept if it had at least ten counts summed
+                across all samples. For the co-expression network behind
+                <a href="results.html#pathways">Results Figure&nbsp;6</a>, a gene needed
+                CPM&nbsp;&ge;&nbsp;0.5 in at least 10% of tumours. 10% of 1,095 is about 110
+                patients, which is roughly the size of the smallest subtype. I set it that way
+                deliberately. A filter based on average expression would drop genes that are
+                only expressed in one subtype, and in breast cancer those are some of the most
+                important genes to keep.
               </p>
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p><strong>Three places the numbers do not line up, on purpose.</strong></p>
-                  <p><strong>Two de-duplication rules exist.</strong> The survival scripts keep the <em>first</em> aliquot per patient; the expression figures keep the aliquot with the <em>largest library size</em>. Eleven patients are affected and the two rules usually pick the same sample. Each script states its choice rather than one rule being imposed across the site.</p>
-                  <p><strong>Normalisation is not computed on the same matrix everywhere.</strong> The survival scripts run TMM on the de-duplicated tumour matrix of 1,095 columns; the expression figures run it on all 1,224 aliquots. A patient's log&#8322;&nbsp;CPM can therefore differ in the second decimal between two figures. Each figure is internally consistent; values are not interchangeable between them.</p>
-                  <p class="mb-0"><strong>GSE70947 is 148/148 here and 147/146 in the figure.</strong> The series is fully paired at 296 samples, but the PPP4C panel drops the samples with a missing value for that one probe. The same two samples are why the Results page totals 1,570 tumour and 367 normal where this table sums to 1,571 and 369. Both numbers are right for their own context.</p>
+                  <p><strong>Why some numbers differ between figures</strong></p>
+                  <p><strong>Two de-duplication rules.</strong> The survival scripts keep the <em>first</em> aliquot for each patient, and the expression figures keep the one with the <em>largest library size</em>. This affects eleven patients, and both rules usually pick the same sample. Each script states which rule it uses.</p>
+                  <p><strong>Normalisation.</strong> The survival scripts run TMM normalisation on the de-duplicated tumour data (1,095 samples), while the expression figures run it on all 1,224 aliquots. As a result, a patient's log&#8322;&nbsp;CPM can differ in the second decimal place between figures. Each figure is internally consistent, but values shouldn't be compared across them.</p>
+                  <p class="mb-0"><strong>GSE70947 counts.</strong> This table says 148/148 and the figure says 147/146. The dataset is fully paired at 296 samples, but the PPP4C panel drops samples with a missing value for that probe. Those dropped samples are also why the Results page totals 1,570 tumour and 367 normal while this table adds up to 1,571 and 369. Both numbers are correct for what they describe.</p>
                 </div>
               </div>
             </div>
@@ -263,9 +263,9 @@
           <aside class="layout-aside__side">
             <p class="eyebrow">On this page</p>
             <ul class="toc">
-              <li><a href="#datasets">The five cohorts</a></li>
-              <li><a href="#tcga">TCGA in detail</a></li>
-              <li><a href="#counts">Which n to quote</a></li>
+              <li><a href="#datasets">Datasets</a></li>
+              <li><a href="#tcga">TCGA-BRCA cohort</a></li>
+              <li><a href="#counts">Sample counts</a></li>
               <li><a href="#filtering">Inclusion and exclusion</a></li>
             </ul>
           </aside>

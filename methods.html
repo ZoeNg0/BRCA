@@ -80,8 +80,8 @@
         <p class="eyebrow">Section 03</p>
         <h1>Methods</h1>
         <p class="lede">
-          The pipeline from downloaded counts to finished figure, written so that a reader
-          with the same data could run it and get the same answer.
+          How the raw data was turned into the figures on this site, step by step, so anyone
+          with the same data could get the same answer.
         </p>
       </div>
     </section>
@@ -104,8 +104,8 @@
                 <div class="pipeline__node"><strong>8. Export</strong><span>Plots and tables for this site</span></div>
               </div>
               <p class="meta">
-                Each stage is one numbered R script, run in dependency order. Nothing
-                downstream re-downloads or re-fits what an earlier stage already produced.
+                Each stage is a numbered R script, run in order. Later stages reuse what earlier
+                ones produced instead of downloading or fitting it again.
               </p>
             </div>
 
@@ -113,40 +113,40 @@
               <h2>Step by step</h2>
               <ol class="steps">
                 <li>
-                  <h4>Acquisition</h4>
-                  <p class="text-secondary">TCGA expression, clinical tables and somatic mutation calls are pulled from the GDC with TCGAbiolinks &mdash; STAR counts, unstranded assay, primary tumours and solid-tissue normals &mdash; then cached as R objects so nothing re-downloads. The GEO series are cached the same way. GSE58135 needs different handling: GEO holds no raw counts for it, only per-sample FPKM tracking files, so its matrix is assembled during download and its 28 cell lines are excluded at that point rather than filtered out later.</p>
+                  <h4>Downloading the data</h4>
+                  <p class="text-secondary">I downloaded TCGA expression data, clinical tables and somatic mutation calls from the GDC using TCGAbiolinks (STAR counts, unstranded, primary tumours and normal tissue) and saved them as R objects so I'd only need to download them once. The GEO datasets were saved the same way. GSE58135 needed extra work because GEO doesn't have raw counts for it, only an FPKM file per sample, so I built its data table during the download and removed its 28 cell lines at that point.</p>
                 </li>
                 <li>
-                  <h4>Differential expression, one method per platform</h4>
-                  <p class="text-secondary">TCGA uses DESeq2 with <code>design = ~ sample_type</code>, the reference level set to normal tissue so a positive log&#8322; fold change always means &ldquo;up in tumour&rdquo;. GSE70947 uses limma with the design blocked on patient, which removes inter-patient variance and is the whole reason that cohort carries the most weight. GSE58135 has no counts, so limma-trend models the mean&ndash;variance relationship of log&#8322;(FPKM&nbsp;+&nbsp;1) directly. The two Affymetrix cohorts arrive RMA-processed and get a cross-array quantile normalisation before the same two-group contrast. Matching the model to the measurement matters more than using one model everywhere.</p>
+                  <h4>Differential expression</h4>
+                  <p class="text-secondary">For TCGA I used DESeq2 with <code>design = ~ sample_type</code> and normal tissue as the reference level, so a positive log&#8322; fold change means &ldquo;higher in tumour&rdquo;. GSE70947 used limma with patient included in the design, which removes variation between patients and is the main reason that cohort carries the most weight. GSE58135 has no raw counts, so I used limma-trend on log&#8322;(FPKM&nbsp;+&nbsp;1), which models the mean&ndash;variance relationship directly. The two Affymetrix cohorts were already RMA-processed, so they got quantile normalisation across arrays and then the same two-group comparison. I matched each model to the type of data instead of forcing one model onto all five.</p>
                 </li>
                 <li>
-                  <h4>Combining cohorts by rank, not by intersection</h4>
-                  <p class="text-secondary">The obvious rule &mdash; keep genes significant in all five cohorts &mdash; is very sensitive to an arbitrary threshold and punishes the smaller cohorts for being small. Instead each cohort is ranked independently by signed &minus;log&#8321;&#8320;&nbsp;p, and the rankings are combined with robust rank aggregation, so a gene rises by being <em>consistently</em> near the top. Up and down directions are aggregated separately, so a gene that moves one way in one cohort and the other way elsewhere is penalised in both lists. The analysis is restricted to the 7,311 genes measured in all five cohorts; a gene outside that set is untested, not disproved.</p>
+                  <h4>Combining the five cohorts</h4>
+                  <p class="text-secondary">The simplest approach would be to keep genes that are significant in all five cohorts, but the result depends a lot on where the cutoff is set, and smaller cohorts get penalised for having less power. Instead I ranked each cohort's genes separately by signed &minus;log&#8321;&#8320;&nbsp;p and combined the rankings with robust rank aggregation, so a gene scores well if it's <em>consistently</em> near the top. Up and down were combined separately, which penalises a gene that goes up in one cohort and down in another. Only the 7,311 genes measured in all five cohorts could be included, so a gene outside that set hasn't been tested, which isn't the same as being ruled out.</p>
                 </li>
                 <li>
-                  <h4>From 8,186 candidates to 260</h4>
-                  <p class="text-secondary">Rank aggregation returns 294 up and 615 down at adjusted p&nbsp;&lt;&nbsp;0.05, and the shortlist keeps the 260 genes that are also individually significant, in the same direction, in every one of the five cohorts. Two sanity checks come free: the up list is dominated by mitotic machinery and the down list is an adipose and stromal loss signature &mdash; exactly what comparing tumour against normal breast, which is largely fat and stroma, should produce. That is evidence the pipeline is wired correctly, not a discovery.</p>
+                  <h4>Shortlisting genes</h4>
+                  <p class="text-secondary">Rank aggregation gave 294 up and 615 down genes at adjusted p&nbsp;&lt;&nbsp;0.05. The shortlist is the 260 of these that are also individually significant, in the same direction, in all five cohorts. As a sanity check, the up list is mostly cell division genes and the down list is mostly fat and connective tissue (stroma) genes. That's expected, since normal breast tissue is mostly fat and stroma. It confirms the pipeline is set up correctly, but it isn't a new finding.</p>
                 </li>
                 <li>
-                  <h4>Characterising a candidate, and guarding against its confounders</h4>
-                  <p class="text-secondary">Survival uses a <em>pre-specified</em> median split rather than the cut-point that minimises p, which would inflate significance badly; Kaplan&ndash;Meier with 95% bands and a log-rank test, censored at five years, then Cox adjusted for stage, age and subtype, with the proportional-hazards assumption checked rather than assumed. Two sensitivity analyses guard the split: a top-40%-versus-bottom-40% comparison with the middle fifth dropped rather than reassigned, and a sweep across 50/50, 60/40, 70/30, 80/20 and 90/10. Subtype comparisons use non-parametric tests, because the group sizes differ by more than an order of magnitude.</p>
+                  <h4>Survival and subtype analysis</h4>
+                  <p class="text-secondary">For survival I split patients at the median PPP4C value, decided <em>in advance</em>, because choosing the cut-point that gives the smallest p-value inflates significance a lot. I used Kaplan&ndash;Meier curves with 95% bands and a log-rank test, censored at five years, then a Cox model adjusted for stage, age and subtype, and checked the proportional-hazards assumption. Two sensitivity analyses tested the split. One compared the top 40% with the bottom 40%, dropping the middle fifth. The other tried 50/50, 60/40, 70/30, 80/20 and 90/10 splits. For subtypes I used non-parametric tests, since group sizes differ by more than tenfold.</p>
                 </li>
                 <li>
-                  <h4>Building the co-expression network</h4>
-                  <p class="text-secondary">&ldquo;Hub&rdquo; is a property of a network, so the network is built before anything is called a hub: the 10,184 TCGA differentially expressed genes are filtered to 4,563 that are actually expressed across the cohort, joined by 20,326 edges wherever two genes correlate at |Spearman&nbsp;&rho;|&nbsp;&ge;&nbsp;0.70 across the 1,095 tumours, and split into 143 modules. The 200 most connected genes &mdash; degree 71 to 172 &mdash; are the hubs. No external interaction database contributes an edge: STRING or BioGRID would import evidence from other tissues and experiments, which is precisely what a TCGA-only analysis excludes.</p>
+                  <h4>Co-expression network</h4>
+                  <p class="text-secondary">A hub only makes sense within a network, so I built the network first. I started with the 10,184 genes differentially expressed in TCGA and filtered them to the 4,563 actually expressed across the cohort. Two genes were connected if their expression correlated at |Spearman&nbsp;&rho;|&nbsp;&ge;&nbsp;0.70 across the 1,095 tumours, which gave 20,326 connections (edges), and the network split into 143 modules. The hubs are the 200 most connected genes, with 71 to 172 connections each. I didn't add edges from interaction databases like STRING or BioGRID, because those include evidence from other tissues and experiments and I wanted the network to come from TCGA only.</p>
                 </li>
                 <li>
-                  <h4>Asking the enrichment question in a way that can return &ldquo;no&rdquo;</h4>
-                  <p class="text-secondary">A first pass over twenty databases returns 3,034 terms at FDR&nbsp;&lt;&nbsp;0.05, tested against two backgrounds that answer different questions: against all expressed genes, what biology are the hubs part of; against the other differentially expressed genes, what makes a hub different from any ordinary tumour-altered gene. But &ldquo;what passed&rdquo; is the wrong instrument for &ldquo;is motility involved?&rdquo;, so a second, directed test names the canonical proliferation and motility sets in advance and reports every one of them whether it passes or not. That is what <a href="results.html#pathways">Results Figure&nbsp;6</a> draws, and it is why a failing set is faded on that figure rather than deleted from it.</p>
+                  <h4>Gene set enrichment</h4>
+                  <p class="text-secondary">A first pass across twenty databases found 3,034 terms at FDR&nbsp;&lt;&nbsp;0.05. I tested against two backgrounds. Using all expressed genes asks what biology the hubs are involved in. Using the other differentially expressed genes asks what sets hubs apart from other genes that change in tumours. A list of significant terms can't really tell you whether motility is involved, though, so I also ran a targeted test. I picked the standard proliferation and motility gene sets in advance and reported every one, whether it passed or not. That's what <a href="results.html#pathways">Results Figure&nbsp;6</a> shows, and the sets that failed are faded on the figure instead of removed.</p>
                 </li>
                 <li>
-                  <h4>Testing whether a signal is tumour or stroma</h4>
-                  <p class="text-secondary">One module in the network does carry a strong EMT signature, which would be a real finding if it came from the cancer cells. Each module is scored per tumour and correlated against markers whose cellular origin is not in doubt. That module tracks fibroblast content at +0.86 and epithelial content at &minus;0.14 &mdash; cancer cells changing state would move <em>with</em> epithelial content, not against it. So it is measuring how much fibroblast is admixed in each bulk sample. The proliferation module behaves the opposite way, and is a programme of the carcinoma cells themselves.</p>
+                  <h4>Tumour cells versus stroma</h4>
+                  <p class="text-secondary">One module had a strong EMT signature, which would be interesting if it came from the cancer cells. To check, I scored each module in every tumour and correlated the scores with markers for specific cell types. That module correlated +0.86 with fibroblast content and &minus;0.14 with epithelial content. If cancer cells were changing state, it should have gone up <em>with</em> epithelial content. So the module mostly reflects how many fibroblasts were in each bulk sample. The proliferation module showed the opposite pattern and comes from the cancer cells themselves.</p>
                 </li>
                 <li>
-                  <h4>Export to this website</h4>
-                  <p class="text-secondary">Every figure on this site is exported from the analysis together with the table of values behind it and a record of how it was produced. Nothing is recomputed at that stage and nothing is synthesised: the export aborts rather than publish a figure that disagrees with the analysis. The survival export, for instance, refuses to run unless the recomputed sample count, event count, hazard ratio and log-rank p match the values the analysis itself reported &mdash; so the site and the analysis cannot quietly drift apart.</p>
+                  <h4>Exporting figures</h4>
+                  <p class="text-secondary">Each figure on the site is exported from the analysis with the table of values behind it and a record of how it was made. Nothing is recalculated or made up at this stage, and if a figure doesn't match the analysis, the export stops. For example, the survival export only runs if the sample count, event count, hazard ratio and log-rank p it recalculates match the values from the analysis, so the site can't drift out of sync with the results.</p>
                 </li>
               </ol>
             </div>
@@ -178,21 +178,20 @@
                 </table>
               </div>
               <p class="meta">
-                DESeq2 carries no version because the TCGA differential expression was run in
-                the original acquisition notebook, whose session record was not kept. Every
-                other version is recorded automatically at the time the analysis ran.
+                DESeq2 has no version listed because the TCGA differential expression was run in
+                the original download notebook and I didn't save its session record. All other
+                versions were recorded automatically when the analysis ran.
               </p>
             </div>
 
             <div id="repro">
               <h2>Reproducibility</h2>
               <p>
-                Analysis code lives in a separate repository; this site holds only the
-                exported results. Each stage is a separate script run in dependency order,
-                every download is cached, and each step is independently re-runnable, so
-                repeating the analysis costs compute rather than bandwidth. Each script
-                writes a record of its own inputs, parameters and software versions
-                alongside its output.
+                The analysis code is in a separate repository, and this site only contains the
+                exported results. Each stage is a separate script run in order. Downloads are
+                saved locally and each step can be re-run on its own, so repeating the analysis
+                only costs computing time. Every script also saves its inputs, settings and
+                software versions alongside its output.
               </p>
 
             </div>

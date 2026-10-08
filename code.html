@@ -80,9 +80,9 @@
         <p class="eyebrow">Section 06</p>
         <h1>Code</h1>
         <p class="lede">
-          The notebook where the TCGA data was downloaded and first analysed &mdash;
-          the mutation summary and the differential expression that Results
-          Figure&nbsp;3 is drawn from, shown exactly as it was written.
+          The R notebook that downloaded the TCGA data and ran the mutation summary and the
+          differential expression behind Results Figure&nbsp;3, shown exactly as it was
+          written.
         </p>
         <div class="btn-row">
           <a class="btn btn--ghost" href="https://github.com/ZoeNg0/BRCA_Analysis" target="_blank" rel="noopener">Full analysis code on GitHub</a>
@@ -96,17 +96,15 @@
           <div class="stack-lg">
 
             <div id="notebook">
-              <h2 class="mt-0">The acquisition notebook</h2>
+              <h2 class="mt-0">Download and analysis notebook</h2>
               <p>
-                This is the one file in the project where TCGA data is actually
-                downloaded. It queries the GDC for masked somatic mutation calls and for
-                RNA-seq STAR counts, caches both so nothing ever re-downloads, summarises
-                the mutations with <code>maftools</code>, and runs the tumour-versus-normal
-                differential expression model with <code>DESeq2</code>. Everything else in
-                the analysis &mdash; the four replication cohorts, the rank aggregation,
-                the survival models, the co-expression network &mdash; reads the objects
-                this file cached, and is described on the
-                <a href="methods.html">Methods</a> page.
+                This is the only file in the project that downloads TCGA data. It gets masked
+                somatic mutation calls and RNA-seq STAR counts from the GDC, saves them so they
+                only need downloading once, summarises the mutations with <code>maftools</code>,
+                and runs the tumour-vs-normal differential expression with <code>DESeq2</code>.
+                The rest of the analysis (the four replication cohorts, rank aggregation,
+                survival models and co-expression network) uses the files this notebook saved,
+                and is described on the <a href="methods.html">Methods</a> page.
               </p>
               <div class="codepane" data-codepane data-lang="r" data-file="TCGA_BRCA_analysis.R">
                 <div class="codepane__head">
@@ -305,38 +303,37 @@ dev.off()
             </div>
 
             <div id="reading">
-              <h2>Four lines worth stopping on</h2>
+              <h2>Key lines</h2>
               <p>
-                If you read nothing else in it, these are the decisions that shape every
-                expression figure on the site. Click any line of code below to jump to it
-                in the source above.
+                These lines affect every expression figure on the site. Click a line of code below
+                to jump to it in the source above.
               </p>
               <div class="grid grid--2">
                 <div class="card">
                   <h4>Setting the reference level</h4>
-                  <p class="text-secondary mb-0"><code data-code-jump="relevel(dds_input$sample_type">relevel(..., ref = "Solid Tissue Normal")</code> is the line that fixes what the sign of a fold change means. With normal tissue as the reference, a positive log&#8322; fold change reads &ldquo;up in tumour&rdquo; everywhere downstream. Get it backwards and every figure on the site points the wrong way while still looking perfectly plausible.</p>
+                  <p class="text-secondary mb-0"><code data-code-jump="relevel(dds_input$sample_type">relevel(..., ref = "Solid Tissue Normal")</code> sets which group is the reference. With normal tissue as the reference, a positive log&#8322; fold change means &ldquo;higher in tumour&rdquo; in everything that follows. If this were the wrong way round, every figure on the site would point the wrong way and still look believable.</p>
                 </div>
                 <div class="card">
                   <h4>The low-count filter</h4>
-                  <p class="text-secondary mb-0"><code data-code-jump="keep = rowSums(counts(dds_input))">keep = rowSums(counts(dds_input)) &gt;= 10</code> drops genes with almost no reads before the model runs. They carry no information, and leaving them in costs statistical power once the multiple-testing correction divides across every gene tested.</p>
+                  <p class="text-secondary mb-0"><code data-code-jump="keep = rowSums(counts(dds_input))">keep = rowSums(counts(dds_input)) &gt;= 10</code> removes genes with almost no reads before the model is fitted. They don't carry any information, and keeping them would reduce statistical power, because the multiple-testing correction is spread over every gene tested.</p>
                 </div>
                 <div class="card">
                   <h4>Caching with saveRDS</h4>
-                  <p class="text-secondary mb-0">Every download is written to disk with <code data-code-jump="saveRDS(maf">saveRDS()</code> and read back from there. That is what makes the analysis re-runnable without hitting the GDC again, and it is why every figure traces to one stored copy of the data rather than to whatever the portal served that day.</p>
+                  <p class="text-secondary mb-0">Each download is saved to disk with <code data-code-jump="saveRDS(maf">saveRDS()</code> and loaded from there afterwards. This means the analysis can be re-run without downloading from the GDC again, and every figure comes from the same stored copy of the data.</p>
                 </div>
                 <div class="card">
                   <h4>Thresholds set in the plot call</h4>
-                  <p class="text-secondary mb-0"><code data-code-jump="pCutoff = 0.05">pCutoff = 0.05</code> and <code data-code-jump="FCcutoff = 1">FCcutoff = 1</code> are the same thresholds the site uses. They appear as the dashed lines on <a href="results.html#transcriptome">Results Figure&nbsp;3</a>, and as the gene filter that defines the nodes of the network behind <a href="results.html#pathways">Figure&nbsp;6</a>.</p>
+                  <p class="text-secondary mb-0"><code data-code-jump="pCutoff = 0.05">pCutoff = 0.05</code> and <code data-code-jump="FCcutoff = 1">FCcutoff = 1</code> are the same cutoffs used across the site. They're the dashed lines on <a href="results.html#transcriptome">Results Figure&nbsp;3</a> and also the filter that decides which genes go into the network behind <a href="results.html#pathways">Figure&nbsp;6</a>.</p>
                 </div>
               </div>
             </div>
 
             <div id="honest">
-              <h2>What this file is not</h2>
+              <h2>About this notebook</h2>
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p>It is a working notebook, not tidy production code, and it is shown that way on purpose. The <code>?function</code> help calls and the <code>View()</code> calls are how it was actually explored in RStudio; the install block at the top ran once. A few lines are repeated where something was re-run after a failed download.</p>
-                  <p class="mb-0">The scripts that came afterwards are stricter &mdash; they take no interactive input, they record their own inputs and software versions beside every result, and they abort rather than publish a figure that disagrees with the analysis. This page shows where the project started, not the standard it ended at.</p>
+                  <p>This is a working notebook rather than cleaned-up production code, and I've left it that way on purpose. The <code>?function</code> help calls and <code>View()</code> calls are from exploring the data in RStudio, and the install block at the top only ran once. Some lines are repeated where I re-ran something after a download failed.</p>
+                  <p class="mb-0">The scripts I wrote after this are stricter. They don't take interactive input, they save their inputs and software versions next to every result, and they stop if a figure doesn't match the analysis. This page shows where the project started.</p>
                 </div>
               </div>
             </div>
@@ -346,9 +343,9 @@ dev.off()
           <aside class="layout-aside__side">
             <p class="eyebrow">On this page</p>
             <ul class="toc">
-              <li><a href="#notebook">The notebook</a></li>
-              <li><a href="#reading">Four lines worth stopping on</a></li>
-              <li><a href="#honest">What this file is not</a></li>
+              <li><a href="#notebook">Notebook</a></li>
+              <li><a href="#reading">Key lines</a></li>
+              <li><a href="#honest">About this notebook</a></li>
             </ul>
           </aside>
         </div>
