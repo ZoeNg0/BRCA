@@ -326,16 +326,18 @@ hr {
   overflow: hidden;
   padding-block: var(--sp-9) var(--sp-8);
   border-bottom: 1px solid var(--border);
-  /* Layers, top first: a wash that lightens the bottom edge, so the tints
-     fade out downwards; a broad pink glow coming in from the right; the
-     original green glow at top left; the card beige underneath. */
+  /* Layers, top first: a wash that lightens the bottom edge, then one smooth
+     left-to-right blend from olive green to pink, over the card beige.
+     Interpolating in oklab avoids the banding a plain sRGB blend shows. */
   background:
-    linear-gradient(to bottom, transparent 35%,
+    linear-gradient(to bottom, transparent 30%,
       color-mix(in srgb, var(--surface-raised) 85%, transparent) 100%),
-    radial-gradient(90ch 70ch at 105% 15%,
-      color-mix(in srgb, var(--series-5) 28%, transparent), transparent 72%),
-    radial-gradient(60ch 40ch at 12% -10%,
-      color-mix(in srgb, var(--series-1) 16%, transparent), transparent 70%),
+    linear-gradient(to right in oklab,
+      var(--hero-green) 0%,
+      color-mix(in oklab, var(--hero-green) 45%, transparent) 30%,
+      transparent 50%,
+      color-mix(in oklab, var(--hero-pink) 45%, transparent) 70%,
+      var(--hero-pink) 100%),
     var(--surface-1);
 }
 

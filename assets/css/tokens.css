@@ -70,6 +70,10 @@
   --series-4:        #a8802b;   /* gold      */
   --series-5:        #c2718c;   /* pink      */
   --series-6:        #3b4723;   /* forest    */
+  /* Overview hero gradient: the button olive on the left, the pink on the
+     right, mixed so both read at about the same strength. */
+  --hero-green:      color-mix(in srgb, var(--accent-solid) 22%, transparent);
+  --hero-pink:       color-mix(in srgb, var(--series-5) 28%, transparent);
   --series-7:        #6b5ba6;   /* violet    */
   --series-8:        #9c3f52;   /* deep rose */
 
@@ -217,6 +221,7 @@
     --series-4:        #d6b15c;
     --series-5:        #f1b3cd;
     --series-6:        #a7b870;
+    --hero-green:      color-mix(in srgb, var(--accent-solid) 26%, transparent);
     --series-7:        #a899e8;
     --series-8:        #e07a92;
 
@@ -296,6 +301,7 @@
   --series-4:        #d6b15c;
   --series-5:        #f1b3cd;
   --series-6:        #a7b870;
+    --hero-green:      color-mix(in srgb, var(--accent-solid) 26%, transparent);
   --series-7:        #a899e8;
   --series-8:        #e07a92;
 
