@@ -80,8 +80,8 @@
         <p class="eyebrow">Section 05</p>
         <h1>Discussion</h1>
         <p class="lede">
-          What the results show, how two published studies of PPP4C compare with them, and
-          where the analysis is weakest.
+          What the results suggest about PPP4C in breast cancer, how they compare with two
+          published studies, and the limitations that affect how far they can be taken.
         </p>
       </div>
     </section>
@@ -92,75 +92,71 @@
           <div class="stack-lg">
 
             <div id="interpretation">
-              <h2 class="mt-0">Interpretation</h2>
+              <h2 class="mt-0">Interpretation of results</h2>
               <p>
-                The analysis tested one gene, chosen in advance, and found four main things.
-                Some are much better supported than others.
+                This project tested one gene, chosen before the analysis began. The results support
+                some conclusions much more strongly than others.
               </p>
-              <p class="text-secondary">
-                <strong>A note on figure numbers.</strong> The figures on this page come from the
-                two papers discussed below and are numbered 1&ndash;4. My own figures are on the
-                <a href="results.html">Results</a> page, and I refer to them here as
-                Results&nbsp;Figure&nbsp;1 to Results&nbsp;Figure&nbsp;5.
-              </p>
+              <div class="callout callout--note">
+                <div class="callout__body">
+                  <p class="mb-0"><strong>A note on figure numbers.</strong> The figures on this page come from the two papers discussed below and are numbered 1&ndash;4. My own figures are on the <a href="results.html">Results</a> page, and I refer to them here as Results&nbsp;Figure&nbsp;1 to Results&nbsp;Figure&nbsp;5.</p>
+                </div>
+              </div>
               <p>
-                <strong>PPP4C is higher in breast tumours.</strong> This is the strongest result.
-                In Results&nbsp;Figure&nbsp;1 the tumour box is above the normal box in all five
-                cohorts, across four platforms, with fold changes from +0.56 to +1.34 log&#8322;
-                units and a rank-aggregated adjusted p of 3.8&times;10&#8315;&#179;.
-                Results&nbsp;Figure&nbsp;2 shows the gap isn't just due to comparing different
-                people. In 109 of 113 TCGA patients with both a tumour and a normal sample,
-                PPP4C is higher in the tumour. The four exceptions change by &minus;0.09 to
-                &minus;0.21 log&#8322; units, which is within noise.
+                <strong>PPP4C RNA is consistently higher in breast tumours.</strong> This is the
+                strongest finding. The increase appeared in all five datasets across four
+                platforms (Results&nbsp;Figure&nbsp;1) and within 109 of 113 individual patients
+                (Results&nbsp;Figure&nbsp;2), so it can't be explained by differences between
+                groups of patients or by one measurement technology. These data measure RNA, so
+                they show that more PPP4C is being transcribed in tumours, not necessarily that
+                there is more PPP4C protein or more PP4 activity.
               </p>
               <p>
-                <strong>The increase is seen in every subtype.</strong> In Results&nbsp;Figure&nbsp;4,
-                subtype medians range from 6.48 to 7.27 (0.79 log&#8322; units), compared with a
-                tumour-vs-normal shift of +1.34 in the same cohort. PPP4C is raised in every
-                subtype, highest in HER2-enriched and lowest in Normal-like, and there's no
-                difference between Luminal&nbsp;A and Basal-like. So the finding applies to
-                breast cancer generally and isn't limited to one type.
+                <strong>The increase is found across all subtypes.</strong> PPP4C was raised in every
+                PAM50 subtype (Results&nbsp;Figure&nbsp;4), and the differences between subtypes
+                were smaller than the difference between tumour and normal tissue. This suggests
+                the change is a general feature of breast tumours and isn't specific to one
+                type.
               </p>
               <p>
-                <strong>PPP4C isn't one of the strongest signals.</strong> In
-                Results&nbsp;Figure&nbsp;3, PPP4C is well inside the significant region but far
-                from the extremes of the 39,393 genes tested, and I never claimed it was an
-                outlier. A gene doesn't need to be one to be worth studying, but it does need to
-                be reproducible, which Results&nbsp;Figures&nbsp;1 and&nbsp;2 show.
+                <strong>PPP4C is not one of the largest changes.</strong> In
+                Results&nbsp;Figure&nbsp;3, PPP4C is well within the significant region but far
+                from the most extreme of the 39,393 genes tested. A change can be statistically
+                consistent without being large or biologically dominant, and the strength of the
+                PPP4C result is its reproducibility rather than its size.
               </p>
               <p>
-                <strong>The link to survival is modest, and borderline after adjustment.</strong>
-                The Kaplan&ndash;Meier curves in Results&nbsp;Figure&nbsp;5 separate early and
-                end 5.1 percentage points apart at five years (84.5% vs 79.4%), log-rank
-                p = 0.021, hazard ratio 1.60 (95% CI 1.07&ndash;2.39). After adjusting for age,
-                AJCC stage and PAM50 subtype, the hazard ratio is 1.53 (95% CI 1.00&ndash;2.35,
-                p = 0.0501), and the confidence interval touches 1. My reading is that PPP4C
-                carries prognostic information that mostly, but not entirely, overlaps with
-                stage and subtype. It needs testing in a second cohort before it could be called
-                an independent marker.
+                <strong>The association with survival is modest and not clearly independent.</strong>
+                Patients with higher PPP4C had worse five-year survival (hazard ratio 1.60,
+                log-rank p = 0.021; Results&nbsp;Figure&nbsp;5). After adjusting for age, stage
+                and subtype, the hazard ratio was 1.53 with p = 0.0501 and a confidence interval
+                reaching 1. This is a borderline result. It is consistent with PPP4C carrying some
+                prognostic information, but it doesn't show that PPP4C predicts survival
+                independently of known clinical factors. It should be treated as a hypothesis to
+                test in another cohort, not as evidence of a new prognostic marker.
               </p>
               <p>
-                None of these results explain <em>why</em>. Everything on the Results page is an
-                association measured in bulk tissue from tumours that had already developed, so
-                this design can't tell whether PPP4C actually does anything, for example whether
-                removing it changes how breast cancer cells behave. The two published studies
-                below can address that.
+                All of these results are associations measured in tumour tissue at a single point
+                in time. They can't show whether PPP4C affects how tumours grow, or whether its
+                increase is a side effect of other changes in the tumour. Answering that requires
+                laboratory experiments, and the two published studies below include them.
               </p>
             </div>
 
             <div id="literature">
-              <h2>Published studies</h2>
+              <h2>Comparison with previous research</h2>
+              <p class="text-secondary">How the findings of Xie <em>et al.</em> (2022) and Li <em>et al.</em> (2026) relate to my own results.</p>
               <p>
                 Two papers are directly relevant. Xie <em>et al.</em> (2022) screened the whole
-                phosphoprotein phosphatase catalytic (PPPCs) family in breast cancer and found
-                that PPP1CA and PPP4C were the two members with real clinical significance
-                <a href="#ref-1">[1]</a>. They reached PPP4C through a family-wide screen, while
-                I started with PPP4C as a single pre-registered target, so the two projects got
-                to the same gene independently. Li <em>et al.</em> (2026) then studied PPP4C in
-                thyroid cancer and triple-negative breast cancer, using bioinformatics alongside
-                tissue staining and cell-line experiments <a href="#ref-2">[2]</a>. Between them,
-                these papers provide two things my analysis doesn't have: protein-level
-                measurements, and experimental evidence about cause and effect.
+                phosphoprotein phosphatase catalytic (PPPCs) family in breast cancer and
+                identified PPP1CA and PPP4C as the two members with clinical significance
+                <a href="#ref-1">[1]</a>. Their study started from the whole gene family, while
+                mine started from PPP4C chosen in advance, so the two reached the same gene in
+                different ways. Li <em>et al.</em> (2026) studied PPP4C in thyroid cancer and
+                triple-negative breast cancer, combining database analysis with tissue staining
+                and cell-line experiments <a href="#ref-2">[2]</a>. These papers provide two kinds
+                of evidence my project doesn't have: measurements of PPP4C protein, and
+                experiments that test cause and effect.
               </p>
 
               <figure class="figure">
@@ -184,8 +180,8 @@
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p><strong>Relevance to Results&nbsp;Figure&nbsp;1.</strong> My cohorts show PPP4C is higher in tumour than normal tissue, but that could mean PPP4C is driving something or that it's just changing along with everything else in the tumour cell. In this experiment the gene is knocked down and the cells slow down. Growth curves separate by day&nbsp;3 and end about half as high, and wound closure drops with all three siRNAs. Using three independent siRNAs matters, because one siRNA can hit the wrong target, while three giving the same result is much harder to explain as an off-target effect.</p>
-                  <p class="mb-0"><strong>Relevance to Results&nbsp;Figure&nbsp;4.</strong> The two cell lines are MCF-7 (ER-positive, luminal) and MDA-MB-468 (triple-negative, basal), and both respond. This fits my PAM50 result, where PPP4C was raised in every subtype.</p>
+                  <p><strong>How this relates to Results&nbsp;Figure&nbsp;1.</strong> My data show that PPP4C RNA is higher in tumours, but that could mean PPP4C contributes to tumour behaviour, or simply that it changes along with other processes in tumour cells. In this experiment, reducing PPP4C slowed the cells down: growth curves separated by day&nbsp;3 and ended about half as high, and wound closure decreased with all three siRNAs. Using three different siRNAs is important, because a single siRNA can affect unintended genes, while three giving the same result makes an off-target effect much less likely.</p>
+                  <p class="mb-0"><strong>How this relates to Results&nbsp;Figure&nbsp;4.</strong> The two cell lines are MCF-7 (ER-positive, luminal) and MDA-MB-468 (triple-negative, basal), and both responded to PPP4C knockdown. This fits with my finding that PPP4C is raised in every subtype.</p>
                 </div>
               </div>
 
@@ -209,8 +205,8 @@
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p><strong>Protein-level evidence.</strong> This addresses two obvious objections to Results&nbsp;Figures&nbsp;1 and&nbsp;2. First, I only measured messenger RNA (mRNA), and mRNA levels don't always match protein levels. Here the protein itself is stained in tissue, and the median histoscore goes from about 3 in nearby tissue to about 8 in tumour. Second, the design matches Results&nbsp;Figure&nbsp;2: tumour is compared with nearby non-tumour tissue from the same specimens, so the comparison is within patients.</p>
-                  <p class="mb-0"><strong>Difference in cohorts.</strong> Their cohort is triple-negative only, while Results&nbsp;Figure&nbsp;1 includes all breast cancer. What agrees is the direction of the change.</p>
+                  <p><strong>Protein-level evidence.</strong> My analysis measured only messenger RNA (mRNA), and mRNA levels don't always match protein levels. This study measured the protein directly by staining tissue. The median histoscore was about 3 in nearby non-tumour tissue and about 8 in tumour, which supports Results&nbsp;Figures&nbsp;1 and&nbsp;2 at the protein level. Like Results&nbsp;Figure&nbsp;2, it compares tumour with adjacent non-tumour tissue from the same specimens. Staining shows how much PPP4C protein is present, not how active PP4 is.</p>
+                  <p class="mb-0"><strong>A difference between the studies.</strong> This cohort is triple-negative only, while Results&nbsp;Figure&nbsp;1 includes all breast cancer. The two studies agree on the direction of the change.</p>
                 </div>
               </div>
 
@@ -233,8 +229,8 @@
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p><strong>Subtype breadth and ordering.</strong> Every cancer cell line has more PPP4C than the non-tumorigenic MCF-10A, including the luminal MCF7, the HER2-amplified SK-BR-3 and both triple-negative lines. This matches my finding that PPP4C is raised in all five PAM50 subtypes. The order is different, though. Their two highest lines are triple-negative, while in my 1,083 tumours the highest median was HER2-enriched at 7.27 and Basal-like was in the middle at about 6.9.</p>
-                  <p class="mb-0">I don't see this as a contradiction, because the two can't really be compared. Five immortalised cell lines grown on plastic for decades don't represent subtype proportions in patients. Their data supports PPP4C being raised across subtypes, which matches mine. Which subtype is highest is a question for my cohort, not theirs.</p>
+                  <p><strong>Subtypes in cell lines and tumours.</strong> Every cancer cell line has more PPP4C than the non-tumorigenic MCF-10A, including the luminal MCF7, the HER2-amplified SK-BR-3 and both triple-negative lines. This matches my finding that PPP4C is raised in all five PAM50 subtypes. The order is different, though. Their two highest lines are triple-negative, while in my 1,083 tumours the highest median was HER2-enriched at 7.27 and Basal-like was in the middle at about 6.9.</p>
+                  <p class="mb-0">This doesn't contradict my results, because the two can't be directly compared. Five cell lines grown in the lab for decades don't represent the range of tumours found in patients. Their data supports PPP4C being raised across subtypes, which agrees with my results, but the question of which subtype has the highest level is better answered by patient tumours.</p>
                 </div>
               </div>
 
@@ -257,90 +253,92 @@
 
               <div class="callout callout--note">
                 <div class="callout__body">
-                  <p><strong>Evidence on causation.</strong> The first limitation listed below is that association isn't causation, which is a real weakness of any study using patient tissue collected at one time point. In this experiment the order is controlled: PPP4C is removed first, and then growth, colony formation, migration and invasion all drop. In these two cell lines, PPP4C affects the cells' behaviour, and not the other way round.</p>
-                  <p class="mb-0"><strong>Link to survival.</strong> If PPP4C supports growth and invasion, tumours in my PPP4C-high group would be expected to be more aggressive, which matches a hazard ratio of 1.60. It's a plausible mechanism, but it hasn't been shown. None of this was measured in my patients, and cells moving through a transwell membrane are very different from a tumour spreading in the body.</p>
+                  <p><strong>Evidence for a causal role.</strong> Patient tissue data like mine can show association but not causation. In this experiment, PPP4C was reduced first, and then growth, colony formation, migration and invasion all decreased. This shows that, in these two cell lines, PPP4C affects cell behaviour.</p>
+                  <p class="mb-0"><strong>A possible link to survival.</strong> If PPP4C supports tumour growth and invasion, patients with higher PPP4C might be expected to have more aggressive disease, which would fit the hazard ratio of 1.60. This is a possible explanation, but it hasn't been tested. None of these experiments used my patients' samples, and cells moving through a membrane in the lab are very different from a tumour spreading in the body.</p>
                 </div>
               </div>
             </div>
 
             <div id="tension">
-              <h2>Limits of the comparison</h2>
+              <h2>How far previous research supports these results</h2>
               <p>
-                The four figures above could easily be read as confirming my results, but there
-                are four reasons to be careful.
+                The published studies support several of my findings, but there are four reasons
+                not to treat them as full confirmation.
               </p>
               <div class="grid grid--2">
                 <div class="card">
-                  <h4>Overlapping data</h4>
-                  <p class="text-secondary mb-0">Xie <em>et al.</em> used the same public databases I did, including TCGA, so part of the agreement between our expression results comes from analysing overlapping data. Their cell-line experiments and Li <em>et al.</em>'s tissue staining are new evidence, but the database results less so.</p>
+                  <h4>Shared data sources</h4>
+                  <p class="text-secondary mb-0">Xie <em>et al.</em> used the same public databases as this project, including TCGA, so some of the agreement between our expression results comes from analysing overlapping data. Their cell-line experiments and Li <em>et al.</em>'s tissue staining are independent evidence; their database analyses are less so.</p>
                 </div>
                 <div class="card">
-                  <h4>No independent survival test</h4>
-                  <p class="text-secondary mb-0">Both papers report worse outcomes with higher PPP4C, and my adjusted hazard ratio of 1.53 has p = 0.0501. Neither paper's survival analysis tests my model on my patients with my covariates, so my result is still borderline.</p>
+                  <h4>Survival result not independently tested</h4>
+                  <p class="text-secondary mb-0">Both papers report worse survival with higher PPP4C, but neither tested my model on my patients with the same adjustments. My adjusted result (p = 0.0501) remains borderline.</p>
                 </div>
                 <div class="card">
-                  <h4>Cell lines vs tumours</h4>
-                  <p class="text-secondary mb-0">Figures&nbsp;1, 3 and&nbsp;4 above use five cell lines grown in culture, with no immune system, stroma or treatment history. They show what PPP4C <em>can</em> do, but not what it's doing in the 1,570 tumours I measured.</p>
+                  <h4>Cell lines are not tumours</h4>
+                  <p class="text-secondary mb-0">The experiments in Figures&nbsp;1, 3 and&nbsp;4 above used cultured cell lines, which lack the immune cells, surrounding tissue and treatment history of real tumours. They show what PPP4C <em>can</em> do in cells, not what it is doing in the 1,570 tumours analysed here.</p>
                 </div>
                 <div class="card">
-                  <h4>Cell of origin</h4>
-                  <p class="text-secondary mb-0">Li <em>et al.</em>'s staining shows PPP4C protein in tumour tissue, which bulk RNA can't show. My own data still can't tell which cells in the sample the signal comes from, and neither paper answers that.</p>
+                  <h4>Which cells express PPP4C</h4>
+                  <p class="text-secondary mb-0">Li <em>et al.</em>'s staining shows PPP4C protein in tumour tissue, but my RNA data come from whole tissue samples, so they can't show which cell types the PPP4C signal comes from.</p>
                 </div>
               </div>
             </div>
 
             <div id="limitations">
-              <h2>Limitations</h2>
+              <h2>Limitations of this study</h2>
               <p>
-                These apply regardless of the results.
+                The following limitations apply to the whole study, regardless of the results.
               </p>
               <div class="grid grid--2">
                 <div class="card">
                   <h4>Association, not causation</h4>
-                  <p class="text-secondary mb-0">Even if PPP4C expression is linked to survival, that doesn't mean it causes it. Expression differences can come from tumour biology, treatment, or the mix of cell types in the sample. The knockdown experiments in Figures&nbsp;1 and&nbsp;4 above test causation in cells, but that doesn't carry over to my cohort.</p>
+                  <p class="text-secondary mb-0">Even if PPP4C is linked to survival, this doesn't mean it causes worse outcomes. Differences in expression could result from tumour biology, treatment, or the mix of cell types in each sample. The knockdown experiments described above test causation in cell lines, but that doesn't prove the same is true in patients.</p>
                 </div>
                 <div class="card">
                   <h4>Reliance on TCGA</h4>
-                  <p class="text-secondary mb-0">TCGA-BRCA is a convenience sample with its own recruitment and demographic biases. The GEO cohorts help, but the survival analysis only uses TCGA, and both published studies also rely on the same public data.</p>
+                  <p class="text-secondary mb-0">TCGA-BRCA was not designed to be representative of all breast cancer patients and has its own recruitment and demographic biases. The GEO datasets help with replication, but the survival analysis uses TCGA alone, and both published studies also draw on the same public data.</p>
                 </div>
                 <div class="card">
                   <h4>Bulk tissue, mixed cells</h4>
-                  <p class="text-secondary mb-0">Bulk RNA-seq averages tumour cells, immune cells and stroma together, so something that looks like a change in tumour cells could actually be a change in the number of immune cells.</p>
+                  <p class="text-secondary mb-0">Bulk RNA-seq measures an average across tumour cells, immune cells and surrounding tissue. A change that appears to come from tumour cells could actually reflect a change in the proportion of other cell types.</p>
                 </div>
                 <div class="card">
-                  <h4>Multiple testing and researcher choice</h4>
-                  <p class="text-secondary mb-0">Choosing PPP4C before the analysis avoids most of this problem. The genes reported as correlated with it weren't chosen in advance, though. They're the strongest of twenty thousand tested, so their coefficients will be inflated.</p>
+                  <h4>Multiple testing</h4>
+                  <p class="text-secondary mb-0">PPP4C was chosen before the analysis, which avoids the problem of picking the best result out of thousands. Genes reported as correlated with PPP4C were not chosen in advance, so their correlation values are likely to be overestimated.</p>
                 </div>
                 <div class="card">
-                  <h4>Median splits lose information</h4>
-                  <p class="text-secondary mb-0">Splitting at the median PPP4C value gives a clear Kaplan-Meier plot but a weaker test, so the continuous Cox model is the main analysis.</p>
+                  <h4>Median split</h4>
+                  <p class="text-secondary mb-0">Splitting patients at the median makes survival curves easy to read, but reducing expression to two groups loses information and gives a weaker test than using expression as a continuous value. For this reason, the continuous Cox model is the main analysis.</p>
                 </div>
                 <div class="card">
                   <h4>Incomplete clinical data</h4>
-                  <p class="text-secondary mb-0">Treatment information in the public clinical tables is patchy, so survival differences can't be fully separated from differences in treatment.</p>
+                  <p class="text-secondary mb-0">Treatment information in the public clinical records is incomplete, so survival differences can't be fully separated from differences in treatment.</p>
                 </div>
                 <div class="card">
                   <h4>Small number of deaths</h4>
-                  <p class="text-secondary mb-0">The survival analysis is based on 99 deaths within five years. This is why the confidence intervals are wide, and supporting literature doesn't change that.</p>
+                  <p class="text-secondary mb-0">The survival analysis is based on 99 deaths within five years. This limits statistical power and is why the confidence intervals are wide.</p>
                 </div>
                 <div class="card">
-                  <h4>mRNA only</h4>
-                  <p class="text-secondary mb-0">I only measured mRNA. Figure&nbsp;2 above shows the protein changing the same way in another cohort, which is reassuring, but it isn't a protein-level check of my own samples.</p>
+                  <h4>RNA, not protein</h4>
+                  <p class="text-secondary mb-0">This project measured only mRNA. Li <em>et al.</em> found the same direction of change in PPP4C protein in a different cohort, but that doesn't confirm protein levels in my samples, and neither RNA nor protein levels show how active PP4 is.</p>
                 </div>
               </div>
             </div>
 
             <div id="future">
-              <h2>Next steps</h2>
+              <h2>Future research</h2>
+              <p class="text-secondary">Follow-up analyses that would address the main limitations of this study.</p>
               <ol>
-                <li>Re-run the survival models with treatment as a covariate where the data allows, since with 99 events and p = 0.0501 an unmeasured confounder could change the result.</li>
-                <li>Check PPP4C protein in a public proteomics cohort such as CPTAC-BRCA. Figure&nbsp;2 only gives a protein-level test for triple-negative disease, so this would extend it to patient tumours in general.</li>
-                <li>Estimate cell-type proportions from the bulk expression data (deconvolution) to test whether the PPP4C signal comes from immune cells, which neither published paper settles.</li>
-                <li>Add a single-cell dataset to check which cells actually express PPP4C.</li>
-                <li>Repeat the tumour-versus-normal and survival analysis in triple-negative tumours alone, so my cohort and Li <em>et al.</em>'s ask the same question about the same disease.</li>
-                <li>Test whether the genes co-expressed with PPP4C in my data overlap the WNT signalling, antigen presentation and DNA repair programmes that Xie <em>et al.</em> report for this family <a href="#ref-1">[1]</a>.</li>
-                <li>Check whether PPP4C copy number at 16p11.2, rather than how the gene is regulated, explains the expression differences.</li>
-                <li>Pre-register the thresholds and analysis plan before touching any new validation cohort.</li>
+                <li>Repeat the survival analysis with treatment included as a covariate where the data allow. With 99 deaths and an adjusted p of 0.0501, an unmeasured factor such as treatment could change the result.</li>
+                <li>Test the survival association in an independent cohort with follow-up data, to see whether the borderline adjusted result is replicated.</li>
+                <li>Check PPP4C protein levels in a public proteomics dataset such as CPTAC-BRCA. Figure&nbsp;2 above only shows protein data for triple-negative breast cancer.</li>
+                <li>Estimate the proportions of different cell types in each sample (deconvolution) to test whether the PPP4C signal is affected by immune cell content, which neither published study addresses.</li>
+                <li>Use a single-cell RNA-seq dataset to find out which cell types express PPP4C.</li>
+                <li>Repeat the tumour-versus-normal and survival analyses in triple-negative tumours only, so the results can be compared directly with Li <em>et al.</em></li>
+                <li>Test whether genes co-expressed with PPP4C overlap with the WNT signalling, antigen presentation and DNA repair pathways reported by Xie <em>et al.</em> <a href="#ref-1">[1]</a>.</li>
+                <li>Check whether changes in PPP4C copy number at 16p11.2, rather than changes in how the gene is regulated, explain the expression differences.</li>
+                <li>Pre-register the thresholds and analysis plan before analysing any new validation cohort.</li>
               </ol>
             </div>
 
@@ -370,11 +368,11 @@
           <aside class="layout-aside__side">
             <p class="eyebrow">On this page</p>
             <ul class="toc">
-              <li><a href="#interpretation">Interpretation</a></li>
-              <li><a href="#literature">Published studies</a></li>
-              <li><a href="#tension">Limits of the comparison</a></li>
-              <li><a href="#limitations">Limitations</a></li>
-              <li><a href="#future">Next steps</a></li>
+              <li><a href="#interpretation">Interpretation of results</a></li>
+              <li><a href="#literature">Previous research</a></li>
+              <li><a href="#tension">Support from previous research</a></li>
+              <li><a href="#limitations">Limitations of this study</a></li>
+              <li><a href="#future">Future research</a></li>
               <li><a href="#references">References</a></li>
             </ul>
           </aside>

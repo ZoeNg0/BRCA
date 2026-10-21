@@ -80,8 +80,9 @@
         <p class="eyebrow">Section 01</p>
         <h1>Background</h1>
         <p class="lede">
-          The basics behind this project: breast cancer, its molecular subtypes, gene
-          expression data, the PPP4C gene and the TCGA database.
+          The scientific background needed to follow this project, covering breast cancer
+          and its molecular subtypes, what gene expression data measures, the PPP4C gene and
+          the TCGA database.
         </p>
       </div>
     </section>
@@ -93,35 +94,41 @@
 
             <div id="why">
               <h2 class="mt-0">Why breast cancer</h2>
+              <p class="text-secondary">How common breast cancer is, and why it suited a project built on public data.</p>
               <p>
-                Breast cancer is the most commonly diagnosed cancer in the world, and it's also
-                one of the most studied at the molecular level. For a student project that's
-                useful. There's a lot of well-labelled public data, plus decades of published
-                results to compare against. If my analysis finds something that's already
-                known, that's a good sign the pipeline is working.
+                Breast cancer was the most commonly diagnosed cancer worldwide in 2020. It's
+                also one of the most studied cancers at the molecular level, which made it a
+                good choice for this project: there is a lot of well-annotated public data and
+                plenty of published research to compare against. Finding results that match
+                earlier studies is also a useful check that an analysis is working
+                properly.
               </p>
               <p>
-                In 2020 there were an estimated 2.3&nbsp;million new cases, 11.7% of all cancer
-                diagnoses, and it was the fifth leading cause of cancer death worldwide.
-                Targeted therapy, radiotherapy and immunotherapy have improved outcomes a lot,
-                but only about 20% of patients whose cancer has spread survive five years. So
-                there's still a need for markers that predict which patients will do badly.
+                According to GLOBOCAN 2020 estimates, there were about 2.3&nbsp;million new
+                cases that year, 11.7% of all cancer diagnoses, and breast cancer was the fifth
+                leading cause of cancer death worldwide. Treatments such as targeted therapy,
+                radiotherapy and immunotherapy have improved outcomes, but survival is much lower
+                once the cancer has spread to distant organs, with roughly 20% of these patients
+                surviving five years in commonly cited estimates. This is one reason researchers
+                continue to look for markers that help identify which patients are at higher
+                risk.
               </p>
               <p>
-                Outcomes also vary a lot <em>within</em> the same diagnosis. Two tumours of the
-                same size and stage can behave very differently, and much of that comes down to
-                which genes the tumour is expressing, which you can't see under a microscope.
-                Expression data can pick up those differences, and the next section covers
-                how.
+                Patients with the same diagnosis can also have very different outcomes. Two
+                tumours of the same size and stage may behave differently, and part of that
+                difference comes from which genes are active in the tumour. Gene expression data
+                can measure these differences, but a microscope can't.
               </p>
             </div>
 
             <div id="subtypes">
-              <h2>The intrinsic molecular subtypes</h2>
+              <h2>Molecular subtypes of breast cancer</h2>
+              <p class="text-secondary">The five PAM50 subtypes and how they relate to prognosis and treatment.</p>
               <p>
-                When tumours are grouped by which genes they express rather than by how they
-                look, a few groups keep showing up. The standard system has five, usually
-                assigned using a 50-gene classifier called PAM50.
+                When breast tumours are grouped by their gene expression patterns instead of by
+                how they look, they fall into a small number of recurring groups called
+                intrinsic subtypes. The standard system has five, usually assigned using a
+                50-gene test called PAM50.
               </p>
 
               <div class="table-wrap">
@@ -147,45 +154,56 @@
               </div>
 
               <p>
-                The subtype affects treatment. It helps decide whether a patient gets hormone
-                therapy, HER2-targeted antibodies, or chemotherapy alone, so a gene that moves
-                tumours between groups would be useful to know about.
+                Subtype affects treatment decisions, such as whether a patient is offered hormone
+                therapy, HER2-targeted drugs, or chemotherapy alone. For this project, it means
+                it's important to check whether a change in PPP4C is limited to one subtype or
+                seen across all of them.
               </p>
             </div>
 
             <div id="expression">
-              <h2>What gene expression data is</h2>
+              <h2>What gene expression data measures</h2>
+              <p class="text-secondary">What RNA sequencing measures and how the data has to be prepared before analysis.</p>
               <p>
-                Every cell has the same DNA, but different cells copy (transcribe) different
-                parts of it into RNA. RNA sequencing counts those RNA molecules, so each tumour
-                ends up as about twenty thousand numbers, one per gene. Each number estimates
-                how active that gene was when the sample was frozen.
+                Every cell in the body has the same DNA, but different cells use different
+                genes. When a gene is active, it is copied (transcribed) into RNA. RNA sequencing
+                counts these RNA molecules, giving roughly twenty thousand numbers per sample,
+                one for each gene. Each number estimates how active that gene was when the
+                sample was collected.
               </p>
               <p>
-                This has three consequences for the analysis. Counts depend on how deeply each
-                sample was sequenced, so they need to be normalised before samples can be
-                compared. Genes with low counts are noisy, so they get filtered out. And when
-                you test twenty thousand genes at once you get hundreds of false positives by
-                chance, so the p-values have to be corrected for multiple testing.
+                These numbers measure RNA, not protein. RNA levels often follow protein levels,
+                but not always, and neither directly shows how active an enzyme is. All the
+                measurements in this project are RNA levels.
+              </p>
+              <p>
+                Working with this kind of data involves three main steps. The counts are
+                normalised, because samples that were sequenced more deeply produce higher
+                counts overall. Genes with very low counts are removed, because their
+                measurements are unreliable. And because thousands of genes are tested at once,
+                p-values are adjusted for multiple testing; otherwise hundreds of genes would
+                appear significant just by chance.
               </p>
             </div>
 
             <div id="target">
-              <h2>The target gene: PPP4C</h2>
+              <h2>PPP4C and protein phosphatase 4</h2>
+              <p class="text-secondary">What PPP4C does, the subunits it works with, and the earlier studies that led to choosing it.</p>
               <p>
-                Protein phosphatase 4 (PP4) is an enzyme complex that removes phosphate groups
-                from other proteins. Cells use phosphorylation to switch many of their
-                proteins on and off, and phosphatases reverse it. PP4 is involved in DNA damage
-                repair, the checkpoints that decide whether a damaged cell can divide, and the
-                cell cycle.
+                Many proteins in a cell are switched on or off by adding or removing phosphate
+                groups (phosphorylation). Enzymes called phosphatases remove these phosphate
+                groups. Protein phosphatase 4 (PP4) is one of them, and it is involved in DNA
+                damage repair, in the checkpoints that stop a damaged cell from dividing, and in
+                the cell cycle.
               </p>
               <p>
-                <strong>PPP4C</strong> is the catalytic subunit, meaning the part of the complex
-                that carries out the reaction. By itself it doesn't do much. The regulatory
-                subunits it binds to (PPP4R1, PPP4R2, PPP4R3A and others) decide which proteins
-                it acts on. This gave me a check I could run: if the PPP4C measurements are real
-                signal and not noise, the regulatory subunits should go up and down with it
-                across tumours.
+                <strong>PPP4C</strong> is the catalytic subunit of PP4, meaning the part that
+                carries out the chemical reaction. On its own it does very little. The
+                regulatory subunits it binds to (PPP4R1, PPP4R2, PPP4R3A and others) determine
+                which proteins it acts on, so PPP4C RNA levels alone can't show how active PP4
+                is in a tumour. This also suggests a possible check: if the PPP4C measurements
+                reflect real biology and not noise, the regulatory subunits might be expected to
+                rise and fall with it across tumours.
               </p>
 
               <div class="table-wrap">
@@ -205,42 +223,42 @@
                 </table>
               </div>
 
-              <h3>Previous studies</h3>
+              <h3>Previous research on PPP4C</h3>
               <p>
-                I didn't choose PPP4C at random. Its gene family, the phosphoprotein phosphatase
-                catalytic subunits, has been studied in breast cancer before. When the whole
-                family was screened for clinical relevance, PPP4C was one of only two members
-                that stood out. It was linked to clinical and pathological features and to
-                prognosis, and the genes changing alongside it were involved in WNT signalling,
-                antigen presentation and DNA repair. Silencing it with siRNA slowed growth and
-                migration in breast cancer cell lines.
+                I chose PPP4C because of earlier research. Xie <em>et al.</em> (2022) screened the
+                whole family of phosphoprotein phosphatase catalytic subunits in breast cancer and
+                found that PPP4C was one of only two members linked to clinical features and
+                prognosis. Genes that changed alongside it were involved in WNT signalling,
+                antigen presentation and DNA repair, and reducing PPP4C with siRNA slowed the
+                growth and migration of breast cancer cell lines.
               </p>
               <p>
-                A more recent study looked at PPP4C by itself in triple-negative breast cancer
-                and thyroid cancer. It found more PPP4C protein in tumours than in nearby normal
-                tissue, worse overall survival in patients with higher expression, and reduced
-                growth, migration and invasion when the gene was knocked down in cell culture.
-                I compare both studies with my results, including their figures, on the
+                A more recent study by Li <em>et al.</em> (2026) looked at PPP4C in
+                triple-negative breast cancer and thyroid cancer. It found more PPP4C protein in
+                tumour tissue than in nearby normal tissue, worse overall survival in patients
+                with higher PPP4C, and reduced growth, migration and invasion when PPP4C was
+                knocked down in cultured cells. Both studies are compared with my results on the
                 <a href="discussion.html#literature">Discussion</a> page.
               </p>
               <p>
-                This gives my project a clear prediction. If the published findings are right,
-                PPP4C should be higher in tumour tissue here too, and higher expression should
-                go with worse outcomes. Because the prediction has a direction, it can be proven
-                wrong. Most of the earlier work also used cell lines or single cohorts, so
-                testing it across several cohorts and platforms adds something new, and that's
-                what the rest of the site does.
+                Based on this research, I expected PPP4C to be higher in tumour tissue, and
+                higher expression to be associated with worse survival. Because the prediction
+                was made before the analysis, the results could have contradicted it. Most of the
+                earlier evidence came from cell lines or single cohorts, so testing it across
+                several independent datasets was the main way this project could add to it.
               </p>
             </div>
 
             <div id="tcga">
-              <h2>What TCGA is</h2>
+              <h2>The Cancer Genome Atlas (TCGA)</h2>
+              <p class="text-secondary">The public database that provided the main dataset for this project.</p>
               <p>
-                The Cancer Genome Atlas (TCGA) is a public archive with molecular and clinical
-                data from over eleven thousand tumours across thirty-three cancer types. Its
-                breast cancer cohort, TCGA-BRCA, links expression data to de-identified clinical
-                records such as stage, receptor status and follow-up time. Having both in one
-                place is what makes survival analysis possible on a laptop.
+                The Cancer Genome Atlas is a public database with molecular and clinical data
+                from more than eleven thousand tumours across thirty-three cancer types. Its
+                breast cancer dataset, TCGA-BRCA, links each patient's gene expression data with
+                de-identified clinical information such as stage, receptor status and follow-up
+                time. Having expression and survival data for the same patients is what makes
+                survival analysis possible.
               </p>
               <div class="callout callout--note">
                 <div class="callout__body">
@@ -257,8 +275,8 @@
               <li><a href="#why">Why breast cancer</a></li>
               <li><a href="#subtypes">Molecular subtypes</a></li>
               <li><a href="#expression">Gene expression data</a></li>
-              <li><a href="#target">The target gene: PPP4C</a></li>
-              <li><a href="#tcga">What TCGA is</a></li>
+              <li><a href="#target">PPP4C</a></li>
+              <li><a href="#tcga">TCGA</a></li>
             </ul>
           </aside>
         </div>

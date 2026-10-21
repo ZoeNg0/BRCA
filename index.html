@@ -80,11 +80,7 @@
       <div class="container hero__inner">
         <h1>PPP4C expression in breast cancer</h1>
         <p class="lede">
-          This project uses public RNA sequencing data from
-          <strong>1,111 primary breast tumours</strong> in The Cancer Genome Atlas, plus four
-          independent cohorts, to test whether <strong>PPP4C</strong> (the catalytic subunit of
-          protein phosphatase 4) is raised in tumours, differs between subtypes, and tracks
-          with how long patients survive.
+          This project uses public RNA sequencing data from <b>1,111 primary breast tumours</b> in The Cancer Genome Atlas, plus four independent cohorts, to test whether <b>PPP4C</b> (the catalytic subunit of protein phosphatase 4) is raised in tumours, differs between subtypes, and tracks with how long patients survive. This page summarises the research question, aims and key findings, and links to each section of the website.
         </p>
 
         <div class="hero__meta">
@@ -103,6 +99,7 @@
         <div class="section__head reveal">
           <p class="eyebrow">At a glance</p>
           <h2 class="mt-0">Key numbers</h2>
+              <p class="text-secondary">Four headline results from the analysis, each explained in detail on the Results page.</p>
         </div>
 
         <div class="grid grid--4 reveal">
@@ -124,7 +121,7 @@
           <div class="tile">
             <p class="tile__label">Five-year hazard ratio</p>
             <p class="tile__value">1.60</p>
-            <p class="tile__delta">PPP4C-high, 95% CI 1.07&ndash;2.39</p>
+            <p class="tile__delta">PPP4C-high vs low, unadjusted (95% CI 1.07&ndash;2.39)</p>
           </div>
         </div>
       </div>
@@ -136,41 +133,51 @@
           <div>
             <p class="eyebrow">The question</p>
             <h2 class="mt-0">Research question</h2>
+              <p class="text-secondary">The question this project set out to answer, why PPP4C was chosen, and the four aims of the analysis.</p>
             <blockquote>
               Is PPP4C expression raised in breast tumours, does it differ between the
-              intrinsic molecular subtypes, and does it predict patient survival
-              independently of stage and age?
+              intrinsic molecular subtypes, and is it associated with patient survival
+              independently of stage, age and subtype?
             </blockquote>
             <p>
-              Breast cancer is really several diseases. Tumours that look the same under a
-              microscope can behave very differently, and since the early 2000s a lot of that
-              has been explained by gene expression, which divides tumours into
-              <em>intrinsic subtypes</em> with different treatments and outcomes. Public
-              databases now have expression data for thousands of tumours, so a student with
-              a laptop can go back to questions that used to need a lab.
+              Breast cancer isn't a single disease. Tumours that look alike under a
+              microscope can grow and respond to treatment very differently, and much of
+              that variation is linked to gene expression, which is used to sort tumours into
+              <em>intrinsic subtypes</em>. Public databases now hold gene expression and
+              clinical data for thousands of patients, which made it possible for me to carry
+              out this project using a laptop and freely available data.
             </p>
             <p>
-              PPP4C is the catalytic subunit of protein phosphatase 4, an enzyme complex
-              involved in DNA damage repair and the cell cycle. It's been reported as
-              over-expressed in several solid tumours, so I wanted to test it independently in
-              a large public breast cancer cohort.
+              I focused on PPP4C, the catalytic subunit of an enzyme called protein
+              phosphatase 4 (PP4). PP4 helps control DNA damage repair and cell division, two
+              processes that often go wrong in cancer, and earlier studies had reported higher
+              PPP4C levels in several types of tumour. I wanted to find out whether that
+              pattern held up in a large, independent set of breast cancer data.
             </p>
-            <p>The project has four aims:</p>
+            <p>
+              My main dataset was TCGA-BRCA from The Cancer Genome Atlas, which has RNA
+              sequencing and clinical data for over 1,000 breast cancer patients. I used four
+              smaller datasets from the Gene Expression Omnibus (GEO) to check whether the
+              TCGA results could be repeated.
+            </p>
+            <p>The project had four aims:</p>
             <ol>
-              <li><strong>Characterise</strong> the cohort: match each sample (aliquot) back to its patient, and work out which sample count belongs to which question.</li>
-              <li><strong>Quantify</strong> PPP4C in tumours compared with nearby normal tissue, and across the five PAM50 subtypes.</li>
-              <li><strong>Connect</strong> PPP4C to patient outcome with survival analysis, and check whether the link holds after accounting for stage, age and subtype.</li>
-              <li><strong>Contextualise</strong> it by building a co-expression network from the tumour-versus-normal signal, and asking which biological programme that network is built around.</li>
+              <li><strong>Characterise</strong> the cohort by matching each sample to its patient and working out the correct sample size for each analysis.</li>
+              <li><strong>Compare</strong> PPP4C expression between tumours and normal breast tissue, and across the five PAM50 subtypes.</li>
+              <li><strong>Test</strong> whether PPP4C expression is associated with survival, and whether that association remains after accounting for stage, age and subtype.</li>
+              <li><strong>Place it in context</strong> by building a network of genes that change together in tumours and identifying the biological processes that network centres on.</li>
             </ol>
           </div>
 
           <aside class="layout-aside__side">
-            <p class="eyebrow">Main finding</p>
+            <p class="eyebrow">Key findings</p>
             <p class="text-secondary">
-              PPP4C is higher in breast tumours in all five cohorts and in 109 of 113
-              matched patients. It's raised in every subtype, and patients with high PPP4C had
-              worse five-year survival, although that result is only borderline significant
-              after adjusting for stage and subtype.
+              PPP4C RNA levels were higher in tumours than in normal tissue in all five
+              datasets and in 109 of 113 patients with matched samples, and the increase was
+              seen in every subtype. Patients with higher PPP4C had somewhat worse five-year
+              survival, but after adjusting for stage, age and subtype the result was
+              borderline (p = 0.0501), so it isn't clear whether PPP4C adds prognostic
+              information on its own.
             </p>
           </aside>
         </div>
@@ -181,44 +188,44 @@
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow">Contents</p>
-          <h2 class="mt-0">Pages</h2>
-          <p class="text-secondary">Each page can be read on its own, but they're listed in the order I'd suggest.</p>
+          <h2 class="mt-0">Website sections</h2>
+          <p class="text-secondary">The pages follow the order of the project, from background to results and discussion.</p>
         </div>
 
         <div class="grid grid--3 reveal">
           <a class="card" href="background.html">
             <h3>Background</h3>
-            <p class="text-secondary mb-0">Why breast cancer, what molecular subtypes are, and what gene expression data can and can't tell you.</p>
+            <p class="text-secondary mb-0">An introduction to breast cancer, molecular subtypes, gene expression and the PPP4C gene.</p>
             <span class="card__more">Read the background &rarr;</span>
           </a>
           <a class="card" href="data.html">
             <h3>Data</h3>
-            <p class="text-secondary mb-0">Which datasets are used, where they came from, and which samples were kept or left out.</p>
+            <p class="text-secondary mb-0">The five datasets used and how samples were selected.</p>
             <span class="card__more">See the datasets &rarr;</span>
           </a>
           <a class="card" href="methods.html">
             <h3>Methods</h3>
-            <p class="text-secondary mb-0">The full analysis pipeline, the software behind each step, and how to reproduce it.</p>
-            <span class="card__more">See the pipeline &rarr;</span>
+            <p class="text-secondary mb-0">How the data was analysed, and the software used at each step.</p>
+            <span class="card__more">See the methods &rarr;</span>
           </a>
           <a class="card" href="results.html">
             <h3>Results</h3>
-            <p class="text-secondary mb-0">PPP4C in tumour and normal tissue, across subtypes, and against survival. Six interactive figures.</p>
+            <p class="text-secondary mb-0">Six interactive figures on PPP4C expression, subtypes and survival.</p>
             <span class="card__more">See the results &rarr;</span>
           </a>
           <a class="card" href="discussion.html">
             <h3>Discussion</h3>
-            <p class="text-secondary mb-0">What the findings mean, how they compare with two published studies of the same gene, and where the analysis is weakest.</p>
+            <p class="text-secondary mb-0">What the results suggest, how they compare with previous studies, and the limitations.</p>
             <span class="card__more">Read the discussion &rarr;</span>
           </a>
           <a class="card" href="code.html">
             <h3>Code</h3>
-            <p class="text-secondary mb-0">The R behind the TCGA download, the mutation summary and the differential expression, shown as it was written.</p>
+            <p class="text-secondary mb-0">The R script used to download the TCGA data and run the first analyses.</p>
             <span class="card__more">Read the code &rarr;</span>
           </a>
           <a class="card" href="about.html">
             <h3>About</h3>
-            <p class="text-secondary mb-0">Who built this, how it started, the timeline, and the skills learned along the way.</p>
+            <p class="text-secondary mb-0">Why I started this project, how it developed, and what I learned.</p>
             <span class="card__more">About the project &rarr;</span>
           </a>
         </div>
@@ -229,37 +236,38 @@
       <div class="container container--narrow">
         <div class="section-head">
           <p class="eyebrow">Process</p>
-          <h2 class="mt-0">Project steps</h2>
+          <h2 class="mt-0">Research process</h2>
+              <p class="text-secondary">The main stages of the project, in the order they were carried out.</p>
         </div>
 
         <ol class="steps reveal">
           <li>
             <h4>Choosing the gene</h4>
-            <p class="text-secondary">I picked one target gene at the start instead of searching every gene for a hit, and read the published work on the PP4 complex in cancer so I knew which results would agree with it and which wouldn't.</p>
+            <p class="text-secondary">I chose PPP4C before starting the analysis, instead of testing every gene and picking whichever looked best. I then read the published research on PP4 in cancer so I knew what results to expect.</p>
           </li>
           <li>
-            <h4>Downloading and checking TCGA-BRCA</h4>
-            <p class="text-secondary">Downloaded expression counts, clinical records and somatic mutation calls from the GDC. Matched 1,224 aliquots to 1,095 patients and kept the 113 patients with a matched normal sample as a separate control group.</p>
+            <h4>Preparing the TCGA data</h4>
+            <p class="text-secondary">I downloaded gene expression, clinical and mutation data from the Genomic Data Commons (GDC) and matched 1,224 samples to 1,095 patients. The 113 patients who also had a normal tissue sample were kept as a matched comparison group.</p>
           </li>
           <li>
-            <h4>Differential expression</h4>
-            <p class="text-secondary">Ran a negative-binomial model across all genes, set up so a positive fold change means higher in tumour, with thresholds chosen before looking at the results.</p>
+            <h4>Comparing tumour and normal tissue</h4>
+            <p class="text-secondary">I compared gene expression between tumour and normal samples using DESeq2, with significance thresholds set before looking at the results.</p>
           </li>
           <li>
-            <h4>Replication in four cohorts</h4>
-            <p class="text-secondary">Added four GEO cohorts from three other platforms, analysed each with the method suited to its data type, and combined all five by rank aggregation instead of intersecting gene lists.</p>
+            <h4>Replicating the results</h4>
+            <p class="text-secondary">I repeated the comparison in four GEO datasets from three other measurement platforms and combined the five results using rank aggregation.</p>
           </li>
           <li>
             <h4>Subtype and survival analysis</h4>
-            <p class="text-secondary">Compared PPP4C across the five PAM50 subtypes, then ran Kaplan-Meier curves and a Cox model adjusted for stage, age and subtype. I checked the proportional-hazards assumption instead of assuming it held.</p>
+            <p class="text-secondary">I compared PPP4C across the five PAM50 subtypes and tested its association with survival using Kaplan&ndash;Meier curves and a Cox model adjusted for stage, age and subtype.</p>
           </li>
           <li>
-            <h4>Co-expression network</h4>
-            <p class="text-secondary">Built a network linking genes whose expression moves together across the cohort, then tested proliferation and motility gene sets against the most connected genes. Sets that failed are reported along with the ones that passed.</p>
+            <h4>Gene network analysis</h4>
+            <p class="text-secondary">I built a network of genes whose expression rises and falls together across tumours, and tested which biological processes its most connected genes belong to.</p>
           </li>
           <li>
             <h4>Write-up</h4>
-            <p class="text-secondary">Compared each finding with the published work, wrote up the limitations, and built this site so every figure shows its sample count, test and caveats.</p>
+            <p class="text-secondary">I compared my findings with published studies, wrote up the limitations, and built this website.</p>
           </li>
         </ol>
       </div>

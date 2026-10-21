@@ -4520,7 +4520,7 @@
   function buildSummary() {
     return {
       samples:    { label: 'Tumour samples analysed',      value: '1,570',  note: 'five independent cohorts' },
-      hazard:     { label: 'Five-year hazard ratio',       value: '1.60',   note: 'PPP4C-high, 95% CI 1.07–2.39' },
+      hazard:     { label: 'Five-year hazard ratio',       value: '1.60',   note: 'PPP4C-high vs low, unadjusted (95% CI 1.07–2.39)' },
       foldChange: { label: TARGET.symbol + ' tumour vs normal', value: '+0.56 to +1.34', note: 'log₂FC, raised in all five cohorts' },
       paired:     { label: 'Matched pairs rising in tumour', value: '109 / 113', note: 'TCGA patients, own normal as control' }
     };

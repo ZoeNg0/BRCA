@@ -161,7 +161,10 @@ hr {
 
 .section { padding-block: var(--sp-8); }
 .section--tight { padding-block: var(--sp-6); }
-.section--alt { background: var(--surface-1); border-block: 1px solid var(--border); }
+.section--alt {
+  background: var(--surface-band);
+  border-block: 1px solid var(--border);
+}
 
 .stack > * + * { margin-top: var(--sp-4); }
 .stack-lg > * + * { margin-top: var(--sp-6); }
@@ -201,7 +204,7 @@ hr {
   height: var(--header-h);
   display: flex;
   align-items: center;
-  background: color-mix(in srgb, var(--surface-raised) 88%, transparent);
+  background: color-mix(in srgb, var(--surface-chrome) 92%, transparent);
   backdrop-filter: saturate(1.4) blur(10px);
   border-bottom: 1px solid var(--border);
 }
@@ -793,7 +796,7 @@ tbody tr:hover { background: var(--hover-wash); }
 .site-footer {
   margin-top: var(--sp-9);
   border-top: 1px solid var(--border);
-  background: var(--surface-1);
+  background: var(--surface-chrome);
   padding-block: var(--sp-7) var(--sp-6);
   font-size: var(--step--1);
   color: var(--text-secondary);
@@ -803,7 +806,7 @@ tbody tr:hover { background: var(--hover-wash); }
   font-size: var(--step--1);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-secondary);   /* muted is under 4.5:1 on the sage footer */
   margin: 0 0 var(--sp-3);
 }
 .site-footer ul { list-style: none; padding: 0; margin: 0; }
@@ -818,7 +821,7 @@ tbody tr:hover { background: var(--hover-wash); }
   flex-wrap: wrap;
   gap: var(--sp-3);
   justify-content: space-between;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 /* ---- 11  Utilities & motion --------------------------------------------- */
